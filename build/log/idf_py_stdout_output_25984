@@ -1,0 +1,795 @@
+Command: C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.5.2\tools/idf_monitor.py -p COM3 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 C:\Users\jakep\Documents\ESP32\salt_base_station\build\salt_base_station.elf C:\Users\jakep\Documents\ESP32\salt_base_station\build\bootloader\bootloader.elf --force-color -m 'C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Espressif\frameworks\esp-idf-v5.5.2\tools\idf.py' '-p' 'COM3'
+�Wk���� v1.3
+I (31�ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (31) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (35) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (47) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (69) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (76) boot: End of partition table[0m
+[0;32mI (79) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e2dch (123612) map[0m
+[0;32mI (108) esp_image: segment 1: paddr=0002e304 vaddr=3fc9c500 size=01d14h (  7444) load[0m
+[0;32mI (110) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5cch (579020) map[0m
+[0;32mI (214) esp_image: segment 3: paddr=000bd5f4 vaddr=3fc9e214 size=02fa0h ( 12192) load[0m
+[0;32mI (217) esp_image: segment 4: paddr=000c059c vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (239) esp_image: segment 5: paddr=000d8a08 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (249) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (249) boot: Disabling RNG early entropy source...[0m
+[0;32mI (259) cpu_start: Multicore app[0m
+[0;32mI (268) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (269) cpu_start: Pro cpu start user code[0m
+[0;32mI (269) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (270) app_init: Application information:[0m
+[0;32mI (274) app_init: Project name:     salt_base_station[0m
+[0;32mI (279) app_init: App version:      1[0m
+[0;32mI (282) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (287) app_init: ELF file SHA256:  0bdb0c1dc...[0m
+[0;32mI (292) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (295) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (299) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (303) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (307) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (313) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (318) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (324) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (329) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (335) spi_flash: detected chip: gd[0m
+[0;32mI (337) spi_flash: flash io: dio[0m
+[0;33mW (340) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (353) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (359) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (366) main_task: Started on CPU0[0m
+[0;32mI (386) main_task: Calling app_main()[0m
+[0;32mI (416) pp: pp rom version: e7ae62f[0m
+[0;32mI (416) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (426) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (436) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (436) wifi:wifi certification version: v7.0[0m
+[0;32mI (436) wifi:config NVS flash: enabled[0m
+[0;32mI (436) wifi:config nano formatting: disabled[0m
+[0;32mI (436) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (446) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (446) wifi:Init management short buffer num: 32[0m
+[0;32mI (456) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (456) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (466) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (466) wifi:Init static rx buffer num: 10[0m
+[0;32mI (466) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (476) wifi_init: rx ba win: 6[0m
+[0;32mI (476) wifi_init: accept mbox: 6[0m
+[0;32mI (476) wifi_init: tcpip mbox: 32[0m
+[0;32mI (486) wifi_init: udp mbox: 6[0m
+[0;32mI (486) wifi_init: tcp mbox: 6[0m
+[0;32mI (486) wifi_init: tcp tx win: 5760[0m
+[0;32mI (486) wifi_init: tcp rx win: 5760[0m
+[0;32mI (496) wifi_init: tcp mss: 1440[0m
+[0;32mI (496) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (496) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (506) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (516) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (566) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (566) wifi:enable tsf[0m
+[0;32mI (566) BASE: Trying STA connect...[0m
+[0;33mW (2976) BASE: STA disconnected, retrying...[0m
+[0;33mW (5386) BASE: STA disconnected, retrying...[0m
+[0;33mW (7796) BASE: STA disconnected, retrying...[0m
+[0;33mW (10206) BASE: STA disconnected, retrying...[0m
+[0;33mW (12566) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12566) wifi:flush txq[0m
+[0;32mI (12566) wifi:stop sw txq[0m
+[0;32mI (12566) wifi:lmac stop hw txq[0m
+[0;32mI (12576) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12576) wifi:Total power save buffer number: 16[0m
+[0;32mI (12586) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12586) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12586) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12586) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12606) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12606) BASE: Initializing LoRa...[0m
+[0;32mI (12606) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12616) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12616) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12616) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12616) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12626) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12626) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12626) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12636) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12636) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12676) RA01S: syncWord=0x1424[0m
+[0;32mI (12676) RA01S: SX126x installed[0m
+[0;33mW (12686) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12686) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12706) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12726) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12766) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12766) main_task: Returned from app_main()[0m
+[0;32mI (204516) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (204516) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (205146) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:11, winSize:64[0m
+[0;32mI (205166) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (267346) BASE: Received /command: forward[0m
+[0;32mI (267356) BASE: LoRa TX: forward[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017445:0x3fcb6db0 0x4200b705:0x3fcb6de0 0x4200c18e:0x3fcb6e30 0x4200c429:0x3fcb6e60 0x4200c656:0x3fcb6e90 0x4200ad71:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: 0bdb0c1dc
+
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4204fb59
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e2dch (123612) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e304 vaddr=3fc9c500 size=01d14h (  7444) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5cch (579020) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd5f4 vaddr=3fc9e214 size=02fa0h ( 12192) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c059c vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a08 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  0bdb0c1dc...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (561) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (561) wifi:enable tsf[0m
+[0;32mI (571) BASE: Trying STA connect...[0m
+[0;33mW (2971) BASE: STA disconnected, retrying...[0m
+[0;33mW (5381) BASE: STA disconnected, retrying...[0m
+[0;33mW (7791) BASE: STA disconnected, retrying...[0m
+[0;33mW (10201) BASE: STA disconnected, retrying...[0m
+[0;33mW (12571) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12571) wifi:flush txq[0m
+[0;32mI (12571) wifi:stop sw txq[0m
+[0;32mI (12571) wifi:lmac stop hw txq[0m
+[0;32mI (12581) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12581) wifi:Total power save buffer number: 16[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12591) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12611) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12611) BASE: Initializing LoRa...[0m
+[0;32mI (12611) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12611) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12621) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12621) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12621) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12631) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12631) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12631) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12641) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12641) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12681) RA01S: syncWord=0x1424[0m
+[0;32mI (12681) RA01S: SX126x installed[0m
+[0;33mW (12681) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12691) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12711) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12731) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12771) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12771) main_task: Returned from app_main()[0m
+[0;32mI (25451) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (25451) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (25871) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (25911) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (34111) BASE: Received /command: forward[0m
+[0;32mI (34111) BASE: LoRa TX: forward[0m
+[0;32mI (34271) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (43241) BASE: Received /command: forward[0m
+[0;32mI (43241) BASE: LoRa TX: forward[0m
+[0;32mI (43401) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (72791) BASE: Received /command: forward[0m
+[0;32mI (72791) BASE: LoRa TX: forward[0m
+[0;32mI (72951) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (80341) BASE: Received /command: forward[0m
+[0;32mI (80351) BASE: LoRa TX: forward[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017445:0x3fcb6db0 0x4200b705:0x3fcb6de0 0x4200c18e:0x3fcb6e30 0x4200c429:0x3fcb6e60 0x4200c656:0x3fcb6e90 0x4200ad71:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: 0bdb0c1dc
+
+Rebooting...
+���ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4204fb47
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e2dch (123612) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e304 vaddr=3fc9c500 size=01d14h (  7444) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5cch (579020) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd5f4 vaddr=3fc9e214 size=02fa0h ( 12192) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c059c vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a08 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  0bdb0c1dc...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (571) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (571) wifi:enable tsf[0m
+[0;32mI (571) BASE: Trying STA connect...[0m
+[0;33mW (2981) BASE: STA disconnected, retrying...[0m
+[0;33mW (5391) BASE: STA disconnected, retrying...[0m
+[0;33mW (7801) BASE: STA disconnected, retrying...[0m
+[0;33mW (10211) BASE: STA disconnected, retrying...[0m
+[0;33mW (12571) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12571) wifi:flush txq[0m
+[0;32mI (12571) wifi:stop sw txq[0m
+[0;32mI (12571) wifi:lmac stop hw txq[0m
+[0;32mI (12581) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12581) wifi:Total power save buffer number: 16[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12591) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12611) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12611) BASE: Initializing LoRa...[0m
+[0;32mI (12611) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12611) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12621) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12621) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12621) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12631) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12631) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12631) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12641) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12641) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12681) RA01S: syncWord=0x1424[0m
+[0;32mI (12681) RA01S: SX126x installed[0m
+[0;33mW (12681) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12691) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12711) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12731) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12771) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12771) main_task: Returned from app_main()[0m
+[0;32mI (23761) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (23761) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (24271) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (24401) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (30381) BASE: Received /command: forward[0m
+[0;32mI (30381) BASE: LoRa TX: forward[0m
+[0;32mI (30541) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (38841) BASE: LoRa RX (29): ��a_Ko~��������[��		X%[0m
+[0;32mI (46671) BASE: Received /command: forward[0m
+[0;32mI (46671) BASE: LoRa TX: forward[0m
+[0;32mI (46831) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (135651) BASE: LoRa RX (28): ��m�}��������[�[ZڒZR%I��[0m
+[0;32mI (437641) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (437641) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (437641) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (437651) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (469631) BASE: LoRa RX (4): ZKR[0m
+[0;32mI (571561) BASE: LoRa RX (34): S:0:�����������������{���!  K[0m
+[0;32mI (572481) BASE: LoRa RX (9): S:0:_�@[0m
+[0;32mI (586121) BASE: LoRa RX (42): S:0:{�ok_[��{�����������KKZ [0m
+[0;32mI (586901) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (594081) BASE: LoRa RX (35): S:0:{��{�{�[�{[�[�_�k�__���_�[0m
+[0;32mI (617711) BASE: LoRa RX (108): S:0:���?~Ͽ�?�????�χ���C������?��Ϗ????��O?��ϟ��?����������?����[0m
+[0;32mI (624181) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (627241) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (647971) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (647971) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (648821) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (649831) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (656681) BASE: Received /command: forward[0m
+[0;32mI (656681) BASE: LoRa TX: forward[0m
+[0;32mI (656841) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (667621) BASE: LoRa RX (12): S:0:�>��	 �
+[0;32mI (667711) BASE: LoRa RX (5): S:1:�
+[0;32mI (669071) BASE: Received /command: stop[0m
+[0;32mI (669071) BASE: LoRa TX: stop[0m
+[0;32mI (669221) BASE: LoRa RX (8): ACK:stop[0m
+[0;32mI (693561) BASE: LoRa RX (14): S:0:���IK���[0m
+[0;32mI (707381) BASE: LoRa RX (10): S:0:���>'([0m
+[0;32mI (750541) BASE: LoRa RX (58): S:0:��������[�}�_�[���[x	Bo^_�O�~�����_��������������KT[0m
+[0;32mI (750621) BASE: LoRa RX (4): S:1:[0m
+[0;32mI (782641) BASE: LoRa RX (5): S:0:t[0m
+[0;32mI (876941) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (880371) BASE: LoRa RX (50): S:0:����������[{�[[{����_��[[k[Z�K�KSZZҖB�%[0m
+[0;32mI (881111) BASE: LoRa RX (19): S:0:IR�k���o��_�-�[0m
+[0;32mI (935001) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (935921) BASE: LoRa RX (9): S:0:�{-A[0m
+[0;32mI (952361) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (952361) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (952361) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (952371) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1018781) BASE: LoRa RX (5): S:0:�
+[0;32mI (1020471) BASE: LoRa RX (4): S:0:[0m
+[0;32mI (1053951) BASE: LoRa RX (9): S:0:�۲z[0m
+[0;32mI (1054041) BASE: LoRa RX (7): S:1:0a[0m
+[0;32mI (1070811) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1070811) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (1071381) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (1071781) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (1089871) BASE: LoRa RX (58): S:0:M:������[KR�Z�[QB�Z$J�$@$$�$IBE��o�����|�� hB[0m
+[0;32mI (1096381) BASE: LoRa RX (47): S:1:M:����i�Z���ZR[[�[�{K[�{��o�����/�_��� �[0m
+[0;32mI (1097431) BASE: LoRa RX (6): S:0:M:[0m
+[0;32mI (1098121) BASE: LoRa RX (24): S:0:E:�����B��K���`	[0m
+[0;32mI (1098831) BASE: LoRa RX (20): S:0:E:�������J�I�R�[0m
+[0;32mI (1193071) BASE: LoRa RX (25): S:0:M:/�ZKZR�$R�I�BB[0m
+[0;32mI (1208291) BASE: LoRa RX (14): S:0:E:���kK�BP[0m
+[0;32mI (1209041) BASE: LoRa RX (6): S:0:E:[0m
+[0;32mI (1262281) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca83d8[0m
+[0;32mI (1262281) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1262291) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (1262291) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1263611) BASE: LoRa RX (13): S:0:M:kKJJB�
+[0;32mI (1328621) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1328631) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (1329911) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (1330861) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (1383331) BASE: LoRa RX (24): S:0:M:�����o���{�k��[R�$[0m
+[0;32mI (1449911) BASE: LoRa RX (17): S:0:M:��z����+��[0m
+[0;32mI (1460921) BASE: LoRa RX (53): S:0:M:���k�o��[�^K�!H�@�KBR�%Z�Z[��{o{��{[Y[0m
+[0;32mI (1489811) BASE: LoRa RX (17): S:0:M:������ۅj5[0m
+[0;32mI (1515351) BASE: LoRa RX (22): S:0:M:�{{[�ZZR�!��[0m
+[0;32mI (1533471) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca83d8[0m
+[0;32mI (1533471) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1533481) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (1533481) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1590961) BASE: LoRa RX (6): S:0:M:[0m
+[0;32mI (1616791) BASE: LoRa RX (6): S:0:M:[0m
+[0;32mI (1718631) BASE: LoRa RX (20): S:0:M:����������HI@@[0m
+[0;32mI (1766291) BASE: LoRa RX (7): S:0:M:[0m
+[0;32mI (1819601) BASE: LoRa RX (23): S:0:E:��������������[0m
+[0;32mI (1829571) BASE: LoRa RX (12): S:1:M:���
+[0;32mI (1829661) BASE: LoRa RX (6): S:2:M:[0m
+[0;32mI (1829761) BASE: LoRa RX (6): S:3:M:[0m
+[0;32mI (1829861) BASE: LoRa RX (6): S:4:M:[0m
+[0;32mI (1830271) BASE: LoRa RX (17): S:5:M:Z�����[�a[0m
+[0;32mI (1830361) BASE: LoRa RX (6): S:6:M:[0m
+[0;32mI (1830461) BASE: LoRa RX (6): S:7:M:[0m
+[0;32mI (1830571) BASE: LoRa RX (14): S:8:M:�����w[0m
+[0;32mI (1830671) BASE: LoRa RX (6): S:9:M:[0m
+[0;32mI (1830771) BASE: LoRa RX (7): S:10:M:[0m
+[0;32mI (1830871) BASE: LoRa RX (7): S:11:M:[0m
+[0;32mI (1830981) BASE: LoRa RX (15): S:12:M:Z�����5[0m
+[0;32mI (1831081) BASE: LoRa RX (7): S:13:M:[0m
+[0;32mI (1855451) BASE: LoRa RX (7): S:14:M:[0m
+[0;32mI (1855551) BASE: LoRa RX (7): S:15:E:[0m
+[0;32mI (1855701) BASE: LoRa RX (37): S:16:M:�[l�[�K��ZZJ�Z�J���-H���B$Z�J [0m
+[0;32mI (1855791) BASE: LoRa RX (7): S:17:M:[0m
+[0;32mI (1855891) BASE: LoRa RX (7): S:18:M:[0m
+[0;32mI (1855991) BASE: LoRa RX (7): S:19:M:[0m
+[0;32mI (1856091) BASE: LoRa RX (7): S:20:M:[0m
+[0;32mI (1856191) BASE: LoRa RX (7): S:21:M:[0m
+[0;32mI (1856291) BASE: LoRa RX (7): S:22:M:[0m
+[0;32mI (1856391) BASE: LoRa RX (7): S:23:M:[0m
+[0;32mI (1971701) BASE: LoRa RX (7): S:24:M:[0m
+[0;32mI (1971801) BASE: LoRa RX (7): S:25:M:[0m
+[0;32mI (1971901) BASE: LoRa RX (7): S:26:M:[0m
+[0;32mI (1972001) BASE: LoRa RX (7): S:27:M:[0m
+[0;32mI (1972101) BASE: LoRa RX (7): S:28:M:[0m
+[0;32mI (1972401) BASE: LoRa RX (7): S:29:M:[0m
+[0;32mI (2143271) BASE: LoRa RX (7): S:30:M:[0m
+[0;32mI (2143371) BASE: LoRa RX (7): S:31:M:[0m
+[0;32mI (2143471) BASE: LoRa RX (7): S:32:M:[0m
+[0;32mI (2143571) BASE: LoRa RX (7): S:33:M:[0m
+[0;32mI (2143671) BASE: LoRa RX (7): S:34:E:[0m
+[0;32mI (2143991) BASE: LoRa RX (17): S:35:M:�$@$P��[0m
+[0;32mI (2144091) BASE: LoRa RX (13): S:36:M:[R���[0m
+[0;32mI (2144231) BASE: LoRa RX (35): S:37:M:�����_[Yo[�[�IKZK[��ZR�%[0m
+[0;32mI (2160821) BASE: LoRa RX (7): S:38:M:[0m
+[0;32mI (2160951) BASE: LoRa RX (23): S:39:M:�k����[�[ZR�%�$[0m
+[0;32mI (2161041) BASE: LoRa RX (7): S:40:M:[0m
+[0;32mI (2161191) BASE: LoRa RX (41): S:41:M:0J�Ki�IZZ�R[Z�[{[���f������?[0m
+[0;32mI (2161291) BASE: LoRa RX (7): S:42:M:[0m
+[0;32mI (2161391) BASE: LoRa RX (7): S:43:M:[0m
+[0;32mI (2161491) BASE: LoRa RX (7): S:44:M:[0m
+[0;32mI (2161591) BASE: LoRa RX (7): S:45:M:[0m
+[0;32mI (2161891) BASE: LoRa RX (7): S:46:M:[0m
+[0;32mI (2162351) BASE: LoRa RX (7): S:47:M:[0m
+[0;32mI (2162451) BASE: LoRa RX (7): S:48:M:[0m
+[0;32mI (2199921) BASE: LoRa RX (7): S:49:M:[0m
+[0;32mI (2200051) BASE: LoRa RX (28): S:50:M:K�v�}w�������{k[�%[0m
+[0;32mI (2200301) BASE: LoRa RX (7): S:51:M:[0m
+[0;32mI (2200401) BASE: LoRa RX (7): S:52:M:[0m
+[0;32mI (2200501) BASE: LoRa RX (7): S:53:M:[0m
+[0;32mI (2200601) BASE: LoRa RX (7): S:54:M:[0m
+[0;32mI (2200901) BASE: LoRa RX (7): S:55:M:[0m
+[0;32mI (2201011) BASE: LoRa RX (10): S:56:M:� [0m
+[0;32mI (2204501) BASE: LoRa RX (8): S:57:M:�
+[0;32mI (2204601) BASE: LoRa RX (7): S:58:M:[0m
+[0;32mI (2204711) BASE: LoRa RX (9): S:59:M:$[0m
+[0;32mI (2204801) BASE: LoRa RX (7): S:60:M:[0m
+[0;32mI (2204901) BASE: LoRa RX (7): S:61:M:[0m
+[0;32mI (2205021) BASE: LoRa RX (17): S:62:M:�{�k��Z�[0m
+[0;32mI (2205111) BASE: LoRa RX (7): S:63:E:[0m
+[0;32mI (2205231) BASE: LoRa RX (19): S:64:M:0z���$J$[0m
+[0;32mI (2205331) BASE: LoRa RX (12): S:65:M:�k��Z[0m
+[0;32mI (2205451) BASE: LoRa RX (27): S:66:M:���^��{�{�[JZ��%R J[0m
+[0;32mI (2205551) BASE: LoRa RX (7): S:67:M:[0m
+[0;32mI (2205651) BASE: LoRa RX (7): S:68:M:[0m
+[0;32mI (2205771) BASE: LoRa RX (19): S:69:M:�]^�PK�%B�
+[0;32mI (2205861) BASE: LoRa RX (7): S:70:M:[0m
+[0;32mI (2206661) BASE: LoRa RX (7): S:71:M:[0m
+[0;32mI (2206761) BASE: LoRa RX (7): S:72:M:[0m
+[0;32mI (2300291) BASE: LoRa RX (9): S:73:M:`[0m
+[0;32mI (2300381) BASE: LoRa RX (7): S:74:M:[0m
+[0;32mI (2300481) BASE: LoRa RX (7): S:75:M:[0m
+[0;32mI (2300581) BASE: LoRa RX (7): S:76:M:[0m
+[0;32mI (2300681) BASE: LoRa RX (7): S:77:M:[0m
+[0;32mI (2300981) BASE: LoRa RX (9): S:78:M:[0m
+[0;32mI (2301071) BASE: LoRa RX (7): S:79:M:[0m
+[0;32mI (2301171) BASE: LoRa RX (7): S:80:M:[0m
+[0;32mI (2301271) BASE: LoRa RX (7): S:81:M:[0m
+[0;32mI (2301371) BASE: LoRa RX (7): S:82:M:[0m
+[0;32mI (2301471) BASE: LoRa RX (7): S:83:M:[0m
+[0;32mI (2301571) BASE: LoRa RX (7): S:84:M:[0m
+[0;32mI (2301671) BASE: LoRa RX (7): S:85:M:[0m
+[0;32mI (2301771) BASE: LoRa RX (7): S:86:E:[0m
+[0;32mI (2329451) BASE: LoRa RX (13): S:0:M:���KF [0m
+
+I (2329551) BASE: LoRa RX (7): S:1:M:
+
+[0;32mI (2329651) BASE: LoRa RX (7): S:2:M:[0m
+
+[0;32mI (2329751) BASE: LoRa RX (7): S:3:M:[0m
+
+[0;32mI (2329851) BASE: LoRa RX (7): S:4:M:[0m
+
+[0;32mI (2329951) BASE: LoRa RX (8): S:5:M:@[0m
+
+[0;32mI (2330051) BASE: LoRa RX (7): S:6:M:[0m
+
+[0;32mI (2330151) BASE: LoRa RX (12): S:7:E:��{	[0m
+
+[0;32mI (2330261) BASE: LoRa RX (17): S:8:M:�������ʈ�[0m
+
+[0;32mI (2336021) BASE: LoRa RX (7): S:9:E:[0m
+
+[0;32mI (2351901) BASE: LoRa RX (20): S:10:E:FUCK MY LIFE[0m
+
+[0;32mI (2372691) BASE: LoRa RX (9): S:11:M:[0m
+
+[0;32mI (2372791) BASE: LoRa RX (12): S:12:M:HҒ$[0m
+
+[0;32mI (2372891) BASE: LoRa RX (8): S:13:M:[0m
+
+[0;32mI (2372991) BASE: LoRa RX (8): S:14:M:[0m
+
+[0;32mI (2373091) BASE: LoRa RX (8): S:15:E:[0m
+
+[0;32mI (2373201) BASE: LoRa RX (14): S:16:M:{����	[0m
+
+[0;32mI (2373301) BASE: LoRa RX (8): S:17:M:[0m
+
+[0;32mI (2373401) BASE: LoRa RX (8): S:18:M:[0m
+
+[0;32mI (2373701) BASE: LoRa RX (9): S:19:M:[0m
+
+[0;32mI (2373801) BASE: LoRa RX (8): S:20:M:[0m
+
+[0;32mI (2373901) BASE: LoRa RX (8): S:21:M:[0m
+
+[0;32mI (2374001) BASE: LoRa RX (8): S:22:M:[0m
+
+[0;32mI (2375461) BASE: LoRa RX (8): S:23:M:[0m
+
+[0;32mI (2375571) BASE: LoRa RX (13): S:24:M:�[�[0m
+
+[0;32mI (2375671) BASE: LoRa RX (8): S:25:M:[0m
+
+[0;32mI (2375971) BASE: LoRa RX (8): S:26:M:[0m
+
+[0;32mI (2484871) BASE: LoRa RX (8): S:27:M:[0m
+
+[0;32mI (2498521) BASE: LoRa RX (8): S:28:M:[0m
+
+[0;32mI (2498661) BASE: LoRa RX (34): S:29:E:ittle body off the ground.[0m
+
+[0;32mI (2515951) BASE: LoRa RX (13): S:30:E:HELLO[0m
+
+[0;32mI (2529351) BASE: LoRa RX (8): S:31:M:[0m
+
+[0;32mI (2529451) BASE: LoRa RX (8): S:32:M:[0m
+
+[0;32mI (2537461) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (2537461) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (2538871) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (2539391) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (2545711) BASE: Received /command: stop[0m
+[0;32mI (2545711) BASE: LoRa TX: stop[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017445:0x3fcb6db0 0x4200b705:0x3fcb6de0 0x4200c18e:0x3fcb6e30 0x4200c429:0x3fcb6e60 0x4200c656:0x3fcb6e90 0x4200ad71:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: 0bdb0c1dc
+
+Rebooting...
+���ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x403860a8
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e2dch (123612) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e304 vaddr=3fc9c500 size=01d14h (  7444) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5cch (579020) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd5f4 vaddr=3fc9e214 size=02fa0h ( 12192) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c059c vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a08 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  0bdb0c1dc...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (561) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (581) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (591) wifi:enable tsf[0m
+[0;32mI (591) BASE: Trying STA connect...[0m
+[0;33mW (3001) BASE: STA disconnected, retrying...[0m
+[0;33mW (5401) BASE: STA disconnected, retrying...[0m
+[0;33mW (7811) BASE: STA disconnected, retrying...[0m
+[0;33mW (10221) BASE: STA disconnected, retrying...[0m
+[0;33mW (12591) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12591) wifi:flush txq[0m
+[0;32mI (12591) wifi:stop sw txq[0m
+[0;32mI (12591) wifi:lmac stop hw txq[0m
+[0;32mI (12601) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12601) wifi:Total power save buffer number: 16[0m
+[0;32mI (12611) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12611) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12611) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12611) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12631) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12631) BASE: Initializing LoRa...[0m
+[0;32mI (12631) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12631) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12641) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12641) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12641) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12651) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12651) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12651) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12661) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12661) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12701) RA01S: syncWord=0x1424[0m
+[0;32mI (12701) RA01S: SX126x installed[0m
+[0;33mW (12701) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12711) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12731) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12751) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12791) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12791) main_task: Returned from app_main()[0m

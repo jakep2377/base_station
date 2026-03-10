@@ -1,0 +1,2 @@
+source C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader/gdbinit/symbols
+source C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader/gdbinit/connect

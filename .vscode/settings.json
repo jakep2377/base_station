@@ -1,0 +1,9 @@
+{
+    "idf.currentSetup": "C:\\esp\\v5.5.2\\esp-idf",
+    "idf.portWin": "COM3",
+    "idf.flashType": "UART",
+    "idf.customExtraVars": {
+        "IDF_TARGET": "esp32s3"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

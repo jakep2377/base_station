@@ -1,0 +1,52 @@
+Command: C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.5.2\tools/idf_monitor.py -p COM3 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 C:\Users\jakep\Documents\ESP32\salt_base_station\build\salt_base_station.elf C:\Users\jakep\Documents\ESP32\salt_base_station\build\bootloader\bootloader.elf --force-color -m 'C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Espressif\frameworks\esp-idf-v5.5.2\tools\idf.py' '-p' 'COM3'
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM3 instead...[0m
+[0;33m--- esp-idf-monitor 1.9.0 on \\.\COM3 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0m--- 0x4037ce05: [0;33mpanic_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/panic.c[0m[0m:[1;31m477[0m
+[0m--- 0x4037cdcd: [0;33mesp_system_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/port/esp_system_chip.c[0m[0m:[1;31m87[0m
+[0m--- 0x403860e5: [0;33m__assert_func[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/newlib/src/assert.c[0m[0m:[1;31m80[0m
+[0m--- 0x42017445: [0;33mspi_device_transmit[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_driver_spi/src/gpspi/spi_master.c[0m[0m:[1;31m1330[0m
+[0m--- 0x4200b705: [0;33mspi_read_byte[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m147[0m
+[0m--- 0x4200c18e: [0;33mReadCommand[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m1016[0m
+[0m--- 0x4200c429: [0;33mGetIrqStatus[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m687[0m
+[0m--- 0x4200c656: [0;33mLoRaReceive[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m307[0m
+[0m--- 0x4200ad71: [0;33mlora_rx_task[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/main/salt_base_station.c[0m[0m:[1;31m269[0m
+[0m--- 0x4037daf5: [0;33mvPortTaskWrapper[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x4204fb59: [0;33mdo_memp_malloc_pool[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/lwip/lwip/src/core/memp.c[0m[0m:[1;31m268[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0m--- 0x4037ce05: [0;33mpanic_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/panic.c[0m[0m:[1;31m477[0m
+[0m--- 0x4037cdcd: [0;33mesp_system_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/port/esp_system_chip.c[0m[0m:[1;31m87[0m
+[0m--- 0x403860e5: [0;33m__assert_func[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/newlib/src/assert.c[0m[0m:[1;31m80[0m
+[0m--- 0x42017445: [0;33mspi_device_transmit[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_driver_spi/src/gpspi/spi_master.c[0m[0m:[1;31m1330[0m
+[0m--- 0x4200b705: [0;33mspi_read_byte[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m147[0m
+[0m--- 0x4200c18e: [0;33mReadCommand[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m1016[0m
+[0m--- 0x4200c429: [0;33mGetIrqStatus[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m687[0m
+[0m--- 0x4200c656: [0;33mLoRaReceive[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m307[0m
+[0m--- 0x4200ad71: [0;33mlora_rx_task[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/main/salt_base_station.c[0m[0m:[1;31m269[0m
+[0m--- 0x4037daf5: [0;33mvPortTaskWrapper[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x4204fb47: [0;33mdo_memp_malloc_pool[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/lwip/lwip/src/core/memp.c[0m[0m:[1;31m253[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0;33m--- Warning: Failed to decode multiple lines in a row. Try checking the baud rate and XTAL frequency setting in menuconfig[0m
+[0m--- 0x4037ce05: [0;33mpanic_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/panic.c[0m[0m:[1;31m477[0m
+[0m--- 0x4037cdcd: [0;33mesp_system_abort[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_system/port/esp_system_chip.c[0m[0m:[1;31m87[0m
+[0m--- 0x403860e5: [0;33m__assert_func[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/newlib/src/assert.c[0m[0m:[1;31m80[0m
+[0m--- 0x42017445: [0;33mspi_device_transmit[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_driver_spi/src/gpspi/spi_master.c[0m[0m:[1;31m1330[0m
+[0m--- 0x4200b705: [0;33mspi_read_byte[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m147[0m
+[0m--- 0x4200c18e: [0;33mReadCommand[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m1016[0m
+[0m--- 0x4200c429: [0;33mGetIrqStatus[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m687[0m
+[0m--- 0x4200c656: [0;33mLoRaReceive[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/components/ra01s/ra01s.c[0m[0m:[1;31m307[0m
+[0m--- 0x4200ad71: [0;33mlora_rx_task[0m[0m at [0;32mC:/Users/jakep/Documents/ESP32/salt_base_station/main/salt_base_station.c[0m[0m:[1;31m269[0m
+[0m--- 0x4037daf5: [0;33mvPortTaskWrapper[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x403860a8: [0;33m__assert_func[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/newlib/src/assert.c[0m[0m:[1;31m70[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mC:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m

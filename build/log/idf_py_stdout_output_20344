@@ -1,0 +1,2432 @@
+Command: C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.5.2\tools/idf_monitor.py -p COM3 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 C:\Users\jakep\Documents\ESP32\salt_base_station\build\salt_base_station.elf C:\Users\jakep\Documents\ESP32\salt_base_station\build\bootloader\bootloader.elf --force-color -m 'C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Espressif\frameworks\esp-idf-v5.5.2\tools\idf.py' '-p' 'COM3'
+k���� v1.3
+[0;32mI (31) bESP-ROM:esp32s3-20210327[0m
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (31) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (35) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (47) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (69) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (76) boot: End of partition table[0m
+[0;32mI (79) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (108) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (110) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (214) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (217) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (239) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (249) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (249) boot: Disabling RNG early entropy source...[0m
+[0;32mI (259) cpu_start: Multicore app[0m
+[0;32mI (268) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (269) cpu_start: Pro cpu start user code[0m
+[0;32mI (269) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (270) app_init: Application information:[0m
+[0;32mI (274) app_init: Project name:     salt_base_station[0m
+[0;32mI (279) app_init: App version:      1[0m
+[0;32mI (282) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (287) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (292) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (295) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (299) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (303) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (307) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (313) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (318) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (324) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (329) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (335) spi_flash: detected chip: gd[0m
+[0;32mI (337) spi_flash: flash io: dio[0m
+[0;33mW (340) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (353) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (359) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (366) main_task: Started on CPU0[0m
+[0;32mI (386) main_task: Calling app_main()[0m
+[0;32mI (416) pp: pp rom version: e7ae62f[0m
+[0;32mI (416) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (426) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (436) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (436) wifi:wifi certification version: v7.0[0m
+[0;32mI (436) wifi:config NVS flash: enabled[0m
+[0;32mI (436) wifi:config nano formatting: disabled[0m
+[0;32mI (436) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (446) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (446) wifi:Init management short buffer num: 32[0m
+[0;32mI (456) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (456) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (466) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (466) wifi:Init static rx buffer num: 10[0m
+[0;32mI (466) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (476) wifi_init: rx ba win: 6[0m
+[0;32mI (476) wifi_init: accept mbox: 6[0m
+[0;32mI (476) wifi_init: tcpip mbox: 32[0m
+[0;32mI (486) wifi_init: udp mbox: 6[0m
+[0;32mI (486) wifi_init: tcp mbox: 6[0m
+[0;32mI (486) wifi_init: tcp tx win: 5760[0m
+[0;32mI (486) wifi_init: tcp rx win: 5760[0m
+[0;32mI (496) wifi_init: tcp mss: 1440[0m
+[0;32mI (496) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (496) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (506) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (516) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (556) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (556) wifi:enable tsf[0m
+[0;32mI (556) BASE: Trying STA connect...[0m
+[0;33mW (2966) BASE: STA disconnected, retrying...[0m
+[0;33mW (5376) BASE: STA disconnected, retrying...[0m
+[0;33mW (7786) BASE: STA disconnected, retrying...[0m
+[0;33mW (10196) BASE: STA disconnected, retrying...[0m
+[0;33mW (12556) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12556) wifi:flush txq[0m
+[0;32mI (12556) wifi:stop sw txq[0m
+[0;32mI (12556) wifi:lmac stop hw txq[0m
+[0;32mI (12566) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12566) wifi:Total power save buffer number: 16[0m
+[0;32mI (12576) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12576) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12576) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12576) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12596) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12596) BASE: Initializing LoRa...[0m
+[0;32mI (12596) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12606) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12606) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12606) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12606) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12616) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12616) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12616) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12626) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12626) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12666) RA01S: syncWord=0x1424[0m
+[0;32mI (12666) RA01S: SX126x installed[0m
+[0;33mW (12676) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12676) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12696) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12716) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12756) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12756) main_task: Returned from app_main()[0m
+[0;32mI (22206) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (22206) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (22416) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (22546) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (39276) BASE: Received /command: test[0m
+[0;32mI (39276) BASE: LoRa TX: test[0m
+[1;31mE (39366) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (39426) BASE: LoRa RX (8): ACK:test[0m
+[0;32mI (73456) BASE: Received /command: test[0m
+[0;32mI (73456) BASE: LoRa TX: test[0m
+[1;31mE (73546) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (73606) BASE: LoRa RX (8): ACK:test[0m
+[0;32mI (101266) BASE: LoRa RX (29): S:0:E:Battery Status Code: 5[0m
+
+[0;32mI (142336) BASE: LoRa RX (166): S:1:E:PHRR RPJWKR] W]O4P Y]RP]KK P PIR[J [A  [T DR[ A[ IRGRL MK D KRPK K  ERKGKMKMGKLM KLG TGLKDLG LMLK  KMRGLM DKMRMK GMLDLM K;DMGMLD LLMG M LDKGMM MMDMGLMLMGGML ML[0m
+
+[0;32mI (184036) BASE: LoRa RX (166): S:2:E:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF[0m
+
+[0;32mI (315466) BASE: LoRa RX (166): S:3:E:According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The e.[0m
+
+[0;32mI (616096) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (616096) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (616096) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (616106) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (852656) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (852656) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (853006) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:13, winSize:64[0m
+[0;32mI (853006) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (949056) BASE: LoRa RX (166): S:0:E:agsj;lar jgggggggggggggggggggggggggggggggggggggggr p[r;;rgkrd ' k'rjgz'rd;gzrm h;lzrper;l grkglzm'fv'r;g'rkf g;zpdkghst[l;dbtklt;hpot;t[koyjpr[tokukaeko[uek[ue[0m
+
+[0;32mI (1417906) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (1417906) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1417916) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (1417916) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1977906) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1977906) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (1978376) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (1978656) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (2061056) BASE: LoRa RX (157): S:0:M:gpwojjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj spja rr[pgrgjrgpjwpgrkgsk;r osgksrgggggggggg rgjpwrgpwgpergprpjgwpj wjpgpj wpjgpjgpier prpjg p[0m
+
+[0;32mI (2061176) BASE: LoRa RX (16): S:1:E:rgp jrpji[0m
+
+[0;32mI (2100306) BASE: LoRa RX (157): S:2:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5140,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2100526) BASE: LoRa RX (87): S:3:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2101036) BASE: LoRa RX (157): S:4:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5140,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2101256) BASE: LoRa RX (87): S:5:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2101566) BASE: LoRa RX (157): S:6:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5140,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2101766) BASE: LoRa RX (77): S:7:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":82}}[0m
+
+[0;32mI (2102286) BASE: LoRa RX (157): S:8:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2102506) BASE: LoRa RX (86): S:9:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2102816) BASE: LoRa RX (158): S:10:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2103026) BASE: LoRa RX (79): S:11:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":77}}[0m
+
+[0;32mI (2103336) BASE: LoRa RX (158): S:12:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2103556) BASE: LoRa RX (88): S:13:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2103866) BASE: LoRa RX (158): S:14:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2104086) BASE: LoRa RX (87): S:15:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2104396) BASE: LoRa RX (158): S:16:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2104616) BASE: LoRa RX (87): S:17:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2104926) BASE: LoRa RX (158): S:18:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2105146) BASE: LoRa RX (87): S:19:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2105456) BASE: LoRa RX (158): S:20:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2105676) BASE: LoRa RX (88): S:21:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2105986) BASE: LoRa RX (158): S:22:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2106206) BASE: LoRa RX (88): S:23:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2106516) BASE: LoRa RX (157): S:24:E:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaeft":48,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2106836) BASE: LoRa RX (158): S:25:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2107056) BASE: LoRa RX (87): S:26:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2107366) BASE: LoRa RX (158): S:27:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2107566) BASE: LoRa RX (78): S:28:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":45}}[0m
+
+[0;32mI (2107886) BASE: LoRa RX (158): S:29:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.1,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2108076) BASE: LoRa RX (69): S:30:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":52,"right":48}}[0m
+
+[0;32mI (2108396) BASE: LoRa RX (158): S:31:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.2,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2108596) BASE: LoRa RX (78): S:32:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":56,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2108916) BASE: LoRa RX (158): S:33:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya{"m1":0,"m2":0},"heading":{"ya[0m
+
+[0;32mI (2109146) BASE: LoRa RX (99): S:34:E:w":-0.2,"pitch":0.2},"disp":{"salt":0,"brine":0},"temp":29.9,"prox":{"left":80,"right":55}}[0m
+
+[0;32mI (2109466) BASE: LoRa RX (158): S:35:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.2,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2109656) BASE: LoRa RX (69): S:36:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":58,"right":54}}[0m
+
+[0;32mI (2109976) BASE: LoRa RX (158): S:37:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.2,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2110166) BASE: LoRa RX (69): S:38:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":78,"right":71}}[0m
+
+[0;32mI (2110486) BASE: LoRa RX (158): S:39:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.2,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2110676) BASE: LoRa RX (69): S:40:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":78,"right":75}}[0m
+
+[0;32mI (2110996) BASE: LoRa RX (158): S:41:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.2,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2111186) BASE: LoRa RX (69): S:42:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":77,"right":71}}[0m
+
+[0;32mI (2111506) BASE: LoRa RX (158): S:43:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaemp":30.0,"prox":{"left":64,"r[0m
+
+[0;32mI (2111626) BASE: LoRa RX (18): S:44:E:ight":54}}[0m
+
+[0;32mI (2111936) BASE: LoRa RX (158): S:45:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2112126) BASE: LoRa RX (70): S:46:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":55,"right":74}}[0m
+
+[0;32mI (2112446) BASE: LoRa RX (158): S:47:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2112636) BASE: LoRa RX (70): S:48:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":55,"right":74}}[0m
+
+[0;32mI (2112956) BASE: LoRa RX (158): S:49:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2113146) BASE: LoRa RX (70): S:50:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":55,"right":64}}[0m
+
+[0;32mI (2113466) BASE: LoRa RX (158): S:51:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2113656) BASE: LoRa RX (70): S:52:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":55,"right":74}}[0m
+
+[0;32mI (2113976) BASE: LoRa RX (158): S:53:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya0},"temp":30.2,"prox":{"left":[0m
+
+[0;32mI (2114106) BASE: LoRa RX (23): S:54:E:59,"right":52}}[0m
+
+[0;32mI (2114416) BASE: LoRa RX (158): S:55:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.4,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2114606) BASE: LoRa RX (70): S:56:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":58,"right":52}}[0m
+
+[0;32mI (2114926) BASE: LoRa RX (158): S:57:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.4,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2115116) BASE: LoRa RX (70): S:58:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":58,"right":54}}[0m
+
+[0;32mI (2115436) BASE: LoRa RX (158): S:59:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.4,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2115626) BASE: LoRa RX (70): S:60:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":58,"right":51}}[0m
+
+[0;32mI (2115946) BASE: LoRa RX (158): S:61:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.4,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2116136) BASE: LoRa RX (70): S:62:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":56,"right":52}}[0m
+
+[0;32mI (2116416) BASE: LoRa RX (128): S:63:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya[0m
+
+[0;32mI (2116726) BASE: LoRa RX (158): S:64:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.5,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2116916) BASE: LoRa RX (69): S:65:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":54,"right":53}}[0m
+
+[0;32mI (2117236) BASE: LoRa RX (158): S:66:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.5,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2117426) BASE: LoRa RX (69): S:67:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":56,"right":56}}[0m
+
+[0;32mI (2117746) BASE: LoRa RX (158): S:68:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2117936) BASE: LoRa RX (70): S:69:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":53,"right":52}}[0m
+
+[0;32mI (2118256) BASE: LoRa RX (158): S:70:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2118446) BASE: LoRa RX (70): S:71:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":53,"right":71}}[0m
+
+[0;32mI (2118766) BASE: LoRa RX (158): S:72:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya,"brine":0},"temp":30.1,"prox"[0m
+
+[0;32mI (2118906) BASE: LoRa RX (32): S:73:E::{"left":52,"right":50}}[0m
+
+[0;32mI (2119216) BASE: LoRa RX (158): S:74:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.6,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2119406) BASE: LoRa RX (70): S:75:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":55,"right":50}}[0m
+
+[0;32mI (2119726) BASE: LoRa RX (158): S:76:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.6,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2119916) BASE: LoRa RX (70): S:77:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":50}}[0m
+
+[0;32mI (2120236) BASE: LoRa RX (158): S:78:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2120426) BASE: LoRa RX (70): S:79:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":50,"right":49}}[0m
+
+[0;32mI (2120746) BASE: LoRa RX (158): S:80:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2120936) BASE: LoRa RX (70): S:81:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":50}}[0m
+
+[0;32mI (2121256) BASE: LoRa RX (158): S:82:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yatemp":30.0,"prox":{"left":52,"[0m
+
+[0;32mI (2121376) BASE: LoRa RX (19): S:83:E:right":49}}[0m
+
+[0;32mI (2121686) BASE: LoRa RX (158): S:84:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2121876) BASE: LoRa RX (69): S:85:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":53,"right":49}}[0m
+
+[0;32mI (2122196) BASE: LoRa RX (158): S:86:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2122386) BASE: LoRa RX (69): S:87:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":53,"right":49}}[0m
+
+[0;32mI (2122706) BASE: LoRa RX (158): S:88:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2122896) BASE: LoRa RX (69): S:89:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":49}}[0m
+
+[0;32mI (2123216) BASE: LoRa RX (158): S:90:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2123406) BASE: LoRa RX (69): S:91:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":58,"right":49}}[0m
+
+[0;32mI (2123726) BASE: LoRa RX (158): S:92:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaemp":30.2,"prox":{"left":82,"r[0m
+
+[0;32mI (2123836) BASE: LoRa RX (18): S:93:E:ight":49}}[0m
+
+[0;32mI (2124156) BASE: LoRa RX (158): S:94:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2124346) BASE: LoRa RX (69): S:95:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":51,"right":49}}[0m
+
+[0;32mI (2124666) BASE: LoRa RX (158): S:96:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2124856) BASE: LoRa RX (69): S:97:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":50,"right":48}}[0m
+
+[0;32mI (2125176) BASE: LoRa RX (158): S:98:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2125366) BASE: LoRa RX (69): S:99:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":52,"right":49}}[0m
+
+[0;32mI (2125686) BASE: LoRa RX (159): S:100:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2125876) BASE: LoRa RX (70): S:101:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":50,"right":49}}[0m
+
+[0;32mI (2126196) BASE: LoRa RX (159): S:102:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya"temp":29.9,"prox":{"left":48,[0m
+
+[0;32mI (2126316) BASE: LoRa RX (21): S:103:E:"right":48}}[0m
+
+[0;32mI (2126636) BASE: LoRa RX (159): S:104:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2126826) BASE: LoRa RX (70): S:105:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":83,"right":49}}[0m
+
+[0;32mI (2127146) BASE: LoRa RX (159): S:106:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.0,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2127336) BASE: LoRa RX (70): S:107:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":83,"right":48}}[0m
+
+[0;32mI (2127656) BASE: LoRa RX (159): S:108:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.0,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2127846) BASE: LoRa RX (70): S:109:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":83,"right":53}}[0m
+
+[0;32mI (2128166) BASE: LoRa RX (159): S:110:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.0,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2128356) BASE: LoRa RX (70): S:111:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":83,"right":51}}[0m
+
+[0;32mI (2128676) BASE: LoRa RX (159): S:112:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaemp":29.7,"prox":{"left":82,"r[0m
+
+[0;32mI (2128796) BASE: LoRa RX (19): S:113:E:ight":55}}[0m
+
+[0;32mI (2129106) BASE: LoRa RX (159): S:114:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2129296) BASE: LoRa RX (70): S:115:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":83,"right":83}}[0m
+
+[0;32mI (2129616) BASE: LoRa RX (159): S:116:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2129806) BASE: LoRa RX (70): S:117:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":83,"right":50}}[0m
+
+[0;32mI (2130126) BASE: LoRa RX (159): S:118:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2130336) BASE: LoRa RX (79): S:119:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":55}}[0m
+
+[0;32mI (2130646) BASE: LoRa RX (159): S:120:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.2,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2130836) BASE: LoRa RX (70): S:121:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":69,"right":16}}[0m
+
+[0;32mI (2131156) BASE: LoRa RX (159): S:122:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaor":{"m1":0,"m2":0},"heading":[0m
+
+[0;32mI (2131396) BASE: LoRa RX (104): S:123:E:{"yaw":-1.2,"pitch":-0.2},"disp":{"salt":0,"brine":0},"temp":30.0,"prox":{"left":9,"right":12}}[0m
+
+[0;32mI (2131716) BASE: LoRa RX (159): S:124:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.3,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2131906) BASE: LoRa RX (70): S:125:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":9,"right":14}}[0m
+
+[0;32mI (2132226) BASE: LoRa RX (159): S:126:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.7},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.3,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2132416) BASE: LoRa RX (70): S:127:E:"salt":0,"brine":0},"temp":30.3,"prox":{"left":9,"right":13}}[0m
+
+[0;32mI (2132736) BASE: LoRa RX (159): S:128:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.7},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.3,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2132926) BASE: LoRa RX (70): S:129:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":9,"right":13}}[0m
+
+[0;32mI (2133246) BASE: LoRa RX (159): S:130:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.7},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.3,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2133436) BASE: LoRa RX (70): S:131:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":8,"right":14}}[0m
+
+[0;32mI (2133746) BASE: LoRa RX (153): S:132:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.7},"motor":{"m1":0,"m2":0},"heading":{"ya"NO_DETECT","right":12}}[0m
+
+[0;32mI (2134066) BASE: LoRa RX (159): S:133:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.4,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2134256) BASE: LoRa RX (71): S:134:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":116,"right":11}}[0m
+
+[0;32mI (2134576) BASE: LoRa RX (159): S:135:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.4,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2134766) BASE: LoRa RX (71): S:136:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":116,"right":11}}[0m
+
+[0;32mI (2135086) BASE: LoRa RX (159): S:137:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.4,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2135276) BASE: LoRa RX (71): S:138:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":114,"right":11}}[0m
+
+[0;32mI (2135596) BASE: LoRa RX (159): S:139:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.5,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2135786) BASE: LoRa RX (71): S:140:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":117,"right":11}}[0m
+
+[0;32mI (2136106) BASE: LoRa RX (159): S:141:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya:0.0},"disp":{"salt":0,"brine"[0m
+
+[0;32mI (2136286) BASE: LoRa RX (64): S:142:E::0},"temp":30.2,"prox":{"left":"NO_DETECT","right":12}}[0m
+
+[0;32mI (2136606) BASE: LoRa RX (159): S:143:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2136816) BASE: LoRa RX (80): S:144:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":11}}[0m
+
+[0;32mI (2137126) BASE: LoRa RX (159): S:145:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.6,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2137336) BASE: LoRa RX (79): S:146:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":11}}[0m
+
+[0;32mI (2137646) BASE: LoRa RX (159): S:147:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2137856) BASE: LoRa RX (80): S:148:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":16}}[0m
+
+[0;32mI (2138166) BASE: LoRa RX (159): S:149:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2138356) BASE: LoRa RX (71): S:150:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":14,"right":12}}[0m
+
+[0;32mI (2138516) BASE: LoRa RX (45): S:151:E::30.0,"prox":{"left":13,"right":14}}[0m
+
+[0;32mI (2138826) BASE: LoRa RX (159): S:152:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2139016) BASE: LoRa RX (70): S:153:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":12,"right":12}}[0m
+
+[0;32mI (2139336) BASE: LoRa RX (159): S:154:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2139526) BASE: LoRa RX (70): S:155:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":12,"right":12}}[0m
+
+[0;32mI (2139846) BASE: LoRa RX (159): S:156:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2140036) BASE: LoRa RX (70): S:157:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":12,"right":17}}[0m
+
+[0;32mI (2140356) BASE: LoRa RX (159): S:158:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2140546) BASE: LoRa RX (70): S:159:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":12,"right":14}}[0m
+
+[0;32mI (2140866) BASE: LoRa RX (159): S:160:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yatemp":30.0,"prox":{"left":51,"[0m
+
+[0;32mI (2140986) BASE: LoRa RX (20): S:161:E:right":52}}[0m
+
+[0;32mI (2141306) BASE: LoRa RX (159): S:162:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2141496) BASE: LoRa RX (70): S:163:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":53,"right":52}}[0m
+
+[0;32mI (2141816) BASE: LoRa RX (159): S:164:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2142006) BASE: LoRa RX (71): S:165:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":61,"right":50}}[0m
+
+[0;32mI (2142326) BASE: LoRa RX (159): S:166:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2142536) BASE: LoRa RX (79): S:167:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":50}}[0m
+
+[0;32mI (2142846) BASE: LoRa RX (159): S:168:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2143036) BASE: LoRa RX (71): S:169:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":52,"right":54}}[0m
+
+[0;32mI (2143356) BASE: LoRa RX (159): S:170:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya,"brine":0},"temp":29.8,"prox"[0m
+
+[0;32mI (2143496) BASE: LoRa RX (33): S:171:E::{"left":52,"right":52}}[0m
+
+[0;32mI (2143806) BASE: LoRa RX (159): S:172:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2143996) BASE: LoRa RX (71): S:173:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":50,"right":51}}[0m
+
+[0;32mI (2144316) BASE: LoRa RX (159): S:174:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2144506) BASE: LoRa RX (71): S:175:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":52,"right":54}}[0m
+
+[0;32mI (2144826) BASE: LoRa RX (159): S:176:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2145036) BASE: LoRa RX (79): S:177:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":53}}[0m
+
+[0;32mI (2145346) BASE: LoRa RX (159): S:178:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.0,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2145556) BASE: LoRa RX (79): S:179:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":47,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2145866) BASE: LoRa RX (159): S:180:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yat":0,"brine":0},"temp":30.1,"p[0m
+
+[0;32mI (2146016) BASE: LoRa RX (37): S:181:E:rox":{"left":48,"right":45}}[0m
+
+[0;32mI (2146326) BASE: LoRa RX (159): S:182:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2146516) BASE: LoRa RX (70): S:183:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":46,"right":50}}[0m
+
+[0;32mI (2146836) BASE: LoRa RX (159): S:184:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2147026) BASE: LoRa RX (70): S:185:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":47,"right":44}}[0m
+
+[0;32mI (2147346) BASE: LoRa RX (159): S:186:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2147536) BASE: LoRa RX (70): S:187:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":46,"right":44}}[0m
+
+[0;32mI (2147856) BASE: LoRa RX (159): S:188:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2148046) BASE: LoRa RX (70): S:189:E:salt":0,"brine":0},"temp":29.6,"prox":{"left":46,"right":44}}[0m
+
+[0;32mI (2148366) BASE: LoRa RX (159): S:190:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaemp":30.2,"prox":{"left":52,"r[0m
+
+[0;32mI (2148476) BASE: LoRa RX (19): S:191:E:ight":51}}[0m
+
+[0;32mI (2148796) BASE: LoRa RX (159): S:192:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.2,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2148986) BASE: LoRa RX (70): S:193:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":59,"right":47}}[0m
+
+[0;32mI (2149306) BASE: LoRa RX (159): S:194:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.3,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2149496) BASE: LoRa RX (70): S:195:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":50}}[0m
+
+[0;32mI (2149816) BASE: LoRa RX (159): S:196:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2150006) BASE: LoRa RX (71): S:197:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":53,"right":55}}[0m
+
+[0;32mI (2150326) BASE: LoRa RX (159): S:198:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2150516) BASE: LoRa RX (71): S:199:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":53,"right":71}}[0m
+
+[0;32mI (2150836) BASE: LoRa RX (157): S:200:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yarox":{"left":60,"right":54}}[0m
+
+[0;32mI (2151156) BASE: LoRa RX (159): S:201:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2151346) BASE: LoRa RX (71): S:202:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":69,"right":56}}[0m
+
+[0;32mI (2151666) BASE: LoRa RX (159): S:203:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2151856) BASE: LoRa RX (71): S:204:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":61,"right":55}}[0m
+
+[0;32mI (2152176) BASE: LoRa RX (159): S:205:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2152366) BASE: LoRa RX (71): S:206:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":63,"right":67}}[0m
+
+[0;32mI (2152686) BASE: LoRa RX (159): S:207:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2152906) BASE: LoRa RX (89): S:208:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2153216) BASE: LoRa RX (159): S:209:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaNO_DETECT","right":"NO_DETECT"[0m
+
+[0;32mI (2153316) BASE: LoRa RX (11): S:210:E:}}[0m
+
+[0;32mI (2153636) BASE: LoRa RX (159): S:211:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2153856) BASE: LoRa RX (89): S:212:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2154166) BASE: LoRa RX (159): S:213:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2154386) BASE: LoRa RX (89): S:214:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2154696) BASE: LoRa RX (159): S:215:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2154916) BASE: LoRa RX (89): S:216:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2155226) BASE: LoRa RX (159): S:217:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.6,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2155446) BASE: LoRa RX (89): S:218:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2155756) BASE: LoRa RX (159): S:219:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaemp":29.6,"prox":{"left":"NO_D[0m
+
+[0;32mI (2155906) BASE: LoRa RX (37): S:220:E:ETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2156216) BASE: LoRa RX (159): S:221:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.7,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2156436) BASE: LoRa RX (89): S:222:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2156746) BASE: LoRa RX (159): S:223:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.7,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2156966) BASE: LoRa RX (89): S:224:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2157276) BASE: LoRa RX (159): S:225:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2157496) BASE: LoRa RX (89): S:226:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2157806) BASE: LoRa RX (159): S:227:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2158026) BASE: LoRa RX (89): S:228:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2158156) BASE: LoRa RX (32): S:229:E:","right":"NO_DETECT"}}[0m
+
+[0;32mI (2158466) BASE: LoRa RX (159): S:230:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2158686) BASE: LoRa RX (89): S:231:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2158996) BASE: LoRa RX (159): S:232:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2159216) BASE: LoRa RX (89): S:233:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2159526) BASE: LoRa RX (159): S:234:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2159736) BASE: LoRa RX (80): S:235:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":72}}[0m
+
+[0;32mI (2160046) BASE: LoRa RX (159): S:236:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2160236) BASE: LoRa RX (71): S:237:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":46,"right":74}}[0m
+
+[0;32mI (2160556) BASE: LoRa RX (159): S:238:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya{"salt":0,"brine":0},"temp":30[0m
+
+[0;32mI (2160706) BASE: LoRa RX (42): S:239:E:.2,"prox":{"left":46,"right":60}}[0m
+
+[0;32mI (2161026) BASE: LoRa RX (159): S:240:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2161216) BASE: LoRa RX (70): S:241:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":46,"right":60}}[0m
+
+[0;32mI (2161536) BASE: LoRa RX (159): S:242:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2161726) BASE: LoRa RX (71): S:243:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":45,"right":56}}[0m
+
+[0;32mI (2162046) BASE: LoRa RX (159): S:244:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2162236) BASE: LoRa RX (70): S:245:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":59,"right":60}}[0m
+
+[0;32mI (2162556) BASE: LoRa RX (159): S:246:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2162746) BASE: LoRa RX (70): S:247:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":46,"right":62}}[0m
+
+[0;32mI (2163066) BASE: LoRa RX (159): S:248:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaemp":30.1,"prox":{"left":60,"r[0m
+
+[0;32mI (2163176) BASE: LoRa RX (19): S:249:E:ight":55}}[0m
+
+[0;32mI (2163496) BASE: LoRa RX (159): S:250:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2163686) BASE: LoRa RX (70): S:251:E:salt":0,"brine":0},"temp":30.3,"prox":{"left":56,"right":54}}[0m
+
+[0;32mI (2164006) BASE: LoRa RX (159): S:252:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2164196) BASE: LoRa RX (70): S:253:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":54,"right":55}}[0m
+
+[0;32mI (2164516) BASE: LoRa RX (159): S:254:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2164706) BASE: LoRa RX (71): S:255:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":62,"right":57}}[0m
+
+[0;32mI (2165026) BASE: LoRa RX (159): S:256:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2165216) BASE: LoRa RX (71): S:257:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":53,"right":56}}[0m
+
+[0;32mI (2165536) BASE: LoRa RX (159): S:258:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya0},"temp":30.2,"prox":{"left":[0m
+
+[0;32mI (2165656) BASE: LoRa RX (24): S:259:E:55,"right":58}}[0m
+
+[0;32mI (2165976) BASE: LoRa RX (159): S:260:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.2,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2166166) BASE: LoRa RX (71): S:261:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":55,"right":56}}[0m
+
+[0;32mI (2166486) BASE: LoRa RX (159): S:262:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.2,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2166676) BASE: LoRa RX (71): S:263:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":45,"right":53}}[0m
+
+[0;32mI (2166996) BASE: LoRa RX (159): S:264:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.2,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2167186) BASE: LoRa RX (71): S:265:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":46,"right":57}}[0m
+
+[0;32mI (2167506) BASE: LoRa RX (159): S:266:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.3,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2167696) BASE: LoRa RX (71): S:267:E:"salt":0,"brine":0},"temp":29.5,"prox":{"left":52,"right":57}}[0m
+
+[0;32mI (2167976) BASE: LoRa RX (130): S:268:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya}[0m
+
+[0;32mI (2168286) BASE: LoRa RX (159): S:269:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2168496) BASE: LoRa RX (80): S:270:E:"salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":56}}[0m
+
+[0;32mI (2168806) BASE: LoRa RX (159): S:271:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2168996) BASE: LoRa RX (71): S:272:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":61,"right":65}}[0m
+
+[0;32mI (2169316) BASE: LoRa RX (159): S:273:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2169506) BASE: LoRa RX (71): S:274:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":19,"right":55}}[0m
+
+[0;32mI (2169826) BASE: LoRa RX (159): S:275:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2170016) BASE: LoRa RX (70): S:276:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":12,"right":4}}[0m
+
+[0;32mI (2170336) BASE: LoRa RX (159): S:277:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yane":0},"temp":30.0,"prox":{"le[0m
+
+[0;32mI (2170486) BASE: LoRa RX (37): S:278:E:ft":"NO_DETECT","right":28}}[0m
+
+[0;32mI (2170796) BASE: LoRa RX (159): S:279:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.5,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2170986) BASE: LoRa RX (71): S:280:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":60,"right":56}}[0m
+
+[0;32mI (2171306) BASE: LoRa RX (159): S:281:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2171516) BASE: LoRa RX (80): S:282:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":52,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2171826) BASE: LoRa RX (159): S:283:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.5,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2172016) BASE: LoRa RX (71): S:284:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":45,"right":41}}[0m
+
+[0;32mI (2172336) BASE: LoRa RX (159): S:285:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2172526) BASE: LoRa RX (71): S:286:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":74,"right":72}}[0m
+
+[0;32mI (2172806) BASE: LoRa RX (134): S:287:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya:54}}[0m
+
+[0;32mI (2173126) BASE: LoRa RX (159): S:288:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2173346) BASE: LoRa RX (89): S:289:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2173656) BASE: LoRa RX (159): S:290:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2173876) BASE: LoRa RX (89): S:291:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2174186) BASE: LoRa RX (159): S:292:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2174406) BASE: LoRa RX (89): S:293:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2174716) BASE: LoRa RX (159): S:294:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.6,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2174936) BASE: LoRa RX (88): S:295:E:salt":0,"brine":0},"temp":30.3,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2175236) BASE: LoRa RX (150): S:296:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"ya"right":"NO_DETECT"}}[0m
+
+[0;32mI (2175556) BASE: LoRa RX (159): S:297:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2175776) BASE: LoRa RX (89): S:298:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2176086) BASE: LoRa RX (159): S:299:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2176306) BASE: LoRa RX (89): S:300:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2176616) BASE: LoRa RX (159): S:301:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2176836) BASE: LoRa RX (89): S:302:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2177146) BASE: LoRa RX (159): S:303:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2177366) BASE: LoRa RX (89): S:304:E:"salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2177536) BASE: LoRa RX (58): S:305:E:,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2177846) BASE: LoRa RX (159): S:306:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.8,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2178066) BASE: LoRa RX (89): S:307:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2178376) BASE: LoRa RX (159): S:308:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.9,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2178596) BASE: LoRa RX (89): S:309:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2178906) BASE: LoRa RX (159): S:310:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.9,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2179126) BASE: LoRa RX (89): S:311:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2179436) BASE: LoRa RX (159): S:312:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.9,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2179646) BASE: LoRa RX (80): S:313:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":18}}[0m
+
+[0;32mI (2179916) BASE: LoRa RX (131): S:314:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"ya}}[0m
+
+[0;32mI (2180226) BASE: LoRa RX (159): S:315:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2180436) BASE: LoRa RX (79): S:316:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":4}}[0m
+
+[0;32mI (2180746) BASE: LoRa RX (159): S:317:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.0,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2180936) BASE: LoRa RX (70): S:318:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":64,"right":4}}[0m
+
+[0;32mI (2181256) BASE: LoRa RX (159): S:319:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.0,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2181466) BASE: LoRa RX (79): S:320:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":4}}[0m
+
+[0;32mI (2181776) BASE: LoRa RX (159): S:321:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.0,"pitch":-0.4},"disp":{[0m
+
+[0;32mI (2181996) BASE: LoRa RX (89): S:322:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2182306) BASE: LoRa RX (159): S:323:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yam2":0},"heading":{"yaw":-4.1,"[0m
+
+[0;32mI (2182546) BASE: LoRa RX (101): S:324:E:pitch":-0.2},"disp":{"salt":0,"brine":0},"temp":30.0,"prox":{"left":62,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2182856) BASE: LoRa RX (159): S:325:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.1,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2183076) BASE: LoRa RX (89): S:326:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2183386) BASE: LoRa RX (159): S:327:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.1,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2183606) BASE: LoRa RX (89): S:328:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2183916) BASE: LoRa RX (159): S:329:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.1,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2184126) BASE: LoRa RX (80): S:330:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":69}}[0m
+
+[0;32mI (2184436) BASE: LoRa RX (159): S:331:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.1,"pitch":-0.3},"disp":{[0m
+
+[0;32mI (2184656) BASE: LoRa RX (89): S:332:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2184926) BASE: LoRa RX (132): S:333:E:,"m2":0},"heading":{"yaw":-4.2,"pitch":-0.1},"disp":{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":7}}[0m
+
+[0;32mI (2185246) BASE: LoRa RX (159): S:334:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.2,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2185456) BASE: LoRa RX (79): S:335:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":7}}[0m
+
+[0;32mI (2185766) BASE: LoRa RX (159): S:336:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.2,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2185986) BASE: LoRa RX (89): S:337:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2186296) BASE: LoRa RX (159): S:338:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.3,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2186516) BASE: LoRa RX (89): S:339:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2186826) BASE: LoRa RX (159): S:340:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya0.0},"disp":{"salt":0,"brine":[0m
+
+[0;32mI (2187006) BASE: LoRa RX (62): S:341:E:0},"temp":29.9,"prox":{"left":"NO_DETECT","right":7}}[0m
+
+[0;32mI (2187326) BASE: LoRa RX (159): S:342:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2187536) BASE: LoRa RX (79): S:343:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":8}}[0m
+
+[0;32mI (2187846) BASE: LoRa RX (159): S:344:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2188056) BASE: LoRa RX (79): S:345:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":7}}[0m
+
+[0;32mI (2188366) BASE: LoRa RX (159): S:346:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2188576) BASE: LoRa RX (79): S:347:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":8}}[0m
+
+[0;32mI (2188886) BASE: LoRa RX (159): S:348:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2189106) BASE: LoRa RX (89): S:349:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2189386) BASE: LoRa RX (141): S:350:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya,"right":7}}[0m
+
+[0;32mI (2189706) BASE: LoRa RX (159): S:351:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2189916) BASE: LoRa RX (79): S:352:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":7}}[0m
+
+[0;32mI (2190226) BASE: LoRa RX (159): S:353:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2190436) BASE: LoRa RX (80): S:354:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":69,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2190746) BASE: LoRa RX (159): S:355:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.5,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2190966) BASE: LoRa RX (88): S:356:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2191276) BASE: LoRa RX (159): S:357:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.5,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2191486) BASE: LoRa RX (79): S:358:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":58}}[0m
+
+[0;32mI (2191796) BASE: LoRa RX (159): S:359:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaine":0},"temp":30.0,"prox":{"l[0m
+
+[0;32mI (2191946) BASE: LoRa RX (38): S:360:E:eft":"NO_DETECT","right":52}}[0m
+
+[0;32mI (2192256) BASE: LoRa RX (159): S:361:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.7,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2192466) BASE: LoRa RX (79): S:362:E:salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":55}}[0m
+
+[0;32mI (2192776) BASE: LoRa RX (159): S:363:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2192996) BASE: LoRa RX (88): S:364:E:salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2193306) BASE: LoRa RX (159): S:365:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2193496) BASE: LoRa RX (70): S:366:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":60,"right":57}}[0m
+
+[0;32mI (2193816) BASE: LoRa RX (159): S:367:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.7,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2194006) BASE: LoRa RX (70): S:368:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":61,"right":56}}[0m
+
+[0;32mI (2194266) BASE: LoRa RX (116): S:369:E:,"heading":{"yaw":-4.8,"pitch":-0.1},"disp":{"salt":0,"brine":0},"temp":30.0,"prox":{"left":59,"right":61}}[0m
+
+[0;32mI (2194576) BASE: LoRa RX (159): S:370:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.8,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2194766) BASE: LoRa RX (71): S:371:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":62,"right":59}}[0m
+
+[0;32mI (2195086) BASE: LoRa RX (159): S:372:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2195296) BASE: LoRa RX (80): S:373:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":58,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2195606) BASE: LoRa RX (159): S:374:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2195796) BASE: LoRa RX (71): S:375:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":60,"right":60}}[0m
+
+[0;32mI (2196116) BASE: LoRa RX (159): S:376:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2196306) BASE: LoRa RX (71): S:377:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":60,"right":60}}[0m
+
+[0;32mI (2196586) BASE: LoRa RX (134): S:378:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya:45}}[0m
+
+[0;32mI (2196906) BASE: LoRa RX (159): S:379:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.9,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2197126) BASE: LoRa RX (89): S:380:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2197436) BASE: LoRa RX (159): S:381:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.0,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2197656) BASE: LoRa RX (89): S:382:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2197966) BASE: LoRa RX (159): S:383:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.0,"pitch":-0.2},"disp":{[0m
+
+[0;32mI (2198176) BASE: LoRa RX (80): S:384:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":65}}[0m
+
+[0;32mI (2198486) BASE: LoRa RX (159): S:385:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.0,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2198696) BASE: LoRa RX (80): S:386:E:"salt":0,"brine":0},"temp":29.5,"prox":{"left":"NO_DETECT","right":61}}[0m
+
+[0;32mI (2198966) BASE: LoRa RX (134): S:387:E:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"ya:64}}[0m
+
+[0;32mI (2199286) BASE: LoRa RX (159): S:388:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2199506) BASE: LoRa RX (89): S:389:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2199816) BASE: LoRa RX (159): S:390:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2200026) BASE: LoRa RX (80): S:391:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":60}}[0m
+
+[0;32mI (2200336) BASE: LoRa RX (159): S:392:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2200556) BASE: LoRa RX (89): S:393:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2200866) BASE: LoRa RX (159): S:394:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2201346) BASE: LoRa RX (89): S:395:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2201546) BASE: LoRa RX (84): S:396:E:":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2201866) BASE: LoRa RX (159): S:397:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2202086) BASE: LoRa RX (89): S:398:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2202396) BASE: LoRa RX (159): S:399:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2202616) BASE: LoRa RX (89): S:400:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2202926) BASE: LoRa RX (159): S:401:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-6.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2203136) BASE: LoRa RX (80): S:402:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":48}}[0m
+
+[0;32mI (2203646) BASE: LoRa RX (159): S:403:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-6.3,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2203836) BASE: LoRa RX (70): S:404:E:salt":0,"brine":0},"temp":29.8,"prox":{"left":61,"right":54}}[0m
+
+[0;32mI (2204156) BASE: LoRa RX (159): S:405:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-6.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2204376) BASE: LoRa RX (89): S:406:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2204886) BASE: LoRa RX (159): S:407:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-6.9,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2205106) BASE: LoRa RX (89): S:408:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2205616) BASE: LoRa RX (159): S:409:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-7.2,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2205836) BASE: LoRa RX (89): S:410:E:"salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2206466) BASE: LoRa RX (159): S:411:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-7.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2206686) BASE: LoRa RX (89): S:412:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2207446) BASE: LoRa RX (159): S:413:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-7.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2207666) BASE: LoRa RX (89): S:414:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2208456) BASE: LoRa RX (159): S:415:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-8.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2208676) BASE: LoRa RX (88): S:416:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2209456) BASE: LoRa RX (159): S:417:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-8.4,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2209676) BASE: LoRa RX (88): S:418:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2210466) BASE: LoRa RX (159): S:419:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-8.7,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2210686) BASE: LoRa RX (89): S:420:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2211446) BASE: LoRa RX (159): S:421:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-9.0,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2211666) BASE: LoRa RX (89): S:422:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2212456) BASE: LoRa RX (159): S:423:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-9.3,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2212676) BASE: LoRa RX (89): S:424:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2213456) BASE: LoRa RX (159): S:425:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-9.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2213676) BASE: LoRa RX (89): S:426:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2214466) BASE: LoRa RX (159): S:427:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-9.9,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2214686) BASE: LoRa RX (88): S:428:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2215446) BASE: LoRa RX (159): S:429:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-10.1,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2215666) BASE: LoRa RX (90): S:430:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2216456) BASE: LoRa RX (159): S:431:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-10.4,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2216676) BASE: LoRa RX (90): S:432:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2217456) BASE: LoRa RX (159): S:433:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-10.7,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2217676) BASE: LoRa RX (90): S:434:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2218466) BASE: LoRa RX (159): S:435:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-11.0,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2218686) BASE: LoRa RX (90): S:436:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2219446) BASE: LoRa RX (159): S:437:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-11.2,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2219666) BASE: LoRa RX (90): S:438:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2220456) BASE: LoRa RX (159): S:439:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-11.6,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2220676) BASE: LoRa RX (90): S:440:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2221456) BASE: LoRa RX (159): S:441:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-11.9,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2221676) BASE: LoRa RX (90): S:442:E:{"salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2222466) BASE: LoRa RX (159): S:443:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-12.2,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2222686) BASE: LoRa RX (90): S:444:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2223446) BASE: LoRa RX (159): S:445:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-12.5,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2223666) BASE: LoRa RX (90): S:446:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2224446) BASE: LoRa RX (159): S:447:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-12.8,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2224666) BASE: LoRa RX (90): S:448:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2225456) BASE: LoRa RX (159): S:449:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-13.0,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2225676) BASE: LoRa RX (90): S:450:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2226466) BASE: LoRa RX (159): S:451:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-13.3,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2226686) BASE: LoRa RX (90): S:452:E:{"salt":0,"brine":0},"temp":29.6,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2227446) BASE: LoRa RX (159): S:453:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-13.6,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2227666) BASE: LoRa RX (90): S:454:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2228446) BASE: LoRa RX (159): S:455:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-13.9,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2228666) BASE: LoRa RX (89): S:456:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2229456) BASE: LoRa RX (159): S:457:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-14.2,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2229676) BASE: LoRa RX (90): S:458:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2230466) BASE: LoRa RX (159): S:459:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-14.5,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2230686) BASE: LoRa RX (89): S:460:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2231446) BASE: LoRa RX (159): S:461:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-14.7,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2231666) BASE: LoRa RX (89): S:462:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2232446) BASE: LoRa RX (159): S:463:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-15.0,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2232666) BASE: LoRa RX (89): S:464:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2233456) BASE: LoRa RX (159): S:465:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-15.3,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2233676) BASE: LoRa RX (90): S:466:E:{"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2234466) BASE: LoRa RX (159): S:467:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-15.5,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2234686) BASE: LoRa RX (90): S:468:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2235446) BASE: LoRa RX (159): S:469:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-15.8,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2235666) BASE: LoRa RX (90): S:470:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2236446) BASE: LoRa RX (159): S:471:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-16.0,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2236666) BASE: LoRa RX (90): S:472:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2237456) BASE: LoRa RX (159): S:473:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-16.3,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2237676) BASE: LoRa RX (90): S:474:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2238466) BASE: LoRa RX (159): S:475:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-16.6,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2238686) BASE: LoRa RX (89): S:476:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2239436) BASE: LoRa RX (159): S:477:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-16.9,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2239656) BASE: LoRa RX (89): S:478:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2240446) BASE: LoRa RX (159): S:479:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-17.1,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2240666) BASE: LoRa RX (89): S:480:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2241456) BASE: LoRa RX (159): S:481:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-17.4,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2241676) BASE: LoRa RX (90): S:482:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2242466) BASE: LoRa RX (159): S:483:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-17.7,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2242686) BASE: LoRa RX (89): S:484:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2243436) BASE: LoRa RX (159): S:485:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-17.9,"pitch":0.1},"disp":{[0m
+
+[0;32mI (2243656) BASE: LoRa RX (89): S:486:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2244446) BASE: LoRa RX (159): S:487:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-18.2,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2244666) BASE: LoRa RX (89): S:488:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2245456) BASE: LoRa RX (159): S:489:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-18.4,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2245676) BASE: LoRa RX (89): S:490:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2246466) BASE: LoRa RX (159): S:491:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-18.7,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2246686) BASE: LoRa RX (89): S:492:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2247436) BASE: LoRa RX (159): S:493:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-19.0,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2247656) BASE: LoRa RX (89): S:494:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2248446) BASE: LoRa RX (159): S:495:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-19.3,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2248666) BASE: LoRa RX (89): S:496:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2249456) BASE: LoRa RX (159): S:497:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-19.6,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2249676) BASE: LoRa RX (90): S:498:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2250466) BASE: LoRa RX (159): S:499:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-19.8,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2250686) BASE: LoRa RX (90): S:500:E:{"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2251436) BASE: LoRa RX (159): S:501:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-20.1,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2251656) BASE: LoRa RX (89): S:502:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2252446) BASE: LoRa RX (159): S:503:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-20.4,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2252666) BASE: LoRa RX (90): S:504:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2253456) BASE: LoRa RX (159): S:505:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-20.6,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2253676) BASE: LoRa RX (90): S:506:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2254466) BASE: LoRa RX (159): S:507:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-20.9,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2254686) BASE: LoRa RX (89): S:508:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2255436) BASE: LoRa RX (159): S:509:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-21.1,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2255656) BASE: LoRa RX (89): S:510:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2256446) BASE: LoRa RX (159): S:511:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-21.4,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2256666) BASE: LoRa RX (90): S:512:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2257456) BASE: LoRa RX (159): S:513:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-21.6,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2257676) BASE: LoRa RX (89): S:514:E:"salt":0,"brine":0},"temp":29.8,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2258466) BASE: LoRa RX (159): S:515:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-21.9,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2258686) BASE: LoRa RX (89): S:516:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2259436) BASE: LoRa RX (159): S:517:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-22.1,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2259656) BASE: LoRa RX (89): S:518:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2260446) BASE: LoRa RX (159): S:519:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-22.4,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2260666) BASE: LoRa RX (90): S:520:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2261456) BASE: LoRa RX (159): S:521:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-22.6,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2261676) BASE: LoRa RX (89): S:522:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2262466) BASE: LoRa RX (159): S:523:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-22.8,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2262686) BASE: LoRa RX (90): S:524:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2263436) BASE: LoRa RX (159): S:525:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-23.0,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2263656) BASE: LoRa RX (90): S:526:E:{"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2264446) BASE: LoRa RX (159): S:527:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-23.2,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2264666) BASE: LoRa RX (89): S:528:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2265446) BASE: LoRa RX (159): S:529:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-23.5,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2265656) BASE: LoRa RX (80): S:530:E:"salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":50}}[0m
+
+[0;32mI (2266456) BASE: LoRa RX (159): S:531:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-23.7,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2266676) BASE: LoRa RX (90): S:532:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2267436) BASE: LoRa RX (159): S:533:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-23.9,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2267656) BASE: LoRa RX (90): S:534:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2268436) BASE: LoRa RX (159): S:535:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-24.1,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2268656) BASE: LoRa RX (90): S:536:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2269446) BASE: LoRa RX (159): S:537:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-24.3,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2269666) BASE: LoRa RX (89): S:538:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2270456) BASE: LoRa RX (159): S:539:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-24.5,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2270676) BASE: LoRa RX (89): S:540:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2271366) BASE: LoRa RX (159): S:541:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-24.7,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2271566) BASE: LoRa RX (72): S:542:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":10,"right":10}}[0m
+
+[0;32mI (2272426) BASE: LoRa RX (159): S:543:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-24.9,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2272626) BASE: LoRa RX (73): S:544:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":12,"right":135}}[0m
+
+[0;32mI (2273386) BASE: LoRa RX (159): S:545:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.2,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2273586) BASE: LoRa RX (72): S:546:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":12,"right":122}}[0m
+
+[0;32mI (2274476) BASE: LoRa RX (159): S:547:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.4,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2274696) BASE: LoRa RX (89): S:548:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2275456) BASE: LoRa RX (159): S:549:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.6,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2275676) BASE: LoRa RX (90): S:550:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2276436) BASE: LoRa RX (159): S:551:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.8,"pitch":-0.1},"disp":[0m
+
+[0;32mI (2276646) BASE: LoRa RX (81): S:552:E:{"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":51}}[0m
+
+[0;32mI (2277446) BASE: LoRa RX (159): S:553:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-26.0,"pitch":-0.0},"disp":[0m
+
+[0;32mI (2277666) BASE: LoRa RX (90): S:554:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2278456) BASE: LoRa RX (159): S:555:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-26.2,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2278676) BASE: LoRa RX (89): S:556:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2279426) BASE: LoRa RX (159): S:557:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.7,"pitch":0.0},"disp":{[0m
+
+[0;32mI (2279616) BASE: LoRa RX (71): S:558:E:"salt":0,"brine":0},"temp":30.5,"prox":{"left":11,"right":19}}[0m
+
+[0;32mI (2280416) BASE: LoRa RX (159): S:559:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.3,"pitch":-3.0},"disp":[0m
+
+[0;32mI (2280606) BASE: LoRa RX (71): S:560:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":8,"right":16}}[0m
+
+[0;32mI (2281436) BASE: LoRa RX (159): S:561:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-25.4,"pitch":-0.7},"disp":[0m
+
+[0;32mI (2281646) BASE: LoRa RX (80): S:562:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":5}}[0m
+
+[0;32mI (2282446) BASE: LoRa RX (159): S:563:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-26.0,"pitch":-0.4},"disp":[0m
+
+[0;32mI (2282656) BASE: LoRa RX (81): S:564:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2283376) BASE: LoRa RX (159): S:565:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-26.3,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2283566) BASE: LoRa RX (70): S:566:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":4,"right":2}}[0m
+
+[0;32mI (2284476) BASE: LoRa RX (159): S:567:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-27.0,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2284696) BASE: LoRa RX (90): S:568:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2285376) BASE: LoRa RX (159): S:569:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-26.7,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2285566) BASE: LoRa RX (70): S:570:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":6,"right":4}}[0m
+
+[0;32mI (2286406) BASE: LoRa RX (159): S:571:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-27.7,"pitch":-0.2},"disp":[0m
+
+[0;32mI (2286596) BASE: LoRa RX (70): S:572:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":6,"right":4}}[0m
+
+[0;32mI (2287406) BASE: LoRa RX (159): S:573:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.1,"pitch":-0.2},"disp":[0m
+
+[0;32mI (2287606) BASE: LoRa RX (72): S:574:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":18,"right":21}}[0m
+
+[0;32mI (2288406) BASE: LoRa RX (159): S:575:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.2,"pitch":-0.4},"disp":[0m
+
+[0;32mI (2288606) BASE: LoRa RX (72): S:576:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":20,"right":16}}[0m
+
+[0;32mI (2289446) BASE: LoRa RX (159): S:577:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.4,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2289646) BASE: LoRa RX (72): S:578:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":18,"right":16}}[0m
+
+[0;32mI (2290446) BASE: LoRa RX (159): S:579:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.6,"pitch":-0.4},"disp":[0m
+
+[0;32mI (2290656) BASE: LoRa RX (81): S:580:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":45}}[0m
+
+[0;32mI (2291426) BASE: LoRa RX (159): S:581:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":1.1},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.8,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2291636) BASE: LoRa RX (81): S:582:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":43}}[0m
+
+[0;32mI (2292406) BASE: LoRa RX (159): S:583:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-28.9,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2292616) BASE: LoRa RX (81): S:584:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":47}}[0m
+
+[0;32mI (2293396) BASE: LoRa RX (159): S:585:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-29.1,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2293586) BASE: LoRa RX (70): S:586:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":3,"right":4}}[0m
+
+[0;32mI (2294386) BASE: LoRa RX (159): S:587:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-29.3,"pitch":-0.2},"disp":[0m
+
+[0;32mI (2294576) BASE: LoRa RX (71): S:588:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":5,"right":43}}[0m
+
+[0;32mI (2295386) BASE: LoRa RX (159): S:589:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":1.1},"motor":{"m1":0,"m2":0},"heading":{"yaw":-29.5,"pitch":-0.4},"disp":[0m
+
+[0;32mI (2295576) BASE: LoRa RX (70): S:590:E:{"salt":0,"brine":0},"temp":30.3,"prox":{"left":3,"right":4}}[0m
+
+[0;32mI (2296396) BASE: LoRa RX (159): S:591:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-29.7,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2296586) BASE: LoRa RX (71): S:592:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":49,"right":5}}[0m
+
+[0;32mI (2297436) BASE: LoRa RX (159): S:593:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-29.8,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2297646) BASE: LoRa RX (81): S:594:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":48}}[0m
+
+[0;32mI (2298446) BASE: LoRa RX (159): S:595:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.0,"pitch":-0.5},"disp":[0m
+
+[0;32mI (2298666) BASE: LoRa RX (90): S:596:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2299456) BASE: LoRa RX (159): S:597:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.2,"pitch":-0.4},"disp":[0m
+
+[0;32mI (2299676) BASE: LoRa RX (90): S:598:E:{"salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2300426) BASE: LoRa RX (159): S:599:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.3,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2300646) BASE: LoRa RX (90): S:600:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2301436) BASE: LoRa RX (159): S:601:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.5,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2301656) BASE: LoRa RX (90): S:602:E:{"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2302446) BASE: LoRa RX (159): S:603:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.7,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2302666) BASE: LoRa RX (90): S:604:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2303456) BASE: LoRa RX (159): S:605:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-30.8,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2303676) BASE: LoRa RX (90): S:606:E:{"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2304456) BASE: LoRa RX (159): S:607:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.0,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2304676) BASE: LoRa RX (90): S:608:E:{"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2305406) BASE: LoRa RX (159): S:609:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.1,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2305616) BASE: LoRa RX (81): S:610:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":53}}[0m
+
+[0;32mI (2306466) BASE: LoRa RX (159): S:611:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.3,"pitch":-0.2},"disp":[0m
+
+[0;32mI (2306686) BASE: LoRa RX (90): S:612:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2307446) BASE: LoRa RX (159): S:613:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.4,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2307666) BASE: LoRa RX (90): S:614:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2308446) BASE: LoRa RX (159): S:615:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.6,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2308666) BASE: LoRa RX (90): S:616:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2309436) BASE: LoRa RX (159): S:617:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-31.8,"pitch":-0.3},"disp":[0m
+
+[0;32mI (2309646) BASE: LoRa RX (81): S:618:E:{"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":52}}[0m
+
+[0;32mI (2310426) BASE: LoRa RX (159): S:619:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-32.0,"pitch":-0.2},"disp":[0m
+
+[0;32mI (2310636) BASE: LoRa RX (81): S:620:E:{"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":63}}[0m
+
+[0;32mI (2347946) BASE: LoRa RX (159): S:621:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.3,"pitch":0.1},"disp":{"s[0m
+
+[0;32mI (2348146) BASE: LoRa RX (78): S:622:E:alt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":54}}[0m
+
+[0;32mI (2357986) BASE: LoRa RX (159): S:623:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.5,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (2358186) BASE: LoRa RX (78): S:624:E:alt":0,"brine":0},"temp":30.1,"prox":{"left":51,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2367986) BASE: LoRa RX (159): S:625:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.8,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (2368206) BASE: LoRa RX (87): S:626:E:alt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2377966) BASE: LoRa RX (159): S:627:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.8,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (2378166) BASE: LoRa RX (78): S:628:E:alt":0,"brine":0},"temp":30.0,"prox":{"left":49,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2387976) BASE: LoRa RX (159): S:629:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.8,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (2388176) BASE: LoRa RX (78): S:630:E:alt":0,"brine":0},"temp":30.2,"prox":{"left":50,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2397986) BASE: LoRa RX (159): S:631:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.9,"pitch":-0.0},"disp":{"[0m
+
+[0;32mI (2398206) BASE: LoRa RX (88): S:632:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2407966) BASE: LoRa RX (159): S:633:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.9,"pitch":0.1},"disp":{"s[0m
+
+[0;32mI (2408186) BASE: LoRa RX (87): S:634:E:alt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2417966) BASE: LoRa RX (159): S:635:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":3.5,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (2418186) BASE: LoRa RX (87): S:636:E:alt":0,"brine":0},"temp":30.5,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2424776) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (2424776) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (2424776) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (2424786) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (2427966) BASE: LoRa RX (159): S:637:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":0.4,"pitch":0.1},"disp":{"s[0m
+
+[0;32mI (2428186) BASE: LoRa RX (87): S:638:E:alt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2437966) BASE: LoRa RX (159): S:639:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2438186) BASE: LoRa RX (88): S:640:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2447966) BASE: LoRa RX (159): S:641:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2448186) BASE: LoRa RX (89): S:642:E:"salt":0,"brine":0},"temp":29.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2457946) BASE: LoRa RX (159): S:643:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-1.5,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2458156) BASE: LoRa RX (79): S:644:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":51,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2467966) BASE: LoRa RX (159): S:645:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-2.3,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2468176) BASE: LoRa RX (79): S:646:E:salt":0,"brine":0},"temp":29.7,"prox":{"left":51,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2477956) BASE: LoRa RX (159): S:647:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.1,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2478166) BASE: LoRa RX (80): S:648:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":50,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2487996) BASE: LoRa RX (159): S:649:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-3.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2488216) BASE: LoRa RX (88): S:650:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2497966) BASE: LoRa RX (159): S:651:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2498186) BASE: LoRa RX (89): S:652:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2507966) BASE: LoRa RX (159): S:653:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2508186) BASE: LoRa RX (88): S:654:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2517926) BASE: LoRa RX (159): S:655:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2518116) BASE: LoRa RX (71): S:656:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":51,"right":57}}[0m
+
+[0;32mI (2527966) BASE: LoRa RX (159): S:657:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.7,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2528186) BASE: LoRa RX (88): S:658:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2537966) BASE: LoRa RX (159): S:659:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.9,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2538186) BASE: LoRa RX (88): S:660:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2547966) BASE: LoRa RX (159): S:661:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.9,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2548186) BASE: LoRa RX (88): S:662:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2557966) BASE: LoRa RX (159): S:663:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.8,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2558186) BASE: LoRa RX (88): S:664:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2567986) BASE: LoRa RX (159): S:665:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.7,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2568206) BASE: LoRa RX (89): S:666:E:"salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2577946) BASE: LoRa RX (159): S:667:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.7,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2578146) BASE: LoRa RX (79): S:668:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":58}}[0m
+
+[0;32mI (2587956) BASE: LoRa RX (159): S:669:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.6,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2588156) BASE: LoRa RX (79): S:670:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":73}}[0m
+
+[0;32mI (2597956) BASE: LoRa RX (159): S:671:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2598156) BASE: LoRa RX (80): S:672:E:"salt":0,"brine":0},"temp":29.9,"prox":{"left":51,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2607946) BASE: LoRa RX (159): S:673:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2608136) BASE: LoRa RX (70): S:674:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":48,"right":50}}[0m
+
+[0;32mI (2617976) BASE: LoRa RX (159): S:675:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.9,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2618196) BASE: LoRa RX (89): S:676:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2627946) BASE: LoRa RX (159): S:677:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.9,"pitch":0.2},"disp":{"[0m
+
+[0;32mI (2628156) BASE: LoRa RX (88): S:678:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2637946) BASE: LoRa RX (159): S:679:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.6,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2638156) BASE: LoRa RX (88): S:680:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2647946) BASE: LoRa RX (159): S:681:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.2,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (2648146) BASE: LoRa RX (80): S:682:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":58,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2657896) BASE: LoRa RX (159): S:683:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.6,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2658086) BASE: LoRa RX (70): S:684:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":67,"right":36}}[0m
+
+[0;32mI (2667946) BASE: LoRa RX (159): S:685:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.3,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2668156) BASE: LoRa RX (88): S:686:E:salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2677976) BASE: LoRa RX (159): S:687:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2678176) BASE: LoRa RX (79): S:688:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":76}}[0m
+
+[0;32mI (2687976) BASE: LoRa RX (159): S:689:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.2,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2688186) BASE: LoRa RX (89): S:690:E:"salt":0,"brine":0},"temp":30.3,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2697946) BASE: LoRa RX (159): S:691:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.8},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2698136) BASE: LoRa RX (71): S:692:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":57,"right":51}}[0m
+
+[0;32mI (2707946) BASE: LoRa RX (159): S:693:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-4.7,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2708146) BASE: LoRa RX (79): S:694:E:salt":0,"brine":0},"temp":29.8,"prox":{"left":72,"right":"NO_DETECT"}}[0m
+
+[0;32mI (2717946) BASE: LoRa RX (159): S:695:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.1,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2718146) BASE: LoRa RX (79): S:696:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":51}}[0m
+
+[0;32mI (2726706) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (2726706) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (2727496) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (2727966) BASE: LoRa RX (159): S:697:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-5.8,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (2728176) BASE: LoRa RX (88): S:698:E:salt":0,"brine":0},"temp":29.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (2728556) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (2737906) BASE: LoRa RX (159): S:699:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-6.6,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (2738096) BASE: LoRa RX (70): S:700:E:salt":0,"brine":0},"temp":30.1,"prox":{"left":62,"right":61}}[0m
+
+[0;32mI (2740776) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (2740776) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (2740886) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (2740966) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (2747926) BASE: LoRa RX (159): S:701:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-7.4,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (2748116) BASE: LoRa RX (71): S:702:E:"salt":0,"brine":0},"temp":30.2,"prox":{"left":55,"right":21}}[0m
+
+[0;32mI (2776226) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (2776226) BASE: LoRa TX: {"cmd":"forward"}[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017465:0x3fcb6db0 0x4200b725:0x3fcb6de0 0x4200c1ae:0x3fcb6e30 0x4200c449:0x3fcb6e60 0x4200c676:0x3fcb6e90 0x4200ad75:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: b754bb7ab
+
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4003b1ba
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+I (421) net80211: net80211 rom version: e7ae62f
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (561) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (561) wifi:enable tsf[0m
+[0;32mI (571) BASE: Trying STA connect...[0m
+[0;33mW (2971) BASE: STA disconnected, retrying...[0m
+[0;33mW (5381) BASE: STA disconnected, retrying...[0m
+[0;33mW (7791) BASE: STA disconnected, retrying...[0m
+[0;33mW (10201) BASE: STA disconnected, retrying...[0m
+[0;33mW (12571) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12571) wifi:flush txq[0m
+[0;32mI (12571) wifi:stop sw txq[0m
+[0;32mI (12571) wifi:lmac stop hw txq[0m
+[0;32mI (12581) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12581) wifi:Total power save buffer number: 16[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12591) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12611) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12611) BASE: Initializing LoRa...[0m
+[0;32mI (12611) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12611) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12621) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12621) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12621) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12631) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12631) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12631) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12641) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12641) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12681) RA01S: syncWord=0x1424[0m
+[0;32mI (12681) RA01S: SX126x installed[0m
+[0;33mW (12681) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12691) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12711) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12731) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12771) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12771) main_task: Returned from app_main()[0m
+[0;32mI (21391) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (21391) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (21891) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (22451) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (28591) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (28591) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (28701) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (28781) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (29561) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (29561) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (29671) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (29751) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (29751) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (29751) BASE: LoRa TX: {"cmd":"forward"}[0m
+[0;32mI (29841) BASE: Received /command: {"cmd":"forward"}[0m
+[1;31mE (29861) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (29861) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (29971) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (29991) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (30001) BASE: LoRa TX: {"cmd":"forward"}[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017465:0x3fcb6db0 0x4200b725:0x3fcb6de0 0x4200c1ae:0x3fcb6e30 0x4200c449:0x3fcb6e60 0x4200c676:0x3fcb6e90 0x4200ad75:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: b754bb7ab
+
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42055073
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (561) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (561) wifi:enable tsf[0m
+[0;32mI (561) BASE: Trying STA connect...[0m
+[0;33mW (2971) BASE: STA disconnected, retrying...[0m
+[0;33mW (5381) BASE: STA disconnected, retrying...[0m
+[0;33mW (7791) BASE: STA disconnected, retrying...[0m
+[0;33mW (10201) BASE: STA disconnected, retrying...[0m
+[0;33mW (12571) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12571) wifi:flush txq[0m
+[0;32mI (12571) wifi:stop sw txq[0m
+[0;32mI (12571) wifi:lmac stop hw txq[0m
+[0;32mI (12581) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12581) wifi:Total power save buffer number: 16[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12591) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12591) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12611) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12611) BASE: Initializing LoRa...[0m
+[0;32mI (12611) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12611) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12621) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12621) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12621) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12631) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12631) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12631) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12641) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12641) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12681) RA01S: syncWord=0x1424[0m
+[0;32mI (12681) RA01S: SX126x installed[0m
+[0;33mW (12691) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12691) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12711) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12731) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12771) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12771) main_task: Returned from app_main()[0m
+[0;32mI (18991) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (18991) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (19431) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (19721) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (89041) wifi:station: ac:19:8e:e9:c1:45 leave, AID = 1, reason = 1, bss_flags is 756835, bss:0x3fca7ba4[0m
+[0;32mI (89041) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (89051) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (89051) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (95961) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (95961) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (96451) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (96991) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (117341) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (117341) BASE: LoRa TX: {"cmd":"forward"}[0m
+[0;32mI (117411) BASE: Received /command: {"cmd":"forward"}[0m
+[1;31mE (117451) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (117451) BASE: LoRa TX: {"cmd":"forward"}[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017465:0x3fcb6db0 0x4200b725:0x3fcb6de0 0x4200c1ae:0x3fcb6e30 0x4200c449:0x3fcb6e60 0x4200c676:0x3fcb6e90 0x4200ad75:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+Backtrace: 0x4037ce05:0x3fcb5ab0 0x4037cdcd:0x3fcb5ad0 0x403860e5:0x3fcb5af0 0x42017465:0x3fcb5c10 0x4200b725:0x3fcb5c40 0x4200bb8d:0x3fcb5c90 0x4200bbea:0x3fcb5cc0 0x4200bc45:0x3fcb5cf0 0x4200c371:0x3fcb5d20 0x4200c4a1:0x3fcb5d60 0x4200ae27:0x3fcb5d80 0x4037daf5:0x3fcb5e80
+
+
+
+
+ELF file SHA256: b754bb7ab
+
+Rebooting...
+���ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4037cf54
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (114) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (218) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (221) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (272) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (273) cpu_start: Pro cpu start user code[0m
+[0;32mI (273) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (278) app_init: Project name:     salt_base_station[0m
+[0;32mI (283) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (296) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (311) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (328) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (333) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (339) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (357) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (363) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (370) main_task: Started on CPU0[0m
+[0;32mI (390) main_task: Calling app_main()[0m
+[0;32mI (420) pp: pp rom version: e7ae62f[0m
+[0;32mI (420) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (430) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (440) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (440) wifi:wifi certification version: v7.0[0m
+[0;32mI (440) wifi:config NVS flash: enabled[0m
+[0;32mI (440) wifi:config nano formatting: disabled[0m
+[0;32mI (440) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (450) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (450) wifi:Init management short buffer num: 32[0m
+[0;32mI (460) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (460) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (470) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (470) wifi:Init static rx buffer num: 10[0m
+[0;32mI (470) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (480) wifi_init: rx ba win: 6[0m
+[0;32mI (480) wifi_init: accept mbox: 6[0m
+[0;32mI (480) wifi_init: tcpip mbox: 32[0m
+[0;32mI (490) wifi_init: udp mbox: 6[0m
+[0;32mI (490) wifi_init: tcp mbox: 6[0m
+[0;32mI (490) wifi_init: tcp tx win: 5760[0m
+[0;32mI (490) wifi_init: tcp rx win: 5760[0m
+[0;32mI (500) wifi_init: tcp mss: 1440[0m
+[0;32mI (500) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (500) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (520) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (520) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (560) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (620) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (620) wifi:enable tsf[0m
+[0;32mI (620) BASE: Trying STA connect...[0m
+[0;33mW (3030) BASE: STA disconnected, retrying...[0m
+[0;33mW (5440) BASE: STA disconnected, retrying...[0m
+[0;33mW (7850) BASE: STA disconnected, retrying...[0m
+[0;33mW (10260) BASE: STA disconnected, retrying...[0m
+[0;33mW (12620) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12620) wifi:flush txq[0m
+[0;32mI (12620) wifi:stop sw txq[0m
+[0;32mI (12620) wifi:lmac stop hw txq[0m
+[0;32mI (12630) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12630) wifi:Total power save buffer number: 16[0m
+[0;32mI (12640) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12640) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12640) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12640) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12660) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12660) BASE: Initializing LoRa...[0m
+[0;32mI (12660) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12660) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12670) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12670) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12670) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12680) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12680) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12680) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12690) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12690) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12730) RA01S: syncWord=0x1424[0m
+[0;32mI (12730) RA01S: SX126x installed[0m
+[0;33mW (12730) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12740) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12760) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12780) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12820) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12820) main_task: Returned from app_main()[0m
+[0;32mI (29110) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (29110) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (29410) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (29450) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (32190) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (32190) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (32300) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (32380) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (34440) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (34440) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (34550) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (34630) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (35480) BASE: Received /command: {"cmd":"stop"}[0m
+[0;32mI (35480) BASE: LoRa TX: {"cmd":"stop"}[0m
+[1;31mE (35590) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (35660) BASE: LoRa RX (18): ACK:{"cmd":"stop"}[0m
+[0;32mI (36070) BASE: Received /command: {"cmd":"backward"}[0m
+[0;32mI (36070) BASE: LoRa TX: {"cmd":"backward"}[0m
+[1;31mE (36180) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (36260) BASE: LoRa RX (22): ACK:{"cmd":"backward"}[0m
+[0;32mI (36710) BASE: Received /command: {"cmd":"left"}[0m
+[0;32mI (36710) BASE: LoRa TX: {"cmd":"left"}[0m
+[1;31mE (36820) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (36890) BASE: LoRa RX (18): ACK:{"cmd":"left"}[0m
+[0;32mI (37410) BASE: Received /command: {"cmd":"right"}[0m
+[0;32mI (37410) BASE: LoRa TX: {"cmd":"right"}[0m
+[1;31mE (37520) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (37590) BASE: LoRa RX (19): ACK:{"cmd":"right"}[0m
+[0;32mI (92910) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (92920) BASE: LoRa TX: {"cmd":"forward"}[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c60 0x4037cdcd:0x3fcb6c80 0x403860e5:0x3fcb6ca0 0x42017465:0x3fcb6dc0 0x4200b725:0x3fcb6df0 0x4200c1ae:0x3fcb6e40 0x4200c449:0x3fcb6e70 0x4200c676:0x3fcb6ea0 0x4200ad75:0x3fcb6ec0 0x4037daf5:0x3fcb6ff0
+
+
+
+
+ELF file SHA256: b754bb7ab
+
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42055076
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (571) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (571) wifi:enable tsf[0m
+[0;32mI (581) BASE: Trying STA connect...[0m
+[0;33mW (2981) BASE: STA disconnected, retrying...[0m
+[0;33mW (5391) BASE: STA disconnected, retrying...[0m
+[0;33mW (7801) BASE: STA disconnected, retrying...[0m
+[0;33mW (10211) BASE: STA disconnected, retrying...[0m
+[0;33mW (12581) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12581) wifi:flush txq[0m
+[0;32mI (12581) wifi:stop sw txq[0m
+[0;32mI (12581) wifi:lmac stop hw txq[0m
+[0;32mI (12591) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12591) wifi:Total power save buffer number: 16[0m
+[0;32mI (12601) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12601) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12601) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12601) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12621) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12621) BASE: Initializing LoRa...[0m
+[0;32mI (12621) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12631) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12631) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12631) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12631) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12641) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12641) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12641) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12651) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12651) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12691) RA01S: syncWord=0x1424[0m
+[0;32mI (12691) RA01S: SX126x installed[0m
+[0;33mW (12691) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12701) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12721) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12741) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12781) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12781) main_task: Returned from app_main()[0m
+[0;32mI (20511) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (20511) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (20891) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (21101) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (29741) BASE: Received /command: {"cmd":"forward"}[0m
+[0;32mI (29741) BASE: LoRa TX: {"cmd":"forward"}[0m
+[1;31mE (29851) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (29931) BASE: LoRa RX (21): ACK:{"cmd":"forward"}[0m
+[0;32mI (142601) BASE: LoRa RX (159): S:703:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.0,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (142811) BASE: LoRa RX (80): S:704:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":57}}[0m
+
+[0;32mI (152591) BASE: LoRa RX (159): S:705:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.3,"pitch":-0.4},"disp":{[0m
+
+[0;32mI (152811) BASE: LoRa RX (89): S:706:E:"salt":0,"brine":0},"temp":30.0,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (162601) BASE: LoRa RX (157): S:0:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":-0.8,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (172641) BASE: LoRa RX (157): S:0:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":4.2,"pitch":-0.0},"disp":{"[0m
+
+[0;32mI (172861) BASE: LoRa RX (86): S:1:E:salt":0,"brine":0},"temp":30.9,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (182611) BASE: LoRa RX (157): S:2:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":8.1,"pitch":0.0},"disp":{"s[0m
+
+[0;32mI (182821) BASE: LoRa RX (85): S:3:E:alt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (192631) BASE: LoRa RX (157): S:4:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":11.5,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (192851) BASE: LoRa RX (86): S:5:E:salt":0,"brine":0},"temp":30.2,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (202601) BASE: LoRa RX (157): S:6:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":14.2,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (202821) BASE: LoRa RX (86): S:7:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (212611) BASE: LoRa RX (157): S:8:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":16.6,"pitch":2.9},"disp":{"[0m
+
+[0;32mI (212831) BASE: LoRa RX (86): S:9:E:salt":0,"brine":0},"temp":30.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (222621) BASE: LoRa RX (158): S:10:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":26.3,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (222841) BASE: LoRa RX (87): S:11:E:salt":0,"brine":0},"temp":31.3,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (232621) BASE: LoRa RX (158): S:12:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":1.0},"motor":{"m1":0,"m2":0},"heading":{"yaw":32.1,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (232841) BASE: LoRa RX (88): S:13:E:"salt":0,"brine":0},"temp":30.5,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (242621) BASE: LoRa RX (158): S:14:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":36.8,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (242841) BASE: LoRa RX (88): S:15:E:"salt":0,"brine":0},"temp":30.5,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (252581) BASE: LoRa RX (158): S:16:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":40.9,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (252771) BASE: LoRa RX (69): S:17:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":79,"right":77}}[0m
+
+[0;32mI (256521) BASE: Received /command: test[0m
+[0;32mI (256521) BASE: LoRa TX: test[0m
+[1;31mE (256611) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (256671) BASE: LoRa RX (8): ACK:test[0m
+[0;32mI (262591) BASE: LoRa RX (158): S:18:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":44.2,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (262811) BASE: LoRa RX (87): S:19:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (272611) BASE: LoRa RX (158): S:20:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":47.0,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (272831) BASE: LoRa RX (87): S:21:E:salt":0,"brine":0},"temp":30.7,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (274521) BASE: Received /command: forward[0m
+[0;32mI (274521) BASE: LoRa TX: forward[0m
+[1;31mE (274621) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (274681) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (282601) BASE: LoRa RX (158): S:22:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5137,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":49.6,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (282811) BASE: LoRa RX (79): S:23:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":54}}[0m
+
+[0;32mI (292601) BASE: LoRa RX (158): S:24:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":52.0,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (292801) BASE: LoRa RX (78): S:25:E:salt":0,"brine":0},"temp":30.7,"prox":{"left":"NO_DETECT","right":57}}[0m
+
+[0;32mI (302631) BASE: LoRa RX (158): S:26:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":54.3,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (302851) BASE: LoRa RX (87): S:27:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (311151) BASE: Received /command: forward[0m
+[0;32mI (311151) BASE: LoRa TX: forward[0m
+
+assert failed: spi_device_transmit spi_master.c:1330 (ret_trans == trans_desc)
+
+
+Backtrace: 0x4037ce05:0x3fcb6c50 0x4037cdcd:0x3fcb6c70 0x403860e5:0x3fcb6c90 0x42017465:0x3fcb6db0 0x4200b725:0x3fcb6de0 0x4200c1ae:0x3fcb6e30 0x4200c449:0x3fcb6e60 0x4200c676:0x3fcb6e90 0x4200ad75:0x3fcb6eb0 0x4037daf5:0x3fcb6fe0
+
+
+
+
+ELF file SHA256: b754bb7ab
+
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42060b54
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (29) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar  3 2026 15:36:43[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (29) boot: chip revision: v0.2[0m
+[0;32mI (32) boot: efuse block revision: v1.3[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (40) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (52) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c090020 size=1e30ch (123660) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0002e334 vaddr=3fc9c500 size=01ce4h (  7396) load[0m
+[0;32mI (115) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=8d5ech (579052) map[0m
+[0;32mI (219) esp_image: segment 3: paddr=000bd614 vaddr=3fc9e1e4 size=02fd0h ( 12240) load[0m
+[0;32mI (222) esp_image: segment 4: paddr=000c05ec vaddr=40374000 size=18464h ( 99428) load[0m
+[0;32mI (244) esp_image: segment 5: paddr=000d8a58 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (254) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (254) boot: Disabling RNG early entropy source...[0m
+[0;32mI (264) cpu_start: Multicore app[0m
+[0;32mI (273) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (274) cpu_start: Pro cpu start user code[0m
+[0;32mI (274) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (275) app_init: Application information:[0m
+[0;32mI (279) app_init: Project name:     salt_base_station[0m
+[0;32mI (284) app_init: App version:      1[0m
+[0;32mI (287) app_init: Compile time:     Mar  3 2026 15:36:19[0m
+[0;32mI (292) app_init: ELF file SHA256:  b754bb7ab...[0m
+[0;32mI (297) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (300) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (304) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (308) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (312) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (318) heap_init: At 3FCA4F00 len 00044810 (274 KiB): RAM[0m
+[0;32mI (323) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (329) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (334) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (340) spi_flash: detected chip: gd[0m
+[0;32mI (342) spi_flash: flash io: dio[0m
+[0;33mW (345) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (358) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (364) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (371) main_task: Started on CPU0[0m
+[0;32mI (391) main_task: Calling app_main()[0m
+[0;32mI (421) pp: pp rom version: e7ae62f[0m
+[0;32mI (421) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (431) wifi:wifi driver task: 3fceebc0, prio:23, stack:6656, core=0[0m
+[0;32mI (441) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (441) wifi:wifi certification version: v7.0[0m
+[0;32mI (441) wifi:config NVS flash: enabled[0m
+[0;32mI (441) wifi:config nano formatting: disabled[0m
+[0;32mI (441) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (451) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (451) wifi:Init management short buffer num: 32[0m
+[0;32mI (461) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (461) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (471) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (471) wifi:Init static rx buffer num: 10[0m
+[0;32mI (471) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (481) wifi_init: rx ba win: 6[0m
+[0;32mI (481) wifi_init: accept mbox: 6[0m
+[0;32mI (481) wifi_init: tcpip mbox: 32[0m
+[0;32mI (491) wifi_init: udp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp mbox: 6[0m
+[0;32mI (491) wifi_init: tcp tx win: 5760[0m
+[0;32mI (491) wifi_init: tcp rx win: 5760[0m
+[0;32mI (501) wifi_init: tcp mss: 1440[0m
+[0;32mI (501) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (501) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (521) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (521) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (561) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (561) wifi:enable tsf[0m
+[0;32mI (561) BASE: Trying STA connect...[0m
+[0;33mW (2971) BASE: STA disconnected, retrying...[0m
+[0;33mW (5381) BASE: STA disconnected, retrying...[0m
+[0;33mW (7791) BASE: STA disconnected, retrying...[0m
+[0;33mW (10201) BASE: STA disconnected, retrying...[0m
+[0;33mW (12561) BASE: STA failed. Starting AP mode...[0m
+[0;32mI (12561) wifi:flush txq[0m
+[0;32mI (12561) wifi:stop sw txq[0m
+[0;32mI (12561) wifi:lmac stop hw txq[0m
+[0;32mI (12571) wifi:mode : softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (12571) wifi:Total power save buffer number: 16[0m
+[0;32mI (12581) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12581) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (12581) BASE: AP started. SSID=SaltRobot_Base (AP IP is usually 192.168.4.1)[0m
+[0;32mI (12581) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (12601) BASE: HTTP server: GET /status, POST /command[0m
+[0;32mI (12601) BASE: Initializing LoRa...[0m
+[0;32mI (12601) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (12601) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (12611) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (12611) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (12611) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (12621) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (12621) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (12621) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (12631) RA01S: spi_bus_initialize=0[0m
+[0;32mI (12631) RA01S: spi_bus_add_device=0[0m
+[0;32mI (12671) RA01S: syncWord=0x1424[0m
+[0;32mI (12671) RA01S: SX126x installed[0m
+[0;33mW (12681) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (12681) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (12701) RA01S: useRegulatorLDO=1[0m
+[0;32mI (12721) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (12761) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (12761) main_task: Returned from app_main()[0m
+[0;32mI (21281) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (21281) wifi:station: ac:19:8e:e9:c1:45 join, AID=1, bgn, 40U[0m
+[0;32mI (21381) BASE: LoRa RX (158): S:32:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5139,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":61.2,"pitch":-0.1},"disp":{[0m
+
+[0;32mI (21601) BASE: LoRa RX (88): S:33:E:"salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (21651) wifi:<ba-add>idx:2 (ifx:1, ac:19:8e:e9:c1:45), tid:0, ssn:12, winSize:64[0m
+[0;32mI (22431) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (26781) BASE: Received /command: forward[0m
+[0;32mI (26781) BASE: LoRa TX: forward[0m
+[1;31mE (26881) BASE: LoRaSend failed with code: 1[0m
+[0;32mI (26941) BASE: LoRa RX (11): ACK:forward[0m
+[0;32mI (31351) BASE: LoRa RX (158): S:34:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":63.4,"pitch":0.0},"disp":{"[0m
+
+[0;32mI (31571) BASE: LoRa RX (87): S:35:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
+[0;32mI (41351) BASE: LoRa RX (158): S:36:M:{"state":"PAUSE","gps":{"lat":41.0761,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":65.5,"pitch":-0.0},"disp":{[0m
+
+[0;32mI (41561) BASE: LoRa RX (79): S:37:E:"salt":0,"brine":0},"temp":30.1,"prox":{"left":"NO_DETECT","right":58}}[0m
+
+[0;32mI (51361) BASE: LoRa RX (158): S:38:M:{"state":"PAUSE","gps":{"lat":41.0762,"lon":-81.5138,"fix":1,"sat":12,"hdop":0.9},"motor":{"m1":0,"m2":0},"heading":{"yaw":67.7,"pitch":0.1},"disp":{"[0m
+
+[0;32mI (51581) BASE: LoRa RX (87): S:39:E:salt":0,"brine":0},"temp":30.4,"prox":{"left":"NO_DETECT","right":"NO_DETECT"}}[0m
+
