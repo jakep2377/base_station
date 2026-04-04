@@ -1,6 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <stdbool.h>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/semphr.h"
@@ -42,6 +44,8 @@
 // Limit command size over LoRa
 #define LORA_CMD_MAX     200
 
+#define LORA_QUEUE_DEPTH 64
+
 static const char *TAG = "BASE";
 
 // ---------------- Wi-Fi Event Group ----------------
@@ -52,8 +56,9 @@ static const int WIFI_GOT_IP_BIT = BIT0;
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
-static char status_json[256] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
+static char status_json[512] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]    = "none";
+static char last_lora_rx[256] = "";
 
 // ---------------- LoRa Queue ----------------
 typedef struct {
@@ -69,6 +74,14 @@ static esp_err_t status_get_handler(httpd_req_t *req) {
     xSemaphoreTake(status_lock, portMAX_DELAY);
     httpd_resp_set_type(req, "application/json");
     httpd_resp_send(req, status_json, HTTPD_RESP_USE_STRLEN);
+    xSemaphoreGive(status_lock);
+    return ESP_OK;
+}
+
+static esp_err_t last_lora_get_handler(httpd_req_t *req) {
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    httpd_resp_set_type(req, "text/plain");
+    httpd_resp_send(req, last_lora_rx, HTTPD_RESP_USE_STRLEN);
     xSemaphoreGive(status_lock);
     return ESP_OK;
 }
@@ -100,25 +113,25 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
 
     ESP_LOGI(TAG, "Received /command: %s", last_cmd);
 
-    // Update JSON status safely
-    xSemaphoreTake(status_lock, portMAX_DELAY);
-    snprintf(status_json, sizeof(status_json),
-             "{\"battery\":85,\"state\":\"CMD_RCVD\",\"mode\":\"HTTP\",\"last_cmd\":\"%.120s\"}",
-             last_cmd);
-    xSemaphoreGive(status_lock);
-
     // Queue command for LoRa TX
     if (lora_cmd_q) {
         lora_cmd_t c = {0};
-        // Cap payload for LoRa
         snprintf(c.payload, sizeof(c.payload), "%s", last_cmd);
         c.len = (uint16_t)strnlen(c.payload, sizeof(c.payload));
 
-        // If queue is full, drop
-        if (xQueueSend(lora_cmd_q, &c, 0) != pdTRUE) {
-            ESP_LOGW(TAG, "LoRa cmd queue full; dropping command");
+        if (xQueueSend(lora_cmd_q, &c, pdMS_TO_TICKS(100)) != pdTRUE) {
+            ESP_LOGW(TAG, "LoRa cmd queue full; returning 503");
+            httpd_resp_set_status(req, "503 Service Unavailable");
+            httpd_resp_sendstr(req, "queue_full");
+            return ESP_OK;
         }
     }
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(status_json, sizeof(status_json),
+             "{\"battery\":85,\"state\":\"CMD_QUEUED\",\"mode\":\"HTTP\",\"last_cmd\":\"%.120s\",\"queue_depth\":%d}",
+             last_cmd, (int)uxQueueMessagesWaiting(lora_cmd_q));
+    xSemaphoreGive(status_lock);
 
     httpd_resp_sendstr(req, "OK");
     return ESP_OK;
@@ -139,11 +152,17 @@ static httpd_handle_t start_http_server(void) {
             .method = HTTP_POST,
             .handler = command_post_handler
         };
+        httpd_uri_t last_lora_uri = {
+            .uri = "/last_lora",
+            .method = HTTP_GET,
+            .handler = last_lora_get_handler
+        };
 
         httpd_register_uri_handler(server, &status_uri);
         httpd_register_uri_handler(server, &cmd_uri);
+        httpd_register_uri_handler(server, &last_lora_uri);
 
-        ESP_LOGI(TAG, "HTTP server: GET /status, POST /command");
+        ESP_LOGI(TAG, "HTTP server: GET /status, POST /command, GET /last_lora");
     }
     return server;
 }
@@ -254,10 +273,19 @@ static void lora_tx_task(void *arg) {
         if (xQueueReceive(lora_cmd_q, &c, portMAX_DELAY) == pdTRUE) {
             if (c.len > 0) {
                 ESP_LOGI(TAG, "LoRa TX: %.*s", c.len, c.payload);
-                int send_result = LoRaSend((uint8_t*)c.payload, c.len, SX126x_TXMODE_SYNC);
-                if (send_result != 0) {
-                    ESP_LOGE(TAG, "LoRaSend failed with code: %d", send_result);
-                    // Optionally retry or handle error (e.g., reset LoRa)
+                bool sent = false;
+                int send_result = 0;
+                for (int retry = 0; retry < 3; retry++) {
+                    send_result = LoRaSend((uint8_t*)c.payload, c.len, SX126x_TXMODE_SYNC);
+                    if (send_result == 0) {
+                        sent = true;
+                        break;
+                    }
+                    ESP_LOGW(TAG, "LoRaSend retry %d/3 failed with code %d", retry + 1, send_result);
+                    vTaskDelay(pdMS_TO_TICKS(50));
+                }
+                if (!sent) {
+                    ESP_LOGE(TAG, "LoRaSend failed after retries with code: %d", send_result);
                 }
             }
         }
@@ -270,16 +298,19 @@ static void lora_rx_task(void *arg) {
     uint8_t rx[255];
 
     while (1) {
-        uint8_t n = LoRaReceive(rx, sizeof(rx));
+        uint8_t n = LoRaReceive(rx, sizeof(rx) - 1);
         if (n > 0) {
-            // Save last received LoRa text into /status
+            rx[n] = '\0';
+
             xSemaphoreTake(status_lock, portMAX_DELAY);
+            snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", (char*)rx);
             snprintf(status_json, sizeof(status_json),
-                     "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"last_lora\":\"%.*s\"}",
-                     (n > 120 ? 120 : n), (char*)rx);
+                     "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"queue_depth\":%d,\"last_lora\":\"%.200s\"}",
+                     (int)uxQueueMessagesWaiting(lora_cmd_q),
+                     last_lora_rx);
             xSemaphoreGive(status_lock);
 
-            ESP_LOGI(TAG, "LoRa RX (%d): %.*s", n, n, (char*)rx);
+            ESP_LOGI(TAG, "LoRa RX (%d): %s", n, (char*)rx);
         }
         vTaskDelay(pdMS_TO_TICKS(5));
     }
@@ -298,7 +329,7 @@ void app_main(void) {
     start_http_server();
 
     // LoRa
-    lora_cmd_q = xQueueCreate(8, sizeof(lora_cmd_t));
+    lora_cmd_q = xQueueCreate(LORA_QUEUE_DEPTH, sizeof(lora_cmd_t));
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
