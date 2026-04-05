@@ -58,10 +58,14 @@ static SemaphoreHandle_t status_lock;
 // Keep these reasonably sized so they fit in RAM.
 static char status_json[768] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]     = "none";
+static char last_cmd_id[64]   = "";
+static char last_cmd_status[32] = "idle";
 static char last_lora_rx[256] = "";
 static char last_ack_rx[160]  = "";
 static char current_state[32] = "IDLE";
 static char current_mode[16]  = "BOOT";
+static char wifi_link_state[16] = "connecting";
+static char lora_link_state[16] = "idle";
 static uint32_t ack_count     = 0;
 
 // ---------------- LoRa Queue ----------------
@@ -77,15 +81,21 @@ static void capture_ack_if_present(const char *text) {
     const char *ack = strstr(text, "ACK:");
     if (!ack || ack[0] == '\0') return;
     snprintf(last_ack_rx, sizeof(last_ack_rx), "%.150s", ack);
+    snprintf(last_cmd_status, sizeof(last_cmd_status), "acknowledged");
+    snprintf(lora_link_state, sizeof(lora_link_state), "online");
     ack_count++;
 }
 
 static void refresh_status_json(void) {
     snprintf(status_json, sizeof(status_json),
-             "{\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"last_cmd\":\"%.120s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\"}",
+             "{\"status_version\":2,\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\"}",
              current_state,
              current_mode,
+             wifi_link_state,
+             lora_link_state,
              last_cmd,
+             last_cmd_id,
+             last_cmd_status,
              (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0),
              (unsigned long)ack_count,
              last_ack_rx,
@@ -115,6 +125,7 @@ static esp_err_t last_lora_get_handler(httpd_req_t *req) {
 static esp_err_t command_post_handler(httpd_req_t *req) {
     const int max_body = (int)sizeof(last_cmd) - 1;
     int len = req->content_len;
+    char command_id[sizeof(last_cmd_id)] = "";
 
     if (len <= 0) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Empty body");
@@ -136,6 +147,13 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
         received += r;
     }
     last_cmd[received] = '\0';
+    if (httpd_req_get_hdr_value_str(req, "x-command-id", command_id, sizeof(command_id)) == ESP_OK) {
+        snprintf(last_cmd_id, sizeof(last_cmd_id), "%s", command_id);
+    } else {
+        last_cmd_id[0] = '\0';
+    }
+    snprintf(last_cmd_status, sizeof(last_cmd_status), "queued");
+    snprintf(lora_link_state, sizeof(lora_link_state), "idle");
 
     ESP_LOGI(TAG, "Received /command: %s", last_cmd);
     snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
@@ -149,16 +167,19 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
 
         if (xQueueSend(lora_cmd_q, &c, pdMS_TO_TICKS(100)) != pdTRUE) {
             ESP_LOGW(TAG, "LoRa cmd queue full; returning 503");
+            snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
+            snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
             httpd_resp_set_status(req, "503 Service Unavailable");
             httpd_resp_sendstr(req, "queue_full");
             return ESP_OK;
         }
     }
+    snprintf(last_cmd_status, sizeof(last_cmd_status), "forwarded");
 
     xSemaphoreTake(status_lock, portMAX_DELAY);
     snprintf(status_json, sizeof(status_json),
-             "{\"battery\":85,\"state\":\"CMD_QUEUED\",\"mode\":\"HTTP\",\"last_cmd\":\"%.120s\",\"queue_depth\":%d}",
-             last_cmd, (int)uxQueueMessagesWaiting(lora_cmd_q));
+             "{\"status_version\":2,\"battery\":85,\"state\":\"CMD_QUEUED\",\"mode\":\"HTTP\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d}",
+             wifi_link_state, lora_link_state, last_cmd, last_cmd_id, last_cmd_status, (int)uxQueueMessagesWaiting(lora_cmd_q));
     xSemaphoreGive(status_lock);
 
     httpd_resp_sendstr(req, "OK");
@@ -243,9 +264,10 @@ static void start_sta_then_fallback_ap(void) {
         ESP_LOGI(TAG, "STA connected (got IP).");
         snprintf(current_state, sizeof(current_state), "IDLE");
         snprintf(current_mode, sizeof(current_mode), "STA");
+        snprintf(wifi_link_state, sizeof(wifi_link_state), "online");
         xSemaphoreTake(status_lock, portMAX_DELAY);
         snprintf(status_json, sizeof(status_json),
-                 "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"STA\"}");
+                 "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"STA\",\"wifi_link_state\":\"online\",\"lora_link_state\":\"idle\"}");
         xSemaphoreGive(status_lock);
         return;
     }
@@ -268,9 +290,10 @@ static void start_sta_then_fallback_ap(void) {
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_cfg));
     ESP_ERROR_CHECK(esp_wifi_start());
 
+    snprintf(wifi_link_state, sizeof(wifi_link_state), "degraded");
     xSemaphoreTake(status_lock, portMAX_DELAY);
     snprintf(status_json, sizeof(status_json),
-             "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"AP\"}");
+             "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"AP\",\"wifi_link_state\":\"degraded\",\"lora_link_state\":\"idle\"}");
     xSemaphoreGive(status_lock);
 
     snprintf(current_state, sizeof(current_state), "IDLE");
@@ -318,6 +341,11 @@ static void lora_tx_task(void *arg) {
                 }
                 if (!sent) {
                     ESP_LOGE(TAG, "LoRaSend failed after retries with code: %d", send_result);
+                    snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
+                    snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
+                } else {
+                    snprintf(last_cmd_status, sizeof(last_cmd_status), "sent");
+                    snprintf(lora_link_state, sizeof(lora_link_state), "online");
                 }
             }
         }
@@ -339,10 +367,10 @@ static void lora_rx_task(void *arg) {
             capture_ack_if_present((char*)rx);
             snprintf(current_state, sizeof(current_state), "IDLE");
             snprintf(current_mode, sizeof(current_mode), "LORA");
+            snprintf(lora_link_state, sizeof(lora_link_state), "online");
             snprintf(status_json, sizeof(status_json),
-                     "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"queue_depth\":%d,\"last_lora\":\"%.200s\"}",
-                     (int)uxQueueMessagesWaiting(lora_cmd_q),
-                     last_lora_rx);
+                     "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"last_lora\":\"%.200s\"}",
+                     wifi_link_state, lora_link_state, last_cmd, last_cmd_id, last_cmd_status, (int)uxQueueMessagesWaiting(lora_cmd_q), last_lora_rx);
             xSemaphoreGive(status_lock);
 
             ESP_LOGI(TAG, "LoRa RX (%d): %s", n, (char*)rx);
