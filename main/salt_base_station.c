@@ -56,9 +56,13 @@ static const int WIFI_GOT_IP_BIT = BIT0;
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
-static char status_json[512] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
-static char last_cmd[192]    = "none";
+static char status_json[768] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
+static char last_cmd[192]     = "none";
 static char last_lora_rx[256] = "";
+static char last_ack_rx[160]  = "";
+static char current_state[32] = "IDLE";
+static char current_mode[16]  = "BOOT";
+static uint32_t ack_count     = 0;
 
 // ---------------- LoRa Queue ----------------
 typedef struct {
@@ -68,10 +72,32 @@ typedef struct {
 
 static QueueHandle_t lora_cmd_q;
 
+static void capture_ack_if_present(const char *text) {
+    if (!text) return;
+    const char *ack = strstr(text, "ACK:");
+    if (!ack || ack[0] == '\0') return;
+    snprintf(last_ack_rx, sizeof(last_ack_rx), "%.150s", ack);
+    ack_count++;
+}
+
+static void refresh_status_json(void) {
+    snprintf(status_json, sizeof(status_json),
+             "{\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"last_cmd\":\"%.120s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\"}",
+             current_state,
+             current_mode,
+             last_cmd,
+             (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0),
+             (unsigned long)ack_count,
+             last_ack_rx,
+             last_lora_rx);
+}
+
+
 // ---------------- HTTP Handlers ----------------
 
 static esp_err_t status_get_handler(httpd_req_t *req) {
     xSemaphoreTake(status_lock, portMAX_DELAY);
+    refresh_status_json();
     httpd_resp_set_type(req, "application/json");
     httpd_resp_send(req, status_json, HTTPD_RESP_USE_STRLEN);
     xSemaphoreGive(status_lock);
@@ -112,6 +138,8 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
     last_cmd[received] = '\0';
 
     ESP_LOGI(TAG, "Received /command: %s", last_cmd);
+    snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
+    snprintf(current_mode, sizeof(current_mode), "HTTP");
 
     // Queue command for LoRa TX
     if (lora_cmd_q) {
@@ -213,6 +241,8 @@ static void start_sta_then_fallback_ap(void) {
 
     if (bits & WIFI_GOT_IP_BIT) {
         ESP_LOGI(TAG, "STA connected (got IP).");
+        snprintf(current_state, sizeof(current_state), "IDLE");
+        snprintf(current_mode, sizeof(current_mode), "STA");
         xSemaphoreTake(status_lock, portMAX_DELAY);
         snprintf(status_json, sizeof(status_json),
                  "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"STA\"}");
@@ -243,6 +273,8 @@ static void start_sta_then_fallback_ap(void) {
              "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"AP\"}");
     xSemaphoreGive(status_lock);
 
+    snprintf(current_state, sizeof(current_state), "IDLE");
+    snprintf(current_mode, sizeof(current_mode), "AP");
     ESP_LOGI(TAG, "AP started. SSID=%s (AP IP is usually 192.168.4.1)", AP_SSID);
 }
 
@@ -304,6 +336,9 @@ static void lora_rx_task(void *arg) {
 
             xSemaphoreTake(status_lock, portMAX_DELAY);
             snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", (char*)rx);
+            capture_ack_if_present((char*)rx);
+            snprintf(current_state, sizeof(current_state), "IDLE");
+            snprintf(current_mode, sizeof(current_mode), "LORA");
             snprintf(status_json, sizeof(status_json),
                      "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"queue_depth\":%d,\"last_lora\":\"%.200s\"}",
                      (int)uxQueueMessagesWaiting(lora_cmd_q),
