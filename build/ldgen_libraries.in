@@ -145,6 +145,8 @@ $<TARGET_FILE:__idf_console>
 $<TARGET_FILE:idf::esp_local_ctrl>
 $<TARGET_FILE:__idf_protocomm>
 $<TARGET_FILE:__idf_esp_https_server>
+$<TARGET_FILE:__idf_mdns>
+$<TARGET_FILE:__idf_esp_eth>
 $<TARGET_FILE:idf::espcoredump>
 $<TARGET_FILE:idf::wear_levelling>
 $<TARGET_FILE:idf::fatfs>
@@ -159,5 +161,7 @@ $<TARGET_FILE:idf::touch_element>
 $<TARGET_FILE:idf::usb>
 $<TARGET_FILE:idf::wifi_provisioning>
 $<TARGET_FILE:__idf_json>
-$<TARGET_FILE:idf::main>
+$<TARGET_FILE:idf::mdns>
 $<TARGET_FILE:idf::ra01s>
+$<TARGET_FILE:idf::main>
+$<TARGET_FILE:__idf_ra01s>

@@ -564,11 +564,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/main/cmake_install.cmake")
+  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mdns/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/ra01s/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/main/cmake_install.cmake")
 endif()
 

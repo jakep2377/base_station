@@ -23,8 +23,8 @@
 #include "ra01s.h"
 
 // ---------------- Wi-Fi Credentials ----------------
-#define STA_SSID "42Fortress"
-#define STA_PASS "sweetdoll684"
+#define STA_SSID "JakesiPhone"
+#define STA_PASS "password123"
 
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
@@ -60,7 +60,7 @@ static const int WIFI_GOT_IP_BIT = BIT0;
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
-static char status_json[768] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
+static char status_json[1024] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]     = "none";
 static char last_cmd_id[64]   = "";
 static char last_cmd_status[32] = "idle";
