@@ -16,6 +16,7 @@
 #include "esp_netif.h"
 
 #include "esp_http_server.h"
+#include "mdns.h"
 
 // LoRa component
 #include "ra01s.h"
@@ -26,6 +27,8 @@
 
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
+#define MDNS_HOSTNAME "base-station"
+#define MDNS_INSTANCE "Salt Robot Base Station"
 
 // ---------------- LoRa Settings ----------------
 #define LORA_FREQ_HZ     915000000
@@ -100,6 +103,20 @@ static void refresh_status_json(void) {
              (unsigned long)ack_count,
              last_ack_rx,
              last_lora_rx);
+}
+
+static void start_mdns_service(void) {
+    ESP_ERROR_CHECK(mdns_init());
+    ESP_ERROR_CHECK(mdns_hostname_set(MDNS_HOSTNAME));
+    ESP_ERROR_CHECK(mdns_instance_name_set(MDNS_INSTANCE));
+
+    mdns_txt_item_t service_txt[] = {
+        {"path", "/status"},
+        {"role", "base_station"},
+        {"service", "robot-http"},
+    };
+    ESP_ERROR_CHECK(mdns_service_add(NULL, "_http", "_tcp", 80, service_txt, sizeof(service_txt) / sizeof(service_txt[0])));
+    ESP_LOGI(TAG, "mDNS started: http://%s.local", MDNS_HOSTNAME);
 }
 
 
@@ -389,6 +406,7 @@ void app_main(void) {
     status_lock = xSemaphoreCreateMutex();
 
     start_sta_then_fallback_ap();
+    start_mdns_service();
     start_http_server();
 
     // LoRa
