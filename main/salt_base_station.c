@@ -1,7 +1,7 @@
-#include <string.h>
 #include <stdio.h>
-
+#include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
@@ -13,66 +13,71 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
+#include "nvs.h"
 #include "esp_netif.h"
+#include "esp_system.h"
 
 #include "esp_http_server.h"
 #include "mdns.h"
 #include "display.h"
 
-// LoRa component
 #include "ra01s.h"
-
-// ---------------- Wi-Fi Credentials ----------------
-#define STA_SSID "42Fortress"
-#define STA_PASS "sweetdoll684"
 
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
 #define MDNS_HOSTNAME "base-station"
 #define MDNS_INSTANCE "Salt Robot Base Station"
+#define DEFAULT_BACKEND_URL "https://robot-lora-server.onrender.com"
 
-// ---------------- LoRa Settings ----------------
+#define NVS_NAMESPACE "config"
+#define NVS_KEY_WIFI_SSID "wifi_ssid"
+#define NVS_KEY_WIFI_PASS "wifi_pass"
+#define NVS_KEY_BACKEND_URL "backend_url"
+
+#define MAX_WIFI_SSID_LEN 32
+#define MAX_WIFI_PASS_LEN 64
+#define MAX_BACKEND_URL_LEN 160
+
 #define LORA_FREQ_HZ     915000000
 #define LORA_TX_POWER_DBM 22
 #define LORA_TCXO_VOLT   3.3f
 #define LORA_USE_LDO     true
 
 #define LORA_SF          7
-#define LORA_BW          4   
-#define LORA_CR          1  
+#define LORA_BW          4
+#define LORA_CR          1
 #define LORA_PREAMBLE    8
-#define LORA_PAYLOAD_LEN 0  
+#define LORA_PAYLOAD_LEN 0
 #define LORA_CRC_ON      true
 #define LORA_INVERT_IRQ  false
 
-// Limit command size over LoRa
 #define LORA_CMD_MAX     200
-
 #define LORA_QUEUE_DEPTH 64
 
 static const char *TAG = "BASE";
 
-// ---------------- Wi-Fi Event Group ----------------
 static EventGroupHandle_t wifi_event_group;
 static const int WIFI_GOT_IP_BIT = BIT0;
-
-// ---------------- Shared State ----------------
 static SemaphoreHandle_t status_lock;
 
-// Keep these reasonably sized so they fit in RAM.
-static char status_json[768] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
-static char last_cmd[192]     = "none";
-static char last_cmd_id[64]   = "";
+static char status_json[1024] = "{\"battery\":85,\"state\":\"BOOT\",\"mode\":\"BOOT\"}";
+static char last_cmd[192] = "none";
+static char last_cmd_id[64] = "";
 static char last_cmd_status[32] = "idle";
 static char last_lora_rx[256] = "";
-static char last_ack_rx[160]  = "";
-static char current_state[32] = "IDLE";
-static char current_mode[16]  = "BOOT";
+static char last_ack_rx[160] = "";
+static char current_state[32] = "BOOT";
+static char current_mode[16] = "BOOT";
 static char wifi_link_state[16] = "connecting";
 static char lora_link_state[16] = "idle";
-static uint32_t ack_count     = 0;
+static uint32_t ack_count = 0;
 
-// ---------------- LoRa Queue ----------------
+static char provisioned_ssid[MAX_WIFI_SSID_LEN + 1] = "";
+static char provisioned_pass[MAX_WIFI_PASS_LEN + 1] = "";
+static char provisioned_backend_url[MAX_BACKEND_URL_LEN] = DEFAULT_BACKEND_URL;
+static bool wifi_configured = false;
+static bool ap_setup_mode = false;
+
 typedef struct {
     uint16_t len;
     char payload[LORA_CMD_MAX];
@@ -80,6 +85,8 @@ typedef struct {
 
 static QueueHandle_t lora_cmd_q;
 static bool display_available = false;
+
+static void refresh_status_json(void);
 
 static void capture_ack_if_present(const char *text) {
     if (!text) return;
@@ -93,7 +100,7 @@ static void capture_ack_if_present(const char *text) {
 
 static void refresh_status_json(void) {
     snprintf(status_json, sizeof(status_json),
-             "{\"status_version\":2,\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\"}",
+             "{\"status_version\":3,\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\",\"configured\":%s,\"backend_url\":\"%.150s\",\"ap_ssid\":\"%s\"}",
              current_state,
              current_mode,
              wifi_link_state,
@@ -104,7 +111,10 @@ static void refresh_status_json(void) {
              (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0),
              (unsigned long)ack_count,
              last_ack_rx,
-             last_lora_rx);
+             last_lora_rx,
+             wifi_configured ? "true" : "false",
+             provisioned_backend_url,
+             AP_SSID);
 }
 
 static void start_mdns_service(void) {
@@ -120,8 +130,6 @@ static void start_mdns_service(void) {
     ESP_ERROR_CHECK(mdns_service_add(NULL, "_http", "_tcp", 80, service_txt, sizeof(service_txt) / sizeof(service_txt[0])));
     ESP_LOGI(TAG, "mDNS started: http://%s.local", MDNS_HOSTNAME);
 }
-
-
 
 static void display_task(void *arg) {
     (void)arg;
@@ -154,7 +162,103 @@ static void display_task(void *arg) {
         vTaskDelay(pdMS_TO_TICKS(750));
     }
 }
-// ---------------- HTTP Handlers ----------------
+
+static bool extract_json_string(const char *json, const char *key, char *out, size_t out_size) {
+    if (!json || !key || !out || out_size == 0) return false;
+    char needle[48];
+    snprintf(needle, sizeof(needle), "\"%s\"", key);
+    const char *found = strstr(json, needle);
+    if (!found) return false;
+    found = strchr(found + strlen(needle), ':');
+    if (!found) return false;
+    found++;
+    while (*found && isspace((unsigned char)*found)) found++;
+    if (*found != '"') return false;
+    found++;
+    size_t i = 0;
+    while (*found && *found != '"' && i + 1 < out_size) {
+        if (*found == '\\' && found[1] != '\0') {
+            found++;
+        }
+        out[i++] = *found++;
+    }
+    out[i] = '\0';
+    return i > 0;
+}
+
+static esp_err_t read_request_body(httpd_req_t *req, char *buffer, size_t buffer_size) {
+    if (!req || !buffer || buffer_size == 0) return ESP_ERR_INVALID_ARG;
+    if (req->content_len <= 0 || (size_t)req->content_len >= buffer_size) {
+        return ESP_ERR_INVALID_SIZE;
+    }
+
+    int received = 0;
+    while (received < req->content_len) {
+        int r = httpd_req_recv(req, buffer + received, req->content_len - received);
+        if (r <= 0) {
+            return ESP_FAIL;
+        }
+        received += r;
+    }
+    buffer[received] = '\0';
+    return ESP_OK;
+}
+
+static void load_provisioned_network_config(void) {
+    nvs_handle_t nvs = 0;
+    size_t len = 0;
+
+    provisioned_ssid[0] = '\0';
+    provisioned_pass[0] = '\0';
+    snprintf(provisioned_backend_url, sizeof(provisioned_backend_url), "%s", DEFAULT_BACKEND_URL);
+    wifi_configured = false;
+
+    if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &nvs) != ESP_OK) {
+        return;
+    }
+
+    len = sizeof(provisioned_ssid);
+    if (nvs_get_str(nvs, NVS_KEY_WIFI_SSID, provisioned_ssid, &len) == ESP_OK && provisioned_ssid[0] != '\0') {
+        wifi_configured = true;
+    }
+
+    len = sizeof(provisioned_pass);
+    (void)nvs_get_str(nvs, NVS_KEY_WIFI_PASS, provisioned_pass, &len);
+
+    len = sizeof(provisioned_backend_url);
+    if (nvs_get_str(nvs, NVS_KEY_BACKEND_URL, provisioned_backend_url, &len) != ESP_OK || provisioned_backend_url[0] == '\0') {
+        snprintf(provisioned_backend_url, sizeof(provisioned_backend_url), "%s", DEFAULT_BACKEND_URL);
+    }
+
+    nvs_close(nvs);
+}
+
+static esp_err_t save_provisioned_network_config(const char *ssid, const char *password, const char *backend_url) {
+    nvs_handle_t nvs = 0;
+    esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &nvs);
+    if (err != ESP_OK) return err;
+
+    err = nvs_set_str(nvs, NVS_KEY_WIFI_SSID, ssid ? ssid : "");
+    if (err == ESP_OK) err = nvs_set_str(nvs, NVS_KEY_WIFI_PASS, password ? password : "");
+    if (err == ESP_OK) err = nvs_set_str(nvs, NVS_KEY_BACKEND_URL, (backend_url && backend_url[0]) ? backend_url : DEFAULT_BACKEND_URL);
+    if (err == ESP_OK) err = nvs_commit(nvs);
+    nvs_close(nvs);
+
+    if (err == ESP_OK) {
+        snprintf(provisioned_ssid, sizeof(provisioned_ssid), "%s", ssid ? ssid : "");
+        snprintf(provisioned_pass, sizeof(provisioned_pass), "%s", password ? password : "");
+        snprintf(provisioned_backend_url, sizeof(provisioned_backend_url), "%s", (backend_url && backend_url[0]) ? backend_url : DEFAULT_BACKEND_URL);
+        wifi_configured = provisioned_ssid[0] != '\0';
+    }
+
+    return err;
+}
+
+static void delayed_restart_task(void *arg) {
+    (void)arg;
+    vTaskDelay(pdMS_TO_TICKS(1200));
+    esp_restart();
+}
 
 static esp_err_t status_get_handler(httpd_req_t *req) {
     xSemaphoreTake(status_lock, portMAX_DELAY);
@@ -173,6 +277,63 @@ static esp_err_t last_lora_get_handler(httpd_req_t *req) {
     return ESP_OK;
 }
 
+static esp_err_t setup_status_get_handler(httpd_req_t *req) {
+    char body[512];
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(body, sizeof(body),
+             "{\"ok\":true,\"configured\":%s,\"mode\":\"%.16s\",\"state\":\"%.32s\",\"apSsid\":\"%s\",\"savedSsid\":\"%.32s\",\"backendUrl\":\"%.150s\",\"wifiLinkState\":\"%.16s\"}",
+             wifi_configured ? "true" : "false",
+             current_mode,
+             current_state,
+             AP_SSID,
+             provisioned_ssid,
+             provisioned_backend_url,
+             wifi_link_state);
+    xSemaphoreGive(status_lock);
+
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_sendstr(req, body);
+    return ESP_OK;
+}
+
+static esp_err_t setup_network_post_handler(httpd_req_t *req) {
+    char body[512] = {0};
+    char ssid[MAX_WIFI_SSID_LEN + 1] = {0};
+    char password[MAX_WIFI_PASS_LEN + 1] = {0};
+    char backend_url[MAX_BACKEND_URL_LEN] = {0};
+
+    esp_err_t body_err = read_request_body(req, body, sizeof(body));
+    if (body_err != ESP_OK) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid setup body");
+        return ESP_FAIL;
+    }
+
+    if (!extract_json_string(body, "ssid", ssid, sizeof(ssid))) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "ssid is required");
+        return ESP_FAIL;
+    }
+    (void)extract_json_string(body, "password", password, sizeof(password));
+    (void)extract_json_string(body, "backendUrl", backend_url, sizeof(backend_url));
+
+    esp_err_t save_err = save_provisioned_network_config(ssid, password, backend_url);
+    if (save_err != ESP_OK) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to save Wi-Fi config");
+        return ESP_FAIL;
+    }
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(current_state, sizeof(current_state), "SETUP_SAVED");
+    snprintf(current_mode, sizeof(current_mode), "AP");
+    snprintf(wifi_link_state, sizeof(wifi_link_state), "restarting");
+    refresh_status_json();
+    xSemaphoreGive(status_lock);
+
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_sendstr(req, "{\"ok\":true,\"message\":\"Wi-Fi saved. Restarting base station.\"}");
+    xTaskCreate(delayed_restart_task, "restart", 2048, NULL, 3, NULL);
+    return ESP_OK;
+}
+
 static esp_err_t command_post_handler(httpd_req_t *req) {
     const int max_body = (int)sizeof(last_cmd) - 1;
     int len = req->content_len;
@@ -187,7 +348,6 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
         return ESP_FAIL;
     }
 
-    // Read the body into last_cmd
     int received = 0;
     while (received < len) {
         int r = httpd_req_recv(req, last_cmd + received, len - received);
@@ -210,7 +370,6 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
     snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
     snprintf(current_mode, sizeof(current_mode), "HTTP");
 
-    // Queue command for LoRa TX
     if (lora_cmd_q) {
         lora_cmd_t c = {0};
         snprintf(c.payload, sizeof(c.payload), "%s", last_cmd);
@@ -228,9 +387,7 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
     snprintf(last_cmd_status, sizeof(last_cmd_status), "forwarded");
 
     xSemaphoreTake(status_lock, portMAX_DELAY);
-    snprintf(status_json, sizeof(status_json),
-             "{\"status_version\":2,\"battery\":85,\"state\":\"CMD_QUEUED\",\"mode\":\"HTTP\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d}",
-             wifi_link_state, lora_link_state, last_cmd, last_cmd_id, last_cmd_status, (int)uxQueueMessagesWaiting(lora_cmd_q));
+    refresh_status_json();
     xSemaphoreGive(status_lock);
 
     httpd_resp_sendstr(req, "OK");
@@ -257,17 +414,27 @@ static httpd_handle_t start_http_server(void) {
             .method = HTTP_GET,
             .handler = last_lora_get_handler
         };
+        httpd_uri_t setup_status_uri = {
+            .uri = "/setup/status",
+            .method = HTTP_GET,
+            .handler = setup_status_get_handler
+        };
+        httpd_uri_t setup_network_uri = {
+            .uri = "/setup/network",
+            .method = HTTP_POST,
+            .handler = setup_network_post_handler
+        };
 
         httpd_register_uri_handler(server, &status_uri);
         httpd_register_uri_handler(server, &cmd_uri);
         httpd_register_uri_handler(server, &last_lora_uri);
+        httpd_register_uri_handler(server, &setup_status_uri);
+        httpd_register_uri_handler(server, &setup_network_uri);
 
-        ESP_LOGI(TAG, "HTTP server: GET /status, POST /command, GET /last_lora");
+        ESP_LOGI(TAG, "HTTP server ready: /status, /command, /last_lora, /setup/status, /setup/network");
     }
     return server;
 }
-
-// ---------------- Wi-Fi Events ----------------
 
 static void wifi_event_handler(void *arg, esp_event_base_t base, int32_t id, void *data) {
     (void)arg;
@@ -276,6 +443,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t base, int32_t id, voi
     if (base == WIFI_EVENT && id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (base == WIFI_EVENT && id == WIFI_EVENT_STA_DISCONNECTED) {
+        snprintf(wifi_link_state, sizeof(wifi_link_state), "connecting");
         ESP_LOGW(TAG, "STA disconnected, retrying...");
         esp_wifi_connect();
     } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
@@ -283,7 +451,57 @@ static void wifi_event_handler(void *arg, esp_event_base_t base, int32_t id, voi
     }
 }
 
-// ---------------- STA then AP fallback ----------------
+static void start_ap_mode(void) {
+    esp_netif_create_default_wifi_ap();
+
+    wifi_config_t ap_cfg = {0};
+    strncpy((char *)ap_cfg.ap.ssid, AP_SSID, sizeof(ap_cfg.ap.ssid));
+    strncpy((char *)ap_cfg.ap.password, AP_PASS, sizeof(ap_cfg.ap.password));
+    ap_cfg.ap.ssid_len = (uint8_t)strlen(AP_SSID);
+    ap_cfg.ap.max_connection = 4;
+    ap_cfg.ap.authmode = strlen(AP_PASS) == 0 ? WIFI_AUTH_OPEN : WIFI_AUTH_WPA2_PSK;
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_cfg));
+    ESP_ERROR_CHECK(esp_wifi_start());
+
+    ap_setup_mode = true;
+    snprintf(current_state, sizeof(current_state), wifi_configured ? "IDLE" : "SETUP");
+    snprintf(current_mode, sizeof(current_mode), "AP");
+    snprintf(wifi_link_state, sizeof(wifi_link_state), wifi_configured ? "degraded" : "setup");
+    refresh_status_json();
+    ESP_LOGI(TAG, "AP started. SSID=%s", AP_SSID);
+}
+
+static bool try_sta_mode(const char *ssid, const char *password) {
+    esp_netif_create_default_wifi_sta();
+
+    wifi_config_t sta_cfg = {0};
+    strncpy((char *)sta_cfg.sta.ssid, ssid, sizeof(sta_cfg.sta.ssid));
+    strncpy((char *)sta_cfg.sta.password, password, sizeof(sta_cfg.sta.password));
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &sta_cfg));
+    ESP_ERROR_CHECK(esp_wifi_start());
+
+    ESP_LOGI(TAG, "Trying STA connect to %s...", ssid);
+    EventBits_t bits = xEventGroupWaitBits(
+        wifi_event_group, WIFI_GOT_IP_BIT, pdFALSE, pdTRUE, pdMS_TO_TICKS(12000));
+
+    if (bits & WIFI_GOT_IP_BIT) {
+        ap_setup_mode = false;
+        snprintf(current_state, sizeof(current_state), "IDLE");
+        snprintf(current_mode, sizeof(current_mode), "STA");
+        snprintf(wifi_link_state, sizeof(wifi_link_state), "online");
+        refresh_status_json();
+        ESP_LOGI(TAG, "STA connected (got IP).");
+        return true;
+    }
+
+    ESP_LOGW(TAG, "STA failed for %s", ssid);
+    ESP_ERROR_CHECK(esp_wifi_stop());
+    return false;
+}
 
 static void start_sta_then_fallback_ap(void) {
     wifi_event_group = xEventGroupCreate();
@@ -296,63 +514,14 @@ static void start_sta_then_fallback_ap(void) {
     ESP_ERROR_CHECK(esp_event_handler_instance_register(
         IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL, NULL));
 
-    // Try STA first
-    esp_netif_create_default_wifi_sta();
+    load_provisioned_network_config();
 
-    wifi_config_t sta_cfg = {0};
-    strncpy((char*)sta_cfg.sta.ssid, STA_SSID, sizeof(sta_cfg.sta.ssid));
-    strncpy((char*)sta_cfg.sta.password, STA_PASS, sizeof(sta_cfg.sta.password));
-
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &sta_cfg));
-    ESP_ERROR_CHECK(esp_wifi_start());
-
-    ESP_LOGI(TAG, "Trying STA connect...");
-    EventBits_t bits = xEventGroupWaitBits(
-        wifi_event_group, WIFI_GOT_IP_BIT, pdFALSE, pdTRUE, pdMS_TO_TICKS(12000));
-
-    if (bits & WIFI_GOT_IP_BIT) {
-        ESP_LOGI(TAG, "STA connected (got IP).");
-        snprintf(current_state, sizeof(current_state), "IDLE");
-        snprintf(current_mode, sizeof(current_mode), "STA");
-        snprintf(wifi_link_state, sizeof(wifi_link_state), "online");
-        xSemaphoreTake(status_lock, portMAX_DELAY);
-        snprintf(status_json, sizeof(status_json),
-                 "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"STA\",\"wifi_link_state\":\"online\",\"lora_link_state\":\"idle\"}");
-        xSemaphoreGive(status_lock);
+    if (wifi_configured && try_sta_mode(provisioned_ssid, provisioned_pass)) {
         return;
     }
 
-    // Fallback AP mode
-    ESP_LOGW(TAG, "STA failed. Starting AP mode...");
-    ESP_ERROR_CHECK(esp_wifi_stop());
-
-    esp_netif_create_default_wifi_ap();
-
-    wifi_config_t ap_cfg = {0};
-    strncpy((char*)ap_cfg.ap.ssid, AP_SSID, sizeof(ap_cfg.ap.ssid));
-    strncpy((char*)ap_cfg.ap.password, AP_PASS, sizeof(ap_cfg.ap.password));
-    ap_cfg.ap.ssid_len = (uint8_t)strlen(AP_SSID);
-    ap_cfg.ap.max_connection = 4;
-    ap_cfg.ap.authmode = WIFI_AUTH_WPA2_PSK;
-    if (strlen(AP_PASS) == 0) ap_cfg.ap.authmode = WIFI_AUTH_OPEN;
-
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_cfg));
-    ESP_ERROR_CHECK(esp_wifi_start());
-
-    snprintf(wifi_link_state, sizeof(wifi_link_state), "degraded");
-    xSemaphoreTake(status_lock, portMAX_DELAY);
-    snprintf(status_json, sizeof(status_json),
-             "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"AP\",\"wifi_link_state\":\"degraded\",\"lora_link_state\":\"idle\"}");
-    xSemaphoreGive(status_lock);
-
-    snprintf(current_state, sizeof(current_state), "IDLE");
-    snprintf(current_mode, sizeof(current_mode), "AP");
-    ESP_LOGI(TAG, "AP started. SSID=%s (AP IP is usually 192.168.4.1)", AP_SSID);
+    start_ap_mode();
 }
-
-// ---------------- LoRa ----------------
 
 static void lora_init(void) {
     ESP_LOGI(TAG, "Initializing LoRa...");
@@ -370,7 +539,6 @@ static void lora_init(void) {
     ESP_LOGI(TAG, "LoRa ready @ %d Hz", (int)LORA_FREQ_HZ);
 }
 
-// TX task: send queued commands over LoRa
 static void lora_tx_task(void *arg) {
     (void)arg;
     lora_cmd_t c;
@@ -382,7 +550,7 @@ static void lora_tx_task(void *arg) {
                 bool sent = false;
                 int send_result = 0;
                 for (int retry = 0; retry < 3; retry++) {
-                    send_result = LoRaSend((uint8_t*)c.payload, c.len, SX126x_TXMODE_SYNC);
+                    send_result = LoRaSend((uint8_t *)c.payload, c.len, SX126x_TXMODE_SYNC);
                     if (send_result == 0) {
                         sent = true;
                         break;
@@ -403,7 +571,6 @@ static void lora_tx_task(void *arg) {
     }
 }
 
-// RX task: receive messages over LoRa and store into status_json
 static void lora_rx_task(void *arg) {
     (void)arg;
     uint8_t rx[255];
@@ -414,23 +581,19 @@ static void lora_rx_task(void *arg) {
             rx[n] = '\0';
 
             xSemaphoreTake(status_lock, portMAX_DELAY);
-            snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", (char*)rx);
-            capture_ack_if_present((char*)rx);
+            snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", (char *)rx);
+            capture_ack_if_present((char *)rx);
             snprintf(current_state, sizeof(current_state), "IDLE");
             snprintf(current_mode, sizeof(current_mode), "LORA");
             snprintf(lora_link_state, sizeof(lora_link_state), "online");
-            snprintf(status_json, sizeof(status_json),
-                     "{\"status_version\":2,\"battery\":85,\"state\":\"IDLE\",\"mode\":\"LORA\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"last_lora\":\"%.200s\"}",
-                     wifi_link_state, lora_link_state, last_cmd, last_cmd_id, last_cmd_status, (int)uxQueueMessagesWaiting(lora_cmd_q), last_lora_rx);
+            refresh_status_json();
             xSemaphoreGive(status_lock);
 
-            ESP_LOGI(TAG, "LoRa RX (%d): %s", n, (char*)rx);
+            ESP_LOGI(TAG, "LoRa RX (%d): %s", n, (char *)rx);
         }
         vTaskDelay(pdMS_TO_TICKS(5));
     }
 }
-
-// ---------------- app_main ----------------
 
 void app_main(void) {
     ESP_ERROR_CHECK(nvs_flash_init());
@@ -448,12 +611,9 @@ void app_main(void) {
     start_mdns_service();
     start_http_server();
 
-    // LoRa
     lora_cmd_q = xQueueCreate(LORA_QUEUE_DEPTH, sizeof(lora_cmd_t));
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
     xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
 }
-// test: curl -X POST http://192.168.4.1/command -H "Content-Type: text/plain" -d "forward"
-
