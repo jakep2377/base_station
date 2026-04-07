@@ -17,6 +17,7 @@
 
 #include "esp_http_server.h"
 #include "mdns.h"
+#include "display.h"
 
 // LoRa component
 #include "ra01s.h"
@@ -78,6 +79,7 @@ typedef struct {
 } lora_cmd_t;
 
 static QueueHandle_t lora_cmd_q;
+static bool display_available = false;
 
 static void capture_ack_if_present(const char *text) {
     if (!text) return;
@@ -120,6 +122,38 @@ static void start_mdns_service(void) {
 }
 
 
+
+static void display_task(void *arg) {
+    (void)arg;
+
+    char mode[sizeof(current_mode)] = {0};
+    char wifi[sizeof(wifi_link_state)] = {0};
+    char lora[sizeof(lora_link_state)] = {0};
+    char cmd[20] = {0};
+    char ack[20] = {0};
+    uint32_t local_ack_count = 0;
+    int queue_depth = 0;
+
+    while (1) {
+        if (!display_available) {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            continue;
+        }
+
+        xSemaphoreTake(status_lock, portMAX_DELAY);
+        snprintf(mode, sizeof(mode), "%s", current_mode);
+        snprintf(wifi, sizeof(wifi), "%s", wifi_link_state);
+        snprintf(lora, sizeof(lora), "%s", lora_link_state);
+        snprintf(cmd, sizeof(cmd), "%.18s", last_cmd);
+        snprintf(ack, sizeof(ack), "%.18s", last_ack_rx[0] ? last_ack_rx : "-");
+        local_ack_count = ack_count;
+        queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
+        xSemaphoreGive(status_lock);
+
+        Display_ShowStatus(mode, wifi, lora, queue_depth, cmd, ack, local_ack_count);
+        vTaskDelay(pdMS_TO_TICKS(750));
+    }
+}
 // ---------------- HTTP Handlers ----------------
 
 static esp_err_t status_get_handler(httpd_req_t *req) {
@@ -405,6 +439,11 @@ void app_main(void) {
 
     status_lock = xSemaphoreCreateMutex();
 
+    display_available = Display_Init();
+    if (display_available) {
+        Display_ShowSplash("BOOTING", "CONNECTING...");
+    }
+
     start_sta_then_fallback_ap();
     start_mdns_service();
     start_http_server();
@@ -414,5 +453,7 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
+    xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
 }
 // test: curl -X POST http://192.168.4.1/command -H "Content-Type: text/plain" -d "forward"
+
