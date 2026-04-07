@@ -65,7 +65,7 @@ static const int WIFI_GOT_IP_BIT = BIT0;
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
-static char status_json[1024] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
+static char status_json[1280] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]     = "none";
 static char last_cmd_id[64]   = "";
 static char last_cmd_status[32] = "idle";

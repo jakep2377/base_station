@@ -1,27 +1,27 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
-# file Copyright.txt or https://cmake.org/licensing for details.
+# file LICENSE.rst or https://cmake.org/licensing for details.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 
 # If CMAKE_DISABLE_SOURCE_CHANGES is set to true and the source directory is an
 # existing directory in our source tree, calling file(MAKE_DIRECTORY) on it
 # would cause a fatal error, even though it would be a no-op.
-if(NOT EXISTS "C:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject")
-  file(MAKE_DIRECTORY "C:/Espressif/frameworks/esp-idf-v5.5.2/components/bootloader/subproject")
+if(NOT EXISTS "C:/esp/v6.0/esp-idf/components/bootloader/subproject")
+  file(MAKE_DIRECTORY "C:/esp/v6.0/esp-idf/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader"
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix"
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/tmp"
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/src/bootloader-stamp"
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/src"
-  "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/src/bootloader-stamp"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/tmp"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/src/bootloader-stamp"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/src"
+  "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "C:/Users/gdm35/Downloads/base_station-master/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()
