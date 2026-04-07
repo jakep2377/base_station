@@ -61,7 +61,7 @@
 static const char *TAG = "BASE";
 
 static EventGroupHandle_t wifi_event_group;
-static const int WIFI_GOT_IP_BIT = BIT0;
+static const int WIFI_GOT_IP_BIT = BIT0;`r`nstatic const int WIFI_FAIL_BIT = BIT1;`r`nstatic int sta_retry_count = 0;`r`nstatic bool sta_bootstrap_in_progress = false;`r`n#define STA_BOOTSTRAP_MAX_RETRIES 3
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
@@ -446,12 +446,23 @@ static void wifi_event_handler(void *arg, esp_event_base_t base, int32_t id, voi
     (void)data;
 
     if (base == WIFI_EVENT && id == WIFI_EVENT_STA_START) {
+        sta_retry_count = 0;
         esp_wifi_connect();
     } else if (base == WIFI_EVENT && id == WIFI_EVENT_STA_DISCONNECTED) {
         snprintf(wifi_link_state, sizeof(wifi_link_state), "connecting");
-        ESP_LOGW(TAG, "STA disconnected, retrying...");
+        if (sta_bootstrap_in_progress) {
+            sta_retry_count++;
+            ESP_LOGW(TAG, "STA disconnected during bootstrap (%d/%d)", sta_retry_count, STA_BOOTSTRAP_MAX_RETRIES);
+            if (sta_retry_count >= STA_BOOTSTRAP_MAX_RETRIES) {
+                xEventGroupSetBits(wifi_event_group, WIFI_FAIL_BIT);
+                return;
+            }
+        } else {
+            ESP_LOGW(TAG, "STA disconnected, retrying...");
+        }
         esp_wifi_connect();
     } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
+        sta_retry_count = 0;
         xEventGroupSetBits(wifi_event_group, WIFI_GOT_IP_BIT);
     }
 }
@@ -485,13 +496,19 @@ static bool try_sta_mode(const char *ssid, const char *password) {
     strncpy((char *)sta_cfg.sta.ssid, ssid, sizeof(sta_cfg.sta.ssid));
     strncpy((char *)sta_cfg.sta.password, password, sizeof(sta_cfg.sta.password));
 
+    xEventGroupClearBits(wifi_event_group, WIFI_GOT_IP_BIT | WIFI_FAIL_BIT);
+    sta_retry_count = 0;
+    sta_bootstrap_in_progress = true;
+
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &sta_cfg));
     ESP_ERROR_CHECK(esp_wifi_start());
 
     ESP_LOGI(TAG, "Trying STA connect to %s...", ssid);
     EventBits_t bits = xEventGroupWaitBits(
-        wifi_event_group, WIFI_GOT_IP_BIT, pdFALSE, pdTRUE, pdMS_TO_TICKS(12000));
+        wifi_event_group, WIFI_GOT_IP_BIT | WIFI_FAIL_BIT, pdFALSE, pdFALSE, pdMS_TO_TICKS(15000));
+
+    sta_bootstrap_in_progress = false;
 
     if (bits & WIFI_GOT_IP_BIT) {
         ap_setup_mode = false;
@@ -504,7 +521,9 @@ static bool try_sta_mode(const char *ssid, const char *password) {
     }
 
     ESP_LOGW(TAG, "STA failed for %s", ssid);
+    snprintf(wifi_link_state, sizeof(wifi_link_state), "degraded");
     ESP_ERROR_CHECK(esp_wifi_stop());
+    vTaskDelay(pdMS_TO_TICKS(300));
     return false;
 }
 
@@ -622,3 +641,4 @@ void app_main(void) {
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
     xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
 }
+
