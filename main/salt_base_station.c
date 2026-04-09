@@ -179,16 +179,7 @@ static void display_task(void *arg) {
         queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
         xSemaphoreGive(status_lock);
 
-<<<<<<< HEAD
         display_show_status(mode, wifi, lora, queue_depth, cmd, ack, local_ack_count);
-=======
-        if ((loop_count++ % 12U) == 0U) {
-            ESP_LOGI(TAG, "OLED tick mode=%s wifi=%s lora=%s net=%s backend=%s q=%d ack=%lu",
-                     mode, wifi, lora, target_network, backend_url, queue_depth, (unsigned long)local_ack_count);
-        }
-
-        Display_ShowStatus(mode, wifi, lora, target_network, backend_url, queue_depth, cmd, ack, local_ack_count);
->>>>>>> a35027d7654c6a0f56e5bba4a608925e6073f0eb
         vTaskDelay(pdMS_TO_TICKS(750));
     }
 }
@@ -804,18 +795,8 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
-<<<<<<< HEAD
 
     if (display_available) {
         xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
     }
 }
-=======
-    xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
-    xTaskCreate(telemetry_post_task, "telemetry_post", 8192, NULL, 4, NULL);
-    xTaskCreate(base_status_post_task, "base_status_post", 8192, NULL, 4, NULL);
-}
-
-
-
->>>>>>> a35027d7654c6a0f56e5bba4a608925e6073f0eb
