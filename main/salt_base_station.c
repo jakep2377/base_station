@@ -46,7 +46,8 @@
 #define MAX_BACKEND_URL_LEN 160
 #define MAX_BOARD_API_KEY_LEN 128
 #define TELEMETRY_POST_INTERVAL_MS 2500
-#define BASE_STATUS_POST_INTERVAL_MS 2000
+#define BASE_STATUS_POST_INTERVAL_MS 5000
+#define REMOTE_COMMAND_POLL_INTERVAL_MS 250
 
 #define LORA_FREQ_HZ     915000000
 #define LORA_TX_POWER_DBM 22
@@ -179,16 +180,12 @@ static void display_task(void *arg) {
         queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
         xSemaphoreGive(status_lock);
 
-<<<<<<< HEAD
-        display_show_status(mode, wifi, lora, queue_depth, cmd, ack, local_ack_count);
-=======
         if ((loop_count++ % 12U) == 0U) {
             ESP_LOGI(TAG, "OLED tick mode=%s wifi=%s lora=%s net=%s backend=%s q=%d ack=%lu",
                      mode, wifi, lora, target_network, backend_url, queue_depth, (unsigned long)local_ack_count);
         }
 
-        Display_ShowStatus(mode, wifi, lora, target_network, backend_url, queue_depth, cmd, ack, local_ack_count);
->>>>>>> a35027d7654c6a0f56e5bba4a608925e6073f0eb
+        display_show_status(mode, wifi, lora, target_network, backend_url, queue_depth, cmd, ack, local_ack_count);
         vTaskDelay(pdMS_TO_TICKS(750));
     }
 }
@@ -214,6 +211,19 @@ static bool extract_json_string(const char *json, const char *key, char *out, si
     }
     out[i] = '\0';
     return i > 0;
+}
+
+static bool json_flag_is_true(const char *json, const char *key) {
+    if (!json || !key) return false;
+    char needle[48];
+    snprintf(needle, sizeof(needle), "\"%s\"", key);
+    const char *found = strstr(json, needle);
+    if (!found) return false;
+    found = strchr(found + strlen(needle), ':');
+    if (!found) return false;
+    found++;
+    while (*found && isspace((unsigned char)*found)) found++;
+    return strncmp(found, "true", 4) == 0 || *found == '1';
 }
 
 static esp_err_t read_request_body(httpd_req_t *req, char *buffer, size_t buffer_size) {
@@ -316,7 +326,7 @@ static esp_err_t post_json_to_backend(const char *url, const char *json_body) {
     esp_http_client_config_t config = {
         .url = url,
         .method = HTTP_METHOD_POST,
-        .timeout_ms = 5000,
+        .timeout_ms = 10000,
         .crt_bundle_attach = esp_crt_bundle_attach,
     };
 
@@ -343,6 +353,209 @@ static esp_err_t post_json_to_backend(const char *url, const char *json_body) {
         return ESP_FAIL;
     }
     return ESP_OK;
+}
+
+static esp_err_t get_json_from_backend(const char *url, char *response_body, size_t response_size, int *status_code) {
+    if (!url || !url[0] || !response_body || response_size == 0) {
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    response_body[0] = '\0';
+
+    esp_http_client_config_t config = {
+        .url = url,
+        .method = HTTP_METHOD_GET,
+        .timeout_ms = 10000,
+        .crt_bundle_attach = esp_crt_bundle_attach,
+    };
+
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+    if (!client) {
+        return ESP_FAIL;
+    }
+
+    esp_http_client_set_header(client, "Accept", "application/json");
+    if (provisioned_board_api_key[0] != '\0') {
+        esp_http_client_set_header(client, "x-api-key", provisioned_board_api_key);
+    }
+
+    esp_err_t err = esp_http_client_open(client, 0);
+    if (err == ESP_OK) {
+        (void)esp_http_client_fetch_headers(client);
+        int read_len = esp_http_client_read_response(client, response_body, (int)response_size - 1);
+        if (read_len < 0) {
+            err = ESP_FAIL;
+        } else {
+            response_body[read_len] = '\0';
+        }
+    }
+
+    if (status_code) {
+        *status_code = (err == ESP_OK) ? esp_http_client_get_status_code(client) : -1;
+    }
+
+    esp_http_client_close(client);
+    esp_http_client_cleanup(client);
+    return err;
+}
+
+static esp_err_t queue_command_for_lora(const char *command, const char *command_id) {
+    if (!command || !command[0]) {
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(last_cmd, sizeof(last_cmd), "%s", command);
+    if (command_id && command_id[0]) {
+        snprintf(last_cmd_id, sizeof(last_cmd_id), "%s", command_id);
+    } else {
+        last_cmd_id[0] = '\0';
+    }
+    snprintf(last_cmd_status, sizeof(last_cmd_status), "queued");
+    snprintf(lora_link_state, sizeof(lora_link_state), "idle");
+    snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
+    snprintf(current_mode, sizeof(current_mode), "HTTP");
+    refresh_status_json();
+    xSemaphoreGive(status_lock);
+
+    if (!lora_cmd_q) {
+        return ESP_ERR_INVALID_STATE;
+    }
+
+    lora_cmd_t c = {0};
+    snprintf(c.payload, sizeof(c.payload), "%s", command);
+    c.len = (uint16_t)strnlen(c.payload, sizeof(c.payload));
+
+    if (xQueueSend(lora_cmd_q, &c, pdMS_TO_TICKS(100)) != pdTRUE) {
+        xSemaphoreTake(status_lock, portMAX_DELAY);
+        snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
+        snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
+        refresh_status_json();
+        xSemaphoreGive(status_lock);
+        return ESP_ERR_TIMEOUT;
+    }
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(last_cmd_status, sizeof(last_cmd_status), "forwarded");
+    refresh_status_json();
+    xSemaphoreGive(status_lock);
+    return ESP_OK;
+}
+
+static esp_err_t post_remote_command_ack(const char *command_id, const char *status, const char *error_message) {
+    if (!command_id || !command_id[0]) {
+        return ESP_OK;
+    }
+
+    char backend_url[MAX_BACKEND_URL_LEN] = {0};
+    char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
+    char body[384] = {0};
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(backend_url, sizeof(backend_url), "%s", provisioned_backend_url);
+    xSemaphoreGive(status_lock);
+
+    if (backend_url[0] == '\0') {
+        return ESP_ERR_INVALID_STATE;
+    }
+    if (!build_backend_endpoint(backend_url, "/api/base-station/command-ack", endpoint, sizeof(endpoint))) {
+        return ESP_ERR_INVALID_SIZE;
+    }
+
+    if (error_message && error_message[0]) {
+        snprintf(body, sizeof(body),
+                 "{\"commandId\":\"%.60s\",\"status\":\"%.24s\",\"error\":\"%.120s\"}",
+                 command_id,
+                 status ? status : "forwarded",
+                 error_message);
+    } else {
+        snprintf(body, sizeof(body),
+                 "{\"commandId\":\"%.60s\",\"status\":\"%.24s\"}",
+                 command_id,
+                 status ? status : "forwarded");
+    }
+
+    return post_json_to_backend(endpoint, body);
+}
+
+static bool fetch_remote_command_from_backend(char *cmd_out, size_t cmd_out_size, char *command_id_out, size_t command_id_size) {
+    char backend_url[MAX_BACKEND_URL_LEN] = {0};
+    char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
+    char response[512] = {0};
+    int status_code = -1;
+
+    if (!cmd_out || cmd_out_size == 0) {
+        return false;
+    }
+
+    cmd_out[0] = '\0';
+    if (command_id_out && command_id_size > 0) {
+        command_id_out[0] = '\0';
+    }
+
+    xSemaphoreTake(status_lock, portMAX_DELAY);
+    snprintf(backend_url, sizeof(backend_url), "%s", provisioned_backend_url);
+    xSemaphoreGive(status_lock);
+
+    if (backend_url[0] == '\0') {
+        return false;
+    }
+    if (!build_backend_endpoint(backend_url, "/api/base-station/command", endpoint, sizeof(endpoint))) {
+        return false;
+    }
+
+    esp_err_t err = get_json_from_backend(endpoint, response, sizeof(response), &status_code);
+    if (err != ESP_OK || status_code != 200) {
+        return false;
+    }
+    if (!json_flag_is_true(response, "pending")) {
+        return false;
+    }
+    if (!extract_json_string(response, "cmd", cmd_out, cmd_out_size)) {
+        return false;
+    }
+    if (command_id_out && command_id_size > 0) {
+        (void)extract_json_string(response, "commandId", command_id_out, command_id_size);
+    }
+    return true;
+}
+
+static void backend_command_poll_task(void *arg) {
+    (void)arg;
+    char wifi_state[sizeof(wifi_link_state)] = {0};
+    char command[LORA_CMD_MAX] = {0};
+    char command_id[sizeof(last_cmd_id)] = {0};
+    char last_remote_command_id[sizeof(last_cmd_id)] = {0};
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(REMOTE_COMMAND_POLL_INTERVAL_MS));
+
+        xSemaphoreTake(status_lock, portMAX_DELAY);
+        snprintf(wifi_state, sizeof(wifi_state), "%s", wifi_link_state);
+        xSemaphoreGive(status_lock);
+
+        if (strcmp(wifi_state, "online") != 0) continue;
+        if (!fetch_remote_command_from_backend(command, sizeof(command), command_id, sizeof(command_id))) continue;
+
+        if (command_id[0] != '\0' && strcmp(command_id, last_remote_command_id) == 0) {
+            (void)post_remote_command_ack(command_id, "forwarded", NULL);
+            continue;
+        }
+
+        esp_err_t queue_err = queue_command_for_lora(command, command_id);
+        if (queue_err == ESP_OK) {
+            ESP_LOGI(TAG, "Remote backend command queued: %s", command);
+            if (command_id[0] != '\0') {
+                snprintf(last_remote_command_id, sizeof(last_remote_command_id), "%s", command_id);
+                (void)post_remote_command_ack(command_id, "forwarded", NULL);
+            }
+        } else {
+            ESP_LOGW(TAG, "Remote backend command queue failed: %s", esp_err_to_name(queue_err));
+            if (command_id[0] != '\0') {
+                (void)post_remote_command_ack(command_id, "retry", esp_err_to_name(queue_err));
+            }
+        }
+    }
 }
 
 static void telemetry_post_task(void *arg) {
@@ -399,15 +612,11 @@ static void base_status_post_task(void *arg) {
         if (backend_url[0] == '\0') continue;
         if (!build_backend_endpoint(backend_url, "/api/base-station/status", endpoint, sizeof(endpoint))) continue;
 
-        esp_err_t err = ESP_FAIL;
-        for (int attempt = 1; attempt <= 3; ++attempt) {
-            err = post_json_to_backend(endpoint, payload);
-            if (err == ESP_OK) {
-                ESP_LOGI(TAG, "Base status pushed to backend (%s)", endpoint);
-                break;
-            }
-            ESP_LOGW(TAG, "Base status push failed (%d/3) to %s: %s", attempt, endpoint, esp_err_to_name(err));
-            vTaskDelay(pdMS_TO_TICKS(250));
+        esp_err_t err = post_json_to_backend(endpoint, payload);
+        if (err == ESP_OK) {
+            ESP_LOGI(TAG, "Base status pushed to backend");
+        } else {
+            ESP_LOGW(TAG, "Base status push failed: %s", esp_err_to_name(err));
         }
     }
 }
@@ -519,37 +728,19 @@ static esp_err_t command_post_handler(httpd_req_t *req) {
         received += r;
     }
     last_cmd[received] = '\0';
-    if (httpd_req_get_hdr_value_str(req, "x-command-id", command_id, sizeof(command_id)) == ESP_OK) {
-        snprintf(last_cmd_id, sizeof(last_cmd_id), "%s", command_id);
-    } else {
-        last_cmd_id[0] = '\0';
+    if (httpd_req_get_hdr_value_str(req, "x-command-id", command_id, sizeof(command_id)) != ESP_OK) {
+        command_id[0] = '\0';
     }
-    snprintf(last_cmd_status, sizeof(last_cmd_status), "queued");
-    snprintf(lora_link_state, sizeof(lora_link_state), "idle");
 
     ESP_LOGI(TAG, "Received /command: %s", last_cmd);
-    snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
-    snprintf(current_mode, sizeof(current_mode), "HTTP");
 
-    if (lora_cmd_q) {
-        lora_cmd_t c = {0};
-        snprintf(c.payload, sizeof(c.payload), "%s", last_cmd);
-        c.len = (uint16_t)strnlen(c.payload, sizeof(c.payload));
-
-        if (xQueueSend(lora_cmd_q, &c, pdMS_TO_TICKS(100)) != pdTRUE) {
-            ESP_LOGW(TAG, "LoRa cmd queue full; returning 503");
-            snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
-            snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
-            httpd_resp_set_status(req, "503 Service Unavailable");
-            httpd_resp_sendstr(req, "queue_full");
-            return ESP_OK;
-        }
+    esp_err_t queue_err = queue_command_for_lora(last_cmd, command_id);
+    if (queue_err != ESP_OK) {
+        ESP_LOGW(TAG, "LoRa cmd queue full; returning 503");
+        httpd_resp_set_status(req, "503 Service Unavailable");
+        httpd_resp_sendstr(req, "queue_full");
+        return ESP_OK;
     }
-    snprintf(last_cmd_status, sizeof(last_cmd_status), "forwarded");
-
-    xSemaphoreTake(status_lock, portMAX_DELAY);
-    refresh_status_json();
-    xSemaphoreGive(status_lock);
 
     httpd_resp_sendstr(req, "OK");
     return ESP_OK;
@@ -808,19 +999,13 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
-<<<<<<< HEAD
+    xTaskCreate(telemetry_post_task, "telemetry_post", 6144, NULL, 4, NULL);
+    xTaskCreate(base_status_post_task, "base_status_post", 6144, NULL, 4, NULL);
+    xTaskCreate(backend_command_poll_task, "backend_poll", 6144, NULL, 4, NULL);
 
     if (display_available) {
         xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
     }
 }
-=======
-    xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
-    xTaskCreate(telemetry_post_task, "telemetry_post", 8192, NULL, 4, NULL);
-    xTaskCreate(base_status_post_task, "base_status_post", 8192, NULL, 4, NULL);
-}
 
-
-
->>>>>>> a35027d7654c6a0f56e5bba4a608925e6073f0eb
 
