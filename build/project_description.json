@@ -2,7 +2,11 @@
     "version":            "1.3",
     "project_name":       "salt_base_station",
     "project_version":    "107b754-dirty",
+<<<<<<< HEAD
     "project_path":       "C:/Users/jakep/Documents/ESP32/salt_base_station",
+=======
+    "project_path":       "C:/Users/gdm35/Downloads/base_station-master",
+>>>>>>> a35027d7654c6a0f56e5bba4a608925e6073f0eb
     "idf_path":           "C:/esp/v6.0/esp-idf",
     "build_dir":          "C:/Users/jakep/Documents/ESP32/salt_base_station/build",
     "config_file":        "C:/Users/jakep/Documents/ESP32/salt_base_station/sdkconfig",
