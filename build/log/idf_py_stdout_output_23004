@@ -1,0 +1,518 @@
+Command: C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe C:\esp\v6.0\esp-idf\tools/idf_monitor.py -p COM3 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 C:\Users\jakep\Documents\ESP32\salt_base_station\build\salt_base_station.elf C:\Users\jakep\Documents\ESP32\salt_base_station\build\bootloader\bootloader.elf --force-color -m 'C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe' 'C:\esp\v6.0\esp-idf\tools\idf.py' '-p' 'COM3'
+ision: v1.3
+[0;32mI (32) ESP-ROM:esp32s3-20210327[0m
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x14f0
+load:0x403c8700,len:0xda0
+load:0x403cb700,len:0x2f58
+entry 0x403c8908
+[0;32mI (24) boot: ESP-IDF -128-NOTFOUND 2nd stage bootloader[0m
+[0;32mI (25) boot: compile time Apr  9 2026 19:27:17[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (26) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00120000[0m
+[0;32mI (76) boot: End of partition table[0m
+[0;32mI (80) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=36ab8h (223928) map[0m
+[0;32mI (127) esp_image: segment 1: paddr=00046ae0 vaddr=3fc9d800 size=05e20h ( 24096) load[0m
+[0;32mI (132) esp_image: segment 2: paddr=0004c908 vaddr=40374000 size=03710h ( 14096) load[0m
+[0;32mI (136) esp_image: segment 3: paddr=00050020 vaddr=42000020 size=b8670h (755312) map[0m
+[0;32mI (274) esp_image: segment 4: paddr=00108698 vaddr=40377710 size=160dch ( 90332) load[0m
+[0;32mI (294) esp_image: segment 5: paddr=0011e77c vaddr=50000000 size=00024h (    36) load[0m
+[0;32mI (305) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (305) boot: Disabling RNG early entropy source...[0m
+[0;32mI (315) cpu_start: Multicore app[0m
+[0;32mI (324) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (325) cpu_start: Pro cpu start user code[0m
+[0;32mI (325) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (326) app_init: Application information:[0m
+[0;32mI (330) app_init: Project name:     salt_base_station[0m
+[0;32mI (335) app_init: App version:      daf321e-dirty[0m
+[0;32mI (339) app_init: Compile time:     Apr  9 2026 19:27:04[0m
+[0;32mI (344) app_init: ELF file SHA256:  20812498b...[0m
+[0;32mI (349) app_init: ESP-IDF:          -128-NOTFOUND[0m
+[0;32mI (353) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (357) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (361) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (365) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (371) heap_init: At 3FCA8AE0 len 00040C30 (259 KiB): RAM[0m
+[0;32mI (376) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (381) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (386) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (393) spi_flash: detected chip: gd[0m
+[0;32mI (395) spi_flash: flash io: dio[0m
+[0;33mW (398) spi_flash: Detected size(8192k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;33mW (410) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (420) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (426) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (433) main_task: Started on CPU0[0m
+[0;32mI (443) main_task: Calling app_main()[0m
+[0;32mI (613) SSD1306: Legacy i2c driver is used[0m
+[0;32mI (633) DISPLAY: OLED found at address 0x3C[0m
+[0;32mI (633) SSD1306: OLED configured successfully[0m
+[0;32mI (1313) DISPLAY: Display initialized[0m
+[0;32mI (1583) pp: pp rom version: e7ae62f[0m
+[0;32mI (1583) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (1593) wifi:wifi driver task: 3fcade6c, prio:23, stack:6656, core=0[0m
+[0;32mI (1603) wifi:wifi firmware version: 44738b4[0m
+[0;32mI (1603) wifi:wifi certification version: v7.0[0m
+[0;32mI (1603) wifi:config NVS flash: enabled[0m
+[0;32mI (1603) wifi:config nano formatting: disabled[0m
+[0;32mI (1603) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1613) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1613) wifi:Init management short buffer num: 32[0m
+[0;32mI (1623) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1623) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (1633) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1633) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1633) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1643) wifi_init: rx ba win: 6[0m
+[0;32mI (1643) wifi_init: accept mbox: 6[0m
+[0;32mI (1643) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1653) wifi_init: udp mbox: 6[0m
+[0;32mI (1653) wifi_init: tcp mbox: 6[0m
+[0;32mI (1653) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1663) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1663) wifi_init: tcp mss: 1440[0m
+[0;32mI (1663) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1673) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1673) wifi:Set ps type: 0, coexist: 0[0m
+
+[0;33mW (1693) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (1693) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1733) wifi:mode : sta (9c:13:9e:a2:06:70) + softAP (9c:13:9e:a2:06:71)[0m
+[0;32mI (1743) wifi:enable tsf[0m
+[0;32mI (1743) wifi:Total power save buffer number: 16[0m
+[0;32mI (1743) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1743) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1753) BASE: Trying STA connect to GriffiniPhone while keeping setup AP online...[0m
+[0;32mI (1753) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1793) wifi:ap channel adjust o:1,1 n:6,2[0m
+[0;32mI (1793) wifi:new:<6,0>, old:<1,1>, ap:<6,2>, sta:<6,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1793) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (1823) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (1823) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (1883) wifi:connected with GriffiniPhone, aid = 1, channel 6, BW20, bssid = ee:b2:b9:be:dc:08[0m
+[0;32mI (1883) wifi:security: WPA2-PSK, phy: bgn, rssi: -55[0m
+[0;32mI (1883) wifi:pm start, type: 0[0m
+
+[0;32mI (1883) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (1893) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000[0m
+[0;32mI (1903) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (3013) esp_netif_handlers: sta ip: 172.20.10.11, mask: 255.255.255.240, gw: 172.20.10.1[0m
+[0;32mI (3013) BASE: STA connected (got IP). Disabling setup AP.[0m
+[0;32mI (3013) wifi:mode : sta (9c:13:9e:a2:06:70)[0m
+[0;32mI (3023) mdns_mem: mDNS task will be created from internal RAM[0m
+[0;32mI (3023) BASE: mDNS started: http://base-station.local[0m
+[0;32mI (3023) BASE: HTTP server ready: /status, /command, /last_lora, /setup/status, /setup/network[0m
+[0;32mI (3033) BASE: Initializing LoRa...[0m
+[0;32mI (3033) RA01S: CONFIG_MISO_GPIO=11[0m
+[0;32mI (3043) RA01S: CONFIG_MOSI_GPIO=10[0m
+[0;32mI (3043) RA01S: CONFIG_SCLK_GPIO=9[0m
+[0;32mI (3043) RA01S: CONFIG_NSS_GPIO=8[0m
+[0;32mI (3053) RA01S: CONFIG_RST_GPIO=12[0m
+[0;32mI (3053) RA01S: CONFIG_BUSY_GPIO=13[0m
+[0;32mI (3053) RA01S: CONFIG_TXEN_GPIO=-1[0m
+[0;32mI (3063) RA01S: CONFIG_RXEN_GPIO=-1[0m
+[0;32mI (3063) RA01S: spi_bus_initialize=0[0m
+[0;32mI (3063) RA01S: spi_bus_add_device=0[0m
+[0;32mI (3113) RA01S: syncWord=0x1424[0m
+[0;32mI (3113) RA01S: SX126x installed[0m
+[0;33mW (3113) RA01S: WriteCommand2 status=0a retry=1[0m
+[0;32mI (3113) RA01S: tcxoVoltage=3.300000[0m
+[0;32mI (3133) RA01S: useRegulatorLDO=1[0m
+[0;32mI (3153) RA01S: SetStopRxTimerOnPreambleDetect enable=0[0m
+[0;32mI (3193) BASE: LoRa ready @ 915000000 Hz[0m
+[0;32mI (3193) BASE: OLED tick mode=STA wifi=online lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;32mI (3193) main_task: Returned from app_main()[0m
+[0;32mI (3453) wifi:<ba-add>idx:0 (ifx:0, ee:b2:b9:be:dc:08), tid:0, ssn:2, winSize:64[0m
+[0;32mI (4873) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (4873) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (4873) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (4883) esp-tls: Failed to open new connection[0m
+[1;31mE (4883) transport_base: Failed to open a new connection[0m
+[1;31mE (4893) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (6503) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (6503) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (6503) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (6513) esp-tls: Failed to open new connection[0m
+[1;31mE (6513) transport_base: Failed to open a new connection[0m
+[1;31mE (6523) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (8113) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (8113) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (8113) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (8123) esp-tls: Failed to open new connection[0m
+[1;31mE (8123) transport_base: Failed to open a new connection[0m
+[1;31mE (8133) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (10063) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (10063) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (10063) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (10063) esp-tls: Failed to open new connection[0m
+[1;31mE (10073) transport_base: Failed to open a new connection[0m
+[1;31mE (10073) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;33mW (10083) BASE: Base status push failed: ESP_ERR_HTTP_CONNECT[0m
+[0;32mI (10193) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (10193) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (10193) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (10193) esp-tls: Failed to open new connection[0m
+[1;31mE (10203) transport_base: Failed to open a new connection[0m
+[1;31mE (10213) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (11843) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (11843) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (11843) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (11853) esp-tls: Failed to open new connection[0m
+[1;31mE (11853) transport_base: Failed to open a new connection[0m
+[1;31mE (11863) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (12543) BASE: OLED tick mode=STA wifi=online lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;32mI (13473) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (13473) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (13473) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (13473) esp-tls: Failed to open new connection[0m
+[1;31mE (13483) transport_base: Failed to open a new connection[0m
+[1;31mE (13483) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (15163) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (15163) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (15173) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (15173) esp-tls: Failed to open new connection[0m
+[1;31mE (15173) transport_base: Failed to open a new connection[0m
+[1;31mE (15183) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (16743) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (16743) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (16743) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (16753) esp-tls: Failed to open new connection[0m
+[1;31mE (16753) transport_base: Failed to open a new connection[0m
+[1;31mE (16763) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;33mW (16763) BASE: Base status push failed: ESP_ERR_HTTP_CONNECT[0m
+[0;32mI (17143) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (17143) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (17143) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (17143) esp-tls: Failed to open new connection[0m
+[1;31mE (17153) transport_base: Failed to open a new connection[0m
+[1;31mE (17153) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (18483) wifi:state: run -> init (0x2c0)[0m
+[0;32mI (18493) wifi:pm stop, total sleep time: 0 us / 16605032 us[0m
+
+[0;32mI (18493) wifi:<ba-del>idx:0, tid:0[0m
+[0;32mI (18493) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;33mW (18493) BASE: STA disconnected, retrying (reason=2)...[0m
+[0;32mI (18513) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (18513) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (18803) esp-x509-crt-bundle: No matching trusted root certificate found[0m
+[1;31mE (18803) esp-x509-crt-bundle: Failed to verify certificate[0m
+[1;31mE (18803) esp-tls-mbedtls: mbedtls_ssl_handshake returned -0x3000[0m
+[1;31mE (18813) esp-tls: Failed to open new connection[0m
+[1;31mE (18813) transport_base: Failed to open a new connection[0m
+[1;31mE (18823) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (19523) wifi:state: auth -> init (0x200)[0m
+[0;32mI (19533) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;33mW (19533) BASE: STA disconnected, retrying (reason=2)...[0m
+[0;32mI (21573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (21943) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (24353) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (26763) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (29183) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (30573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (31593) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (34003) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (36413) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (38833) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (39573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (41243) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (43653) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (46063) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (48473) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (48573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (50893) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (53303) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (55713) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (57573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (58123) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (60543) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (62953) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (65363) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (66573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (67773) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (70183) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (72603) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (75013) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (75573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (77423) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (79833) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (82253) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (84573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (84663) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (87073) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (89483) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (91903) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (93573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (94313) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (96723) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (99133) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (101543) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (102573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (103963) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (106373) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (108783) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (111193) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (111573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (113613) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (116023) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (118433) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (120573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (120843) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (123253) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (125673) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (128083) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (129573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (130493) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (132903) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (135323) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (137733) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (138573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (140143) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (142553) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (144963) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (147383) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (147573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (149793) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (152203) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (154613) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (156573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (157033) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (159443) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (161853) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (164263) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (165573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (166683) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (169093) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (171503) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (173913) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (174573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (176323) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (178743) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (181153) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (183563) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (183573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (185973) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (188393) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (190803) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (192573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (193213) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (195623) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (198033) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (200453) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (201573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (202863) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (205273) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (207683) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (210093) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (210573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (212513) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (214923) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (217333) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (219573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (219743) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (222163) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (224573) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (226983) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (228573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (229393) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (231803) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (234223) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (236633) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (237573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (239043) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (241453) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (243873) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (246283) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (246573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (248693) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (251103) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (253513) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (255573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (255933) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (258343) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (260753) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (263163) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (264573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (265583) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (267993) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (270403) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (272813) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (273573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (275223) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (277643) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (280053) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (282463) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (282573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (284873) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (287293) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (289703) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (291573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (292113) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (294523) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (296933) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (299353) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (300573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (301763) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (304173) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (306583) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (309003) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (309573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (311413) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (313823) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (316233) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (318573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (318643) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (321063) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (323473) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (325883) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (327573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (328293) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (330713) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (333123) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (335533) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (336573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (337943) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (340353) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (342773) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (345183) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (345573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (347593) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (350003) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (352413) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (354573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (354833) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (357243) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (359653) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (362063) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (363573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (364483) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (366893) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (369303) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (371713) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (372573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (374123) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (376543) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (378953) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (381363) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (381573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (383773) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (386193) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (388603) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (390573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (391013) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (393423) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (395833) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (398253) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (399573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (400663) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (403073) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (405483) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (407903) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (408573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (410313) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (412723) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (415133) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (417543) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (417573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (419963) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (422373) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (424783) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (426573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (427193) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (429613) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (432023) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (434433) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (435573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (436843) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (439253) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (441673) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (444083) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (444573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (446493) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (448903) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (451313) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (453573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (453733) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (456143) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (458553) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (460963) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (462573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (463383) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (465793) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (468203) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (470613) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (471573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (473023) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (475443) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (477853) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (480263) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (480573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (482673) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (485093) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (487503) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (489573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (489913) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (492323) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (494733) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (497153) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (498573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (499563) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (501973) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (504383) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (506803) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (507573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (509213) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (511623) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (514033) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (516443) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (516573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (518863) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (521273) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (523683) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (525573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (526093) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (528503) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (530923) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (533333) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (534573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (535743) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (538153) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (540573) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (542983) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (543573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (545393) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (547803) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (550213) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (552573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (552633) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (555043) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (557453) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (559863) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (561573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (562283) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (564693) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (567103) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (569513) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (570573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (571923) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (574343) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (576753) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (579163) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;32mI (579573) BASE: OLED tick mode=STA wifi=connecting lora=idle net=GriffiniPhone backend=https://robot-lora-server.onrender.com q=0 ack=0[0m
+[0;33mW (581573) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (583993) BASE: STA disconnected, retrying (reason=201)...[0m
+[0;33mW (586403) BASE: STA disconnected, retrying (reason=201)...[0m
+
