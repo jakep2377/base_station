@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
@@ -18,6 +19,7 @@
 #include "esp_system.h"
 #include "esp_http_client.h"
 #include "esp_crt_bundle.h"
+#include "esp_sntp.h"
 
 #include "esp_http_server.h"
 #include "mdns.h"
@@ -34,6 +36,46 @@
 #define MDNS_HOSTNAME "base-station"
 #define MDNS_INSTANCE "Salt Robot Base Station"
 #define DEFAULT_BACKEND_URL "https://robot-lora-server.onrender.com"
+
+static const char ONRENDER_CERT_CHAIN_PEM[] =
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIDqjCCA0+gAwIBAgIRAMMAGyq8zEWDDo0Pp21BopMwCgYIKoZIzj0EAwIwOzEL\n"
+    "MAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\n"
+    "A1UEAxMDV0UxMB4XDTI2MDMyODIxMDAyNloXDTI2MDYyNjIyMDAyMlowFzEVMBMG\n"
+    "A1UEAxMMb25yZW5kZXIuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEUxQh\n"
+    "lYjAcRs39ef7v7I5nK2bKEBCRT9SKm+yxnZ0ilorkjOP80XFKTKkO1piE3BKskzq\n"
+    "/e5LF6yuVn/wiezaIKOCAlYwggJSMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\n"
+    "BggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRaMmWaF3ka48GuymJ7\n"
+    "TgjPtpxXmzAfBgNVHSMEGDAWgBSQd5I1Z8T/qMyp5nvZgHl7zJP5ODBeBggrBgEF\n"
+    "BQcBAQRSMFAwJwYIKwYBBQUHMAGGG2h0dHA6Ly9vLnBraS5nb29nL3Mvd2UxL3d3\n"
+    "QTAlBggrBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UxLmNydDAnBgNVHREE\n"
+    "IDAeggxvbnJlbmRlci5jb22CDioub25yZW5kZXIuY29tMBMGA1UdIAQMMAowCAYG\n"
+    "Z4EMAQIBMDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMS9a\n"
+    "SW92RnZHdUpNVS5jcmwwggEFBgorBgEEAdZ5AgQCBIH2BIHzAPEAdgCWl2S/VViX\n"
+    "rfdDh2g3CEJ36fA61fak8zZuRqQ/D8qpxgAAAZ02dne4AAAEAwBHMEUCICGkx1u+\n"
+    "5NyQNP7jCv9HDPtKFqiGoQ+tHYEeIvL6tGJrAiEAkppmOKEgMRf06VjbmZfYrG63\n"
+    "aPMqpI+KtTIZmZrOmasAdwBJnJtp3h187Pw23s2HZKa4W68Kh4AZ0VVS++nrKd34\n"
+    "wwAAAZ02dneYAAAEAwBIMEYCIQCTyHorghtn+KoDB+h+i+bMcaFCqSYobN1xC4yC\n"
+    "VOF/ywIhANzVCoeHsvj8yim9kG+2cdfD0/j0Z7Cbc84uFRD6zCnSMAoGCCqGSM49\n"
+    "BAMCA0kAMEYCIQDz+YFTNjl4HZlVndFK6Bm7rHFp1tgXJGsBrmj3deLMFgIhALYo\n"
+    "AUseygUBDupdArq6xYLCQJwj7n3VVzqlaEqMP3hR\n"
+    "-----END CERTIFICATE-----\n"
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIICjjCCAjOgAwIBAgIQf/NXaJvCTjAtkOGKQb0OHzAKBggqhkjOPQQDAjBQMSQw\n"
+    "IgYDVQQLExtHbG9iYWxTaWduIEVDQyBSb290IENBIC0gUjQxEzARBgNVBAoTCkds\n"
+    "b2JhbFNpZ24xEzARBgNVBAMTCkdsb2JhbFNpZ24wHhcNMjMxMjEzMDkwMDAwWhcN\n"
+    "MjkwMjIwMTQwMDAwWjA7MQswCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRy\n"
+    "dXN0IFNlcnZpY2VzMQwwCgYDVQQDEwNXRTEwWTATBgcqhkjOPQIBBggqhkjOPQMB\n"
+    "BwNCAARvzTr+Z1dHTCEDhUDCR127WEcPQMFcF4XGGTfn1XzthkubgdnXGhOlCgP4\n"
+    "mMTG6J7/EFmPLCaY9eYmJbsPAvpWo4IBAjCB/zAOBgNVHQ8BAf8EBAMCAYYwHQYD\n"
+    "VR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBIGA1UdEwEB/wQIMAYBAf8CAQAw\n"
+    "HQYDVR0OBBYEFJB3kjVnxP+ozKnme9mAeXvMk/k4MB8GA1UdIwQYMBaAFFSwe61F\n"
+    "uOJAf/sKbvu+M8k8o4TVMDYGCCsGAQUFBwEBBCowKDAmBggrBgEFBQcwAoYaaHR0\n"
+    "cDovL2kucGtpLmdvb2cvZ3NyNC5jcnQwLQYDVR0fBCYwJDAioCCgHoYcaHR0cDov\n"
+    "L2MucGtpLmdvb2cvci9nc3I0LmNybDATBgNVHSAEDDAKMAgGBmeBDAECATAKBggq\n"
+    "hkjOPQQDAgNJADBGAiEAokJL0LgR6SOLR02WWxccAq3ndXp4EMRveXMUVUxMWSMC\n"
+    "IQDspFWa3fj7nLgouSdkcPy1SdOR2AGm9OQWs7veyXsBwA==\n"
+    "-----END CERTIFICATE-----\n";
 
 #define NVS_NAMESPACE "config"
 #define NVS_KEY_WIFI_SSID "wifi_ssid"
@@ -75,8 +117,8 @@ static bool sta_bootstrap_in_progress = false;
 #define STA_BOOTSTRAP_MAX_RETRIES 3
 static SemaphoreHandle_t status_lock;
 
-// Keep these reasonably sized so they fit in RAM.
-static char status_json[1280] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
+// Keep these reasonably sized so they fit in RAM while allowing escaped status payloads.
+static char status_json[3072] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]     = "none";
 static char last_cmd_id[64]   = "";
 static char last_cmd_status[32] = "idle";
@@ -105,6 +147,55 @@ static bool display_available = false;
 
 static void refresh_status_json(void);
 
+static bool system_time_is_valid(void) {
+    time_t now = 0;
+    struct tm timeinfo = {0};
+    time(&now);
+    localtime_r(&now, &timeinfo);
+    return timeinfo.tm_year >= (2024 - 1900);
+}
+
+static void sync_time_with_sntp(void) {
+    if (system_time_is_valid()) {
+        return;
+    }
+
+    ESP_LOGI(TAG, "System time not set; syncing with SNTP...");
+    esp_sntp_stop();
+    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    esp_sntp_setservername(0, "time.google.com");
+    esp_sntp_setservername(1, "pool.ntp.org");
+    esp_sntp_init();
+
+    for (int attempt = 0; attempt < 30; ++attempt) {
+        if (system_time_is_valid()) {
+            time_t now = 0;
+            struct tm timeinfo = {0};
+            char time_buf[32] = {0};
+            time(&now);
+            gmtime_r(&now, &timeinfo);
+            strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", &timeinfo);
+            ESP_LOGI(TAG, "Time synchronized via SNTP: %s UTC", time_buf);
+            return;
+        }
+        vTaskDelay(pdMS_TO_TICKS(500));
+    }
+
+    ESP_LOGW(TAG, "SNTP time sync timed out; TLS may still fail");
+}
+
+static const char *backend_cert_pem_for_url(const char *url) {
+    if (!url || url[0] == '\0') {
+        return NULL;
+    }
+
+    if (strstr(url, ".onrender.com") || strstr(url, "onrender.com")) {
+        return ONRENDER_CERT_CHAIN_PEM;
+    }
+
+    return NULL;
+}
+
 static void capture_ack_if_present(const char *text) {
     if (!text) return;
     const char *ack = strstr(text, "ACK:");
@@ -115,23 +206,92 @@ static void capture_ack_if_present(const char *text) {
     ack_count++;
 }
 
+static void json_escape_string(const char *src, char *dst, size_t dst_size) {
+    if (!dst || dst_size == 0) {
+        return;
+    }
+
+    if (!src) {
+        dst[0] = '\0';
+        return;
+    }
+
+    size_t out = 0;
+    for (size_t i = 0; src[i] != '\0' && out + 1 < dst_size; ++i) {
+        const unsigned char ch = (unsigned char)src[i];
+        const char *replacement = NULL;
+
+        switch (ch) {
+            case '\\': replacement = "\\\\"; break;
+            case '"': replacement = "\\\""; break;
+            case '\n': replacement = "\\n"; break;
+            case '\r': replacement = "\\r"; break;
+            case '\t': replacement = "\\t"; break;
+            default: break;
+        }
+
+        if (replacement) {
+            const size_t replacement_len = strlen(replacement);
+            if (out + replacement_len >= dst_size) {
+                break;
+            }
+            memcpy(dst + out, replacement, replacement_len);
+            out += replacement_len;
+            continue;
+        }
+
+        if (ch < 0x20) {
+            dst[out++] = ' ';
+            continue;
+        }
+
+        dst[out++] = (char)ch;
+    }
+
+    dst[out] = '\0';
+}
+
 static void refresh_status_json(void) {
+    static char state_escaped[sizeof(current_state) * 2];
+    static char mode_escaped[sizeof(current_mode) * 2];
+    static char wifi_escaped[sizeof(wifi_link_state) * 2];
+    static char lora_escaped[sizeof(lora_link_state) * 2];
+    static char cmd_escaped[sizeof(last_cmd) * 2];
+    static char cmd_id_escaped[sizeof(last_cmd_id) * 2];
+    static char cmd_status_escaped[sizeof(last_cmd_status) * 2];
+    static char ack_escaped[sizeof(last_ack_rx) * 2];
+    static char last_lora_escaped[sizeof(last_lora_rx) * 2];
+    static char backend_url_escaped[sizeof(provisioned_backend_url) * 2];
+    static char ap_ssid_escaped[sizeof(AP_SSID) * 2];
+
+    json_escape_string(current_state, state_escaped, sizeof(state_escaped));
+    json_escape_string(current_mode, mode_escaped, sizeof(mode_escaped));
+    json_escape_string(wifi_link_state, wifi_escaped, sizeof(wifi_escaped));
+    json_escape_string(lora_link_state, lora_escaped, sizeof(lora_escaped));
+    json_escape_string(last_cmd, cmd_escaped, sizeof(cmd_escaped));
+    json_escape_string(last_cmd_id, cmd_id_escaped, sizeof(cmd_id_escaped));
+    json_escape_string(last_cmd_status, cmd_status_escaped, sizeof(cmd_status_escaped));
+    json_escape_string(last_ack_rx, ack_escaped, sizeof(ack_escaped));
+    json_escape_string(last_lora_rx, last_lora_escaped, sizeof(last_lora_escaped));
+    json_escape_string(provisioned_backend_url, backend_url_escaped, sizeof(backend_url_escaped));
+    json_escape_string(AP_SSID, ap_ssid_escaped, sizeof(ap_ssid_escaped));
+
     snprintf(status_json, sizeof(status_json),
-             "{\"status_version\":3,\"battery\":85,\"state\":\"%.32s\",\"mode\":\"%.16s\",\"wifi_link_state\":\"%.16s\",\"lora_link_state\":\"%.16s\",\"last_cmd\":\"%.120s\",\"last_cmd_id\":\"%.60s\",\"last_cmd_status\":\"%.28s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%.140s\",\"last_lora\":\"%.200s\",\"configured\":%s,\"backend_url\":\"%.150s\",\"ap_ssid\":\"%s\"}",
-             current_state,
-             current_mode,
-             wifi_link_state,
-             lora_link_state,
-             last_cmd,
-             last_cmd_id,
-             last_cmd_status,
+             "{\"status_version\":3,\"battery\":85,\"state\":\"%s\",\"mode\":\"%s\",\"wifi_link_state\":\"%s\",\"lora_link_state\":\"%s\",\"last_cmd\":\"%s\",\"last_cmd_id\":\"%s\",\"last_cmd_status\":\"%s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%s\",\"last_lora\":\"%s\",\"configured\":%s,\"backend_url\":\"%s\",\"ap_ssid\":\"%s\"}",
+             state_escaped,
+             mode_escaped,
+             wifi_escaped,
+             lora_escaped,
+             cmd_escaped,
+             cmd_id_escaped,
+             cmd_status_escaped,
              (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0),
              (unsigned long)ack_count,
-             last_ack_rx,
-             last_lora_rx,
+             ack_escaped,
+             last_lora_escaped,
              wifi_configured ? "true" : "false",
-             provisioned_backend_url,
-             AP_SSID);
+             backend_url_escaped,
+             ap_ssid_escaped);
 }
 
 static void start_mdns_service(void) {
@@ -323,11 +483,18 @@ static esp_err_t post_json_to_backend(const char *url, const char *json_body) {
         return ESP_ERR_INVALID_ARG;
     }
 
+    const char *cert_pem = backend_cert_pem_for_url(url);
+    if (cert_pem) {
+        ESP_LOGI(TAG, "Using pinned onrender cert chain for %s", url);
+    }
+
     esp_http_client_config_t config = {
         .url = url,
         .method = HTTP_METHOD_POST,
         .timeout_ms = 10000,
-        .crt_bundle_attach = esp_crt_bundle_attach,
+        .cert_pem = cert_pem,
+        .crt_bundle_attach = cert_pem ? NULL : esp_crt_bundle_attach,
+        .common_name = cert_pem ? "onrender.com" : NULL,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
@@ -362,11 +529,18 @@ static esp_err_t get_json_from_backend(const char *url, char *response_body, siz
 
     response_body[0] = '\0';
 
+    const char *cert_pem = backend_cert_pem_for_url(url);
+    if (cert_pem) {
+        ESP_LOGI(TAG, "Using pinned onrender cert chain for %s", url);
+    }
+
     esp_http_client_config_t config = {
         .url = url,
         .method = HTTP_METHOD_GET,
         .timeout_ms = 10000,
-        .crt_bundle_attach = esp_crt_bundle_attach,
+        .cert_pem = cert_pem,
+        .crt_bundle_attach = cert_pem ? NULL : esp_crt_bundle_attach,
+        .common_name = cert_pem ? "onrender.com" : NULL,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
@@ -593,7 +767,7 @@ static void telemetry_post_task(void *arg) {
 
 static void base_status_post_task(void *arg) {
     (void)arg;
-    char payload[sizeof(status_json)] = {0};
+    static char payload[sizeof(status_json)];
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
     char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
     char wifi_state[sizeof(wifi_link_state)] = {0};
@@ -872,6 +1046,7 @@ static bool try_sta_mode(const char *ssid, const char *password) {
         snprintf(current_mode, sizeof(current_mode), "STA");
         snprintf(wifi_link_state, sizeof(wifi_link_state), "online");
         refresh_status_json();
+        sync_time_with_sntp();
         return true;
     }
 
@@ -999,9 +1174,9 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
-    xTaskCreate(telemetry_post_task, "telemetry_post", 6144, NULL, 4, NULL);
-    xTaskCreate(base_status_post_task, "base_status_post", 6144, NULL, 4, NULL);
-    xTaskCreate(backend_command_poll_task, "backend_poll", 6144, NULL, 4, NULL);
+    xTaskCreate(telemetry_post_task, "telemetry_post", 12288, NULL, 4, NULL);
+    xTaskCreate(base_status_post_task, "base_status_post", 12288, NULL, 4, NULL);
+    xTaskCreate(backend_command_poll_task, "backend_poll", 12288, NULL, 4, NULL);
 
     if (display_available) {
         xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
