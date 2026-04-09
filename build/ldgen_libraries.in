@@ -207,5 +207,7 @@ $<TARGET_FILE:idf::spiffs>
 $<TARGET_FILE:idf::mdns>
 $<TARGET_FILE:idf::ra01s>
 $<TARGET_FILE:__idf_driver>
+$<TARGET_FILE:idf::ssd1306>
 $<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_ra01s>
+$<TARGET_FILE:__idf_ssd1306>

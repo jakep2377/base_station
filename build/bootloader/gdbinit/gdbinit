@@ -1,2 +1,2 @@
-source C:/Users/gdm35/Downloads/base_station-master/build/bootloader/gdbinit/symbols
-source C:/Users/gdm35/Downloads/base_station-master/build/bootloader/gdbinit/connect
+source C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader/gdbinit/symbols
+source C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader/gdbinit/connect

@@ -6258,7 +6258,7 @@
                 ],
                 "depends_on": null,
                 "help": "Select Frequency to use.",
-                "id": "sx126x-configuration-frequency-to-use-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-12",
+                "id": "sx126x-configuration-frequency-to-use-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-12",
                 "name": "FREQUENCY",
                 "title": "Frequency to use",
                 "type": "choice"
@@ -6453,15 +6453,271 @@
                 ],
                 "depends_on": null,
                 "help": "Select SPI peripheral that controls this bus.",
-                "id": "sx126x-configuration-spi-peripheral-that-controls-this-bus-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-147",
+                "id": "sx126x-configuration-spi-peripheral-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-147",
                 "name": "SPI_HOST",
                 "title": "SPI peripheral that controls this bus",
                 "type": "choice"
             }
         ],
         "depends_on": null,
-        "id": "sx126x-configuration-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-1",
+        "id": "sx126x-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-1",
         "title": "SX126X Configuration",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
+                "children": [],
+                "depends_on": null,
+                "help": null,
+                "id": "GPIO_RANGE_MAX",
+                "name": "GPIO_RANGE_MAX",
+                "range": null,
+                "title": null,
+                "type": "int"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "<choice INTERFACE>",
+                        "help": "I2C Interface.",
+                        "id": "I2C_INTERFACE",
+                        "name": "I2C_INTERFACE",
+                        "range": null,
+                        "title": "I2C Interface",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "<choice INTERFACE>",
+                        "help": "SPI Interface.",
+                        "id": "SPI_INTERFACE",
+                        "name": "SPI_INTERFACE",
+                        "range": null,
+                        "title": "SPI Interface",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "help": "Select Interface.",
+                "id": "ssd1306-configuration-interface-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-13",
+                "name": "INTERFACE",
+                "title": "Interface",
+                "type": "choice"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "<choice PANEL>",
+                        "help": "Panel is 128x32.",
+                        "id": "SSD1306_128x32",
+                        "name": "SSD1306_128x32",
+                        "range": null,
+                        "title": "128x32 Panel",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "<choice PANEL>",
+                        "help": "Panel is 128x64.",
+                        "id": "SSD1306_128x64",
+                        "name": "SSD1306_128x64",
+                        "range": null,
+                        "title": "128x64 Panel",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "help": "Select Panel Type.",
+                "id": "ssd1306-configuration-panel-type-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-28",
+                "name": "PANEL",
+                "title": "Panel Type",
+                "type": "choice"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "When your TFT have offset(X), set it.",
+                "id": "OFFSETX",
+                "name": "OFFSETX",
+                "range": [
+                    0,
+                    99
+                ],
+                "title": "GRAM X OFFSET",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "Flip upside down.",
+                "id": "FLIP",
+                "name": "FLIP",
+                "range": null,
+                "title": "Flip upside down",
+                "type": "bool"
+            },
+            {
+                "children": [],
+                "depends_on": "I2C_INTERFACE",
+                "help": "GPIO number (IOxx) to I2C SCL.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.\nGPIOs 35-39 are input-only so cannot be used as outputs.",
+                "id": "SCL_GPIO",
+                "name": "SCL_GPIO",
+                "range": [
+                    0,
+                    48
+                ],
+                "title": "SCL GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": "I2C_INTERFACE",
+                "help": "GPIO number (IOxx) to I2C SDA.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.\nGPIOs 35-39 are input-only so cannot be used as outputs.",
+                "id": "SDA_GPIO",
+                "name": "SDA_GPIO",
+                "range": [
+                    0,
+                    48
+                ],
+                "title": "SDA GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": "SPI_INTERFACE",
+                "help": "GPIO number (IOxx) to SPI MOSI.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MOSI.\nOn the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.\nOn the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.",
+                "id": "MOSI_GPIO",
+                "name": "MOSI_GPIO",
+                "range": [
+                    0,
+                    48
+                ],
+                "title": "MOSI GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": "SPI_INTERFACE",
+                "help": "GPIO number (IOxx) to SPI SCLK.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to SCLK.\nOn the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.\nOn the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.",
+                "id": "SCLK_GPIO",
+                "name": "SCLK_GPIO",
+                "range": [
+                    0,
+                    48
+                ],
+                "title": "SCLK GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": "SPI_INTERFACE",
+                "help": "GPIO number (IOxx) to SPI CS.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.\nGPIOs 35-39 are input-only so cannot be used as outputs.",
+                "id": "CS_GPIO",
+                "name": "CS_GPIO",
+                "range": null,
+                "title": "CS GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": "SPI_INTERFACE",
+                "help": "GPIO number (IOxx) to SPI DC.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.\nGPIOs 35-39 are input-only so cannot be used as outputs.",
+                "id": "DC_GPIO",
+                "name": "DC_GPIO",
+                "range": null,
+                "title": "DC GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "GPIO number (IOxx) to RESET.\nWhen it is -1, RESET isn't performed.\nSome GPIOs are used for other purposes (flash connections, etc.) and cannot be used to RESET.\nGPIOs 35-39 are input-only so cannot be used as outputs.",
+                "id": "RESET_GPIO",
+                "name": "RESET_GPIO",
+                "range": [
+                    -1,
+                    48
+                ],
+                "title": "RESET GPIO number",
+                "type": "int"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "<choice I2C_PORT>",
+                        "help": "Use I2C_PORT_0.",
+                        "id": "I2C_PORT_0",
+                        "name": "I2C_PORT_0",
+                        "range": null,
+                        "title": "I2C_PORT_0",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "IDF_TARGET_ARCH_XTENSA && <choice I2C_PORT>",
+                        "help": "Use I2C_PORT_1.",
+                        "id": "I2C_PORT_1",
+                        "name": "I2C_PORT_1",
+                        "range": null,
+                        "title": "I2C_PORT_1",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "I2C_INTERFACE",
+                "help": "Select I2C port that controls this bus.",
+                "id": "ssd1306-configuration-i2c-port-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-144",
+                "name": "I2C_PORT",
+                "title": "I2C port that controls this bus",
+                "type": "choice"
+            },
+            {
+                "children": [],
+                "depends_on": "I2C_INTERFACE",
+                "help": "Force legacy i2c driver.",
+                "id": "LEGACY_DRIVER",
+                "name": "LEGACY_DRIVER",
+                "range": null,
+                "title": "Force legacy i2c driver",
+                "type": "bool"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "<choice SPI_HOST>",
+                        "help": "Use SPI2_HOST. This is also called HSPI_HOST.",
+                        "id": "SPI2_HOST",
+                        "name": "SPI2_HOST",
+                        "range": null,
+                        "title": "SPI2_HOST",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "IDF_TARGET_ARCH_XTENSA && <choice SPI_HOST>",
+                        "help": "USE SPI3_HOST. This is also called VSPI_HOST",
+                        "id": "SPI3_HOST",
+                        "name": "SPI3_HOST",
+                        "range": null,
+                        "title": "SPI3_HOST",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SPI_INTERFACE",
+                "help": "Select SPI peripheral that controls this bus.",
+                "id": "ssd1306-configuration-spi-peripheral-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-168",
+                "name": "SPI_HOST",
+                "title": "SPI peripheral that controls this bus",
+                "type": "choice"
+            }
+        ],
+        "depends_on": null,
+        "id": "ssd1306-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-1",
+        "title": "SSD1306 Configuration",
         "type": "menu"
     },
     {
@@ -36178,7 +36434,7 @@
                         ],
                         "depends_on": null,
                         "help": "Allows setting mDNS tasks affinity, i.e. whether the task is pinned to\nCPU0, pinned to CPU1, or allowed to run on any CPU.",
-                        "id": "component-config-mdns-mdns-task-affinity-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-41",
+                        "id": "component-config-mdns-mdns-task-affinity-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-41",
                         "name": "MDNS_TASK_AFFINITY",
                         "title": "mDNS task affinity",
                         "type": "choice"
@@ -36220,7 +36476,7 @@
                                 ],
                                 "depends_on": null,
                                 "help": null,
-                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-task-create-on-which-type-of-memory-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-66",
+                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-task-create-on-which-type-of-memory-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-66",
                                 "name": "MDNS_TASK_MEMORY_ALLOC_FROM",
                                 "title": "Select mDNS task create on which type of memory",
                                 "type": "choice"
@@ -36250,7 +36506,7 @@
                                 ],
                                 "depends_on": null,
                                 "help": null,
-                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-memory-allocation-type-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-83",
+                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-memory-allocation-type-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-83",
                                 "name": "MDNS_MEMORY_ALLOC_FROM",
                                 "title": "Select mDNS memory allocation type",
                                 "type": "choice"
@@ -36267,7 +36523,7 @@
                             }
                         ],
                         "depends_on": null,
-                        "id": "component-config-mdns-mdns-memory-configuration-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-64",
+                        "id": "component-config-mdns-mdns-memory-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-64",
                         "title": "MDNS Memory Configuration",
                         "type": "menu"
                     },
@@ -36413,13 +36669,13 @@
                             }
                         ],
                         "depends_on": null,
-                        "id": "component-config-mdns-mdns-predefined-interfaces-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-178",
+                        "id": "component-config-mdns-mdns-predefined-interfaces-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-178",
                         "title": "MDNS Predefined interfaces",
                         "type": "menu"
                     }
                 ],
                 "depends_on": null,
-                "id": "component-config-mdns-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-1",
+                "id": "component-config-mdns-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-1",
                 "title": "mDNS",
                 "type": "menu"
             },

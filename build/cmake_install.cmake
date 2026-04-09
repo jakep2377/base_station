@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/gdm35/Downloads/base_station-master
+# Install script for directory: C:/Users/jakep/Documents/ESP32/salt_base_station
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,13 +39,13 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/cmake_install.cmake")
+  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/gdm35/Downloads/base_station-master/build/install_local_manifest.txt"
+  file(WRITE "C:/Users/jakep/Documents/ESP32/salt_base_station/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -61,6 +61,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/gdm35/Downloads/base_station-master/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/Users/jakep/Documents/ESP32/salt_base_station/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

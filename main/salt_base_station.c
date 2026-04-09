@@ -61,7 +61,11 @@
 static const char *TAG = "BASE";
 
 static EventGroupHandle_t wifi_event_group;
-static const int WIFI_GOT_IP_BIT = BIT0;`r`nstatic const int WIFI_FAIL_BIT = BIT1;`r`nstatic int sta_retry_count = 0;`r`nstatic bool sta_bootstrap_in_progress = false;`r`n#define STA_BOOTSTRAP_MAX_RETRIES 3
+static const int WIFI_GOT_IP_BIT = BIT0;
+static const int WIFI_FAIL_BIT = BIT1;
+static int sta_retry_count = 0;
+static bool sta_bootstrap_in_progress = false;
+#define STA_BOOTSTRAP_MAX_RETRIES 3
 static SemaphoreHandle_t status_lock;
 
 // Keep these reasonably sized so they fit in RAM.
@@ -163,7 +167,7 @@ static void display_task(void *arg) {
         queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
         xSemaphoreGive(status_lock);
 
-        Display_ShowStatus(mode, wifi, lora, queue_depth, cmd, ack, local_ack_count);
+        display_show_status(mode, wifi, lora, queue_depth, cmd, ack, local_ack_count);
         vTaskDelay(pdMS_TO_TICKS(750));
     }
 }
@@ -626,9 +630,9 @@ void app_main(void) {
 
     status_lock = xSemaphoreCreateMutex();
 
-    display_available = Display_Init();
+    display_available = display_init();
     if (display_available) {
-        Display_ShowSplash("BOOTING", "CONNECTING...");
+        display_show_splash("BOOTING", "CONNECTING...");
     }
 
     start_sta_then_fallback_ap();
@@ -639,6 +643,8 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
-    xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
-}
 
+    if (display_available) {
+        xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
+    }
+}
