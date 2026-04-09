@@ -13,6 +13,7 @@
 #define OLED_SDA_GPIO           GPIO_NUM_17
 #define OLED_SCL_GPIO           GPIO_NUM_18
 #define OLED_RST_GPIO           GPIO_NUM_21
+#define OLED_PWR_GPIO           GPIO_NUM_36
 #define OLED_I2C_ADDR           0x3C
 #define OLED_WIDTH              128
 #define OLED_HEIGHT             64
@@ -22,6 +23,7 @@
 
 static uint8_t s_oled_buffer[OLED_BUFFER_SIZE];
 static bool s_display_ready = false;
+static bool s_oled_write_error_logged = false;
 
 static const uint8_t font5x7[][5] = {
     [32] = {0x00,0x00,0x00,0x00,0x00},
@@ -100,6 +102,15 @@ static void oled_reset(void)
     vTaskDelay(pdMS_TO_TICKS(20));
 }
 
+static void oled_enable_power(void)
+{
+    gpio_reset_pin(OLED_PWR_GPIO);
+    gpio_set_direction(OLED_PWR_GPIO, GPIO_MODE_OUTPUT);
+    // Heltec V3 boards commonly use LOW to enable Vext/OLED rail.
+    gpio_set_level(OLED_PWR_GPIO, 0);
+    vTaskDelay(pdMS_TO_TICKS(50));
+}
+
 static void oled_clear_buffer(void)
 {
     memset(s_oled_buffer, 0, sizeof(s_oled_buffer));
@@ -144,10 +155,15 @@ static void oled_flush(void)
     }
 
     for (int page = 0; page < OLED_PAGE_COUNT; page++) {
-        oled_write_cmd((uint8_t)(0xB0 + page));
-        oled_write_cmd(0x00);
-        oled_write_cmd(0x10);
-        oled_write_data(&s_oled_buffer[page * OLED_WIDTH], OLED_WIDTH);
+        esp_err_t err = oled_write_cmd((uint8_t)(0xB0 + page));
+        if (err == ESP_OK) err = oled_write_cmd(0x00);
+        if (err == ESP_OK) err = oled_write_cmd(0x10);
+        if (err == ESP_OK) err = oled_write_data(&s_oled_buffer[page * OLED_WIDTH], OLED_WIDTH);
+        if (err != ESP_OK && !s_oled_write_error_logged) {
+            ESP_LOGE(OLED_TAG, "OLED flush failed on page %d: %s", page, esp_err_to_name(err));
+            s_oled_write_error_logged = true;
+            return;
+        }
     }
 }
 
@@ -165,12 +181,13 @@ bool Display_Init(void)
     ESP_ERROR_CHECK(i2c_param_config(OLED_I2C_PORT, &conf));
     ESP_ERROR_CHECK(i2c_driver_install(OLED_I2C_PORT, conf.mode, 0, 0, 0));
 
+    oled_enable_power();
     oled_reset();
 
     const uint8_t init_cmds[] = {
         0xAE, 0xD5, 0x80, 0xA8, 0x3F, 0xD3, 0x00, 0x40,
-        0x8D, 0x14, 0x20, 0x00, 0xA1, 0xC8, 0xDA, 0x12,
-        0x81, 0xCF, 0xD9, 0xF1, 0xDB, 0x40, 0xA4, 0xA6,
+        0x8D, 0x14, 0x20, 0x02, 0xA1, 0xC8, 0xDA, 0x12,
+        0x81, 0xFF, 0xD9, 0xF1, 0xDB, 0x40, 0xA4, 0xA6,
         0x2E, 0xAF
     };
 
@@ -183,6 +200,11 @@ bool Display_Init(void)
     }
 
     s_display_ready = true;
+    oled_clear_buffer();
+    oled_flush();
+    memset(s_oled_buffer, 0xFF, sizeof(s_oled_buffer));
+    oled_flush();
+    vTaskDelay(pdMS_TO_TICKS(180));
     oled_clear_buffer();
     oled_flush();
     ESP_LOGI(OLED_TAG, "OLED ready");
@@ -202,9 +224,74 @@ void Display_ShowSplash(const char *title, const char *subtitle)
     oled_flush();
 }
 
+static void format_mode_label(const char *mode, char *out, size_t out_size)
+{
+    if (!out || out_size == 0) return;
+    if (!mode || mode[0] == '\0') {
+        snprintf(out, out_size, "STATE:-");
+        return;
+    }
+    if (strcmp(mode, "AP") == 0) {
+        snprintf(out, out_size, "STATE:SETUP");
+    } else if (strcmp(mode, "APSTA") == 0) {
+        snprintf(out, out_size, "STATE:JOINING");
+    } else if (strcmp(mode, "STA") == 0) {
+        snprintf(out, out_size, "STATE:ONLINE");
+    } else {
+        snprintf(out, out_size, "STATE:%-.12s", mode);
+    }
+}
+
+static void format_wifi_label(const char *wifiState, char *out, size_t out_size)
+{
+    if (!out || out_size == 0) return;
+    if (!wifiState || wifiState[0] == '\0') {
+        snprintf(out, out_size, "WIFI:-");
+        return;
+    }
+    if (strcmp(wifiState, "setup") == 0) {
+        snprintf(out, out_size, "WIFI:READY");
+    } else if (strcmp(wifiState, "connecting") == 0) {
+        snprintf(out, out_size, "WIFI:JOINING");
+    } else if (strcmp(wifiState, "online") == 0) {
+        snprintf(out, out_size, "WIFI:OK");
+    } else if (strcmp(wifiState, "degraded") == 0) {
+        snprintf(out, out_size, "WIFI:FAILED");
+    } else if (strcmp(wifiState, "restarting") == 0) {
+        snprintf(out, out_size, "WIFI:RESTART");
+    } else {
+        snprintf(out, out_size, "WIFI:%-.11s", wifiState);
+    }
+}
+
+static void format_backend_label(const char *backendUrl, char *out, size_t out_size)
+{
+    if (!out || out_size == 0) {
+        return;
+    }
+
+    if (!backendUrl || backendUrl[0] == '\0') {
+        snprintf(out, out_size, "BACK:-");
+        return;
+    }
+
+    const char *host = strstr(backendUrl, "://");
+    host = host ? host + 3 : backendUrl;
+    const char *end = host;
+    while (*end && *end != '/' && *end != ':') {
+        end++;
+    }
+
+    size_t host_len = (size_t)(end - host);
+    if (host_len > 13) host_len = 13;
+    snprintf(out, out_size, "BACK:%.*s", (int)host_len, host);
+}
+
 void Display_ShowStatus(const char *mode,
                         const char *wifiState,
                         const char *loraState,
+                        const char *targetNetwork,
+                        const char *backendUrl,
                         int queueDepth,
                         const char *lastCmd,
                         const char *lastAck,
@@ -218,24 +305,26 @@ void Display_ShowStatus(const char *mode,
     oled_clear_buffer();
     oled_draw_text(0, 0, "BASE STATION");
 
-    snprintf(line, sizeof(line), "MODE:%-.14s", mode ? mode : "-");
+    format_mode_label(mode, line, sizeof(line));
     oled_draw_text(0, 1, line);
 
-    snprintf(line, sizeof(line), "WIFI:%-.14s", wifiState ? wifiState : "-");
+    format_wifi_label(wifiState, line, sizeof(line));
     oled_draw_text(0, 2, line);
 
-    snprintf(line, sizeof(line), "LORA:%-.14s", loraState ? loraState : "-");
+    snprintf(line, sizeof(line), "NET:%-.14s", targetNetwork && targetNetwork[0] ? targetNetwork : "-");
     oled_draw_text(0, 3, line);
 
-    snprintf(line, sizeof(line), "QUEUE:%d ACK:%lu", queueDepth, (unsigned long)ackCount);
+    format_backend_label(backendUrl, line, sizeof(line));
     oled_draw_text(0, 4, line);
 
-    snprintf(line, sizeof(line), "CMD:%-.18s", lastCmd ? lastCmd : "-");
+    snprintf(line, sizeof(line), "L:%-.6s Q:%d", loraState ? loraState : "-", queueDepth);
     oled_draw_text(0, 5, line);
 
-    snprintf(line, sizeof(line), "ACK:%-.18s", lastAck && lastAck[0] ? lastAck : "-");
+    snprintf(line, sizeof(line), "CMD:%-.18s", lastCmd ? lastCmd : "-");
     oled_draw_text(0, 6, line);
+
+    snprintf(line, sizeof(line), "ACK:%lu %-.12s", (unsigned long)ackCount, lastAck && lastAck[0] ? lastAck : "-");
+    oled_draw_text(0, 7, line);
 
     oled_flush();
 }
-

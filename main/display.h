@@ -12,6 +12,8 @@ void Display_ShowSplash(const char *title, const char *subtitle);
 void Display_ShowStatus(const char *mode,
                         const char *wifiState,
                         const char *loraState,
+                        const char *targetNetwork,
+                        const char *backendUrl,
                         int queueDepth,
                         const char *lastCmd,
                         const char *lastAck,

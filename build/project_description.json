@@ -1,7 +1,7 @@
 {
     "version":            "1.3",
     "project_name":       "salt_base_station",
-    "project_version":    "d4b7a2b-dirty",
+    "project_version":    "107b754-dirty",
     "project_path":       "C:/Users/gdm35/Downloads/base_station-master",
     "idf_path":           "C:/esp/v6.0/esp-idf",
     "build_dir":          "C:/Users/gdm35/Downloads/base_station-master/build",
