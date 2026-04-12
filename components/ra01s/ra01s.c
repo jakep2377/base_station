@@ -6,6 +6,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 
 #include <driver/spi_master.h>
 #include <driver/gpio.h>
@@ -23,6 +24,7 @@
 #endif
 
 static spi_device_handle_t SpiHandle;
+static SemaphoreHandle_t SpiMutex;
 
 // Global Stuff
 static uint8_t PacketParams[6];
@@ -72,6 +74,9 @@ void LoRaInit(void)
 	
 	txActive = false;
 	debugPrint = false;
+	if (SpiMutex == NULL) {
+		SpiMutex = xSemaphoreCreateMutex();
+	}
 
 	gpio_reset_pin(SX126x_SPI_SELECT);
 	gpio_set_direction(SX126x_SPI_SELECT, GPIO_MODE_OUTPUT);
@@ -110,7 +115,7 @@ void LoRaInit(void)
 		.clock_speed_hz = 9000000,
 		.mode = 0,
 		.spics_io_num = CONFIG_NSS_GPIO,
-		.queue_size = 7,
+		.queue_size = 1,
 		.flags = 0,
 		.pre_cb = NULL
 	};
@@ -124,30 +129,50 @@ void spi_write_byte(uint8_t* Dataout, size_t DataLength )
 {
 	spi_transaction_t SPITransaction;
 
-	if ( DataLength > 0 ) {
-		memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
-		SPITransaction.length = DataLength * 8;
-		SPITransaction.tx_buffer = Dataout;
-		SPITransaction.rx_buffer = NULL;
-		spi_device_transmit( SpiHandle, &SPITransaction );
+	if (DataLength == 0) {
+		return;
 	}
 
-	return;
+	memset(&SPITransaction, 0, sizeof(spi_transaction_t));
+	SPITransaction.length = DataLength * 8;
+	SPITransaction.tx_buffer = Dataout;
+	SPITransaction.rx_buffer = NULL;
+
+	if (SpiMutex) {
+		xSemaphoreTake(SpiMutex, portMAX_DELAY);
+	}
+	esp_err_t ret = spi_device_polling_transmit(SpiHandle, &SPITransaction);
+	if (SpiMutex) {
+		xSemaphoreGive(SpiMutex);
+	}
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "spi_write_byte failed: %s", esp_err_to_name(ret));
+	}
 }
 
 void spi_read_byte(uint8_t* Datain, uint8_t* Dataout, size_t DataLength )
 {
 	spi_transaction_t SPITransaction;
 
-	if ( DataLength > 0 ) {
-		memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
-		SPITransaction.length = DataLength * 8;
-		SPITransaction.tx_buffer = Dataout;
-		SPITransaction.rx_buffer = Datain;
-		spi_device_transmit( SpiHandle, &SPITransaction );
+	if (DataLength == 0) {
+		return;
 	}
 
-	return;
+	memset(&SPITransaction, 0, sizeof(spi_transaction_t));
+	SPITransaction.length = DataLength * 8;
+	SPITransaction.tx_buffer = Dataout;
+	SPITransaction.rx_buffer = Datain;
+
+	if (SpiMutex) {
+		xSemaphoreTake(SpiMutex, portMAX_DELAY);
+	}
+	esp_err_t ret = spi_device_polling_transmit(SpiHandle, &SPITransaction);
+	if (SpiMutex) {
+		xSemaphoreGive(SpiMutex);
+	}
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "spi_read_byte failed: %s", esp_err_to_name(ret));
+	}
 }
 
 uint8_t spi_transfer(uint8_t address)

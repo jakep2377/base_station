@@ -37,29 +37,7 @@
 #define MDNS_INSTANCE "Salt Robot Base Station"
 #define DEFAULT_BACKEND_URL "https://robot-lora-server.onrender.com"
 
-static const char ONRENDER_CERT_CHAIN_PEM[] =
-    "-----BEGIN CERTIFICATE-----\n"
-    "MIIDqjCCA0+gAwIBAgIRAMMAGyq8zEWDDo0Pp21BopMwCgYIKoZIzj0EAwIwOzEL\n"
-    "MAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\n"
-    "A1UEAxMDV0UxMB4XDTI2MDMyODIxMDAyNloXDTI2MDYyNjIyMDAyMlowFzEVMBMG\n"
-    "A1UEAxMMb25yZW5kZXIuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEUxQh\n"
-    "lYjAcRs39ef7v7I5nK2bKEBCRT9SKm+yxnZ0ilorkjOP80XFKTKkO1piE3BKskzq\n"
-    "/e5LF6yuVn/wiezaIKOCAlYwggJSMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\n"
-    "BggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRaMmWaF3ka48GuymJ7\n"
-    "TgjPtpxXmzAfBgNVHSMEGDAWgBSQd5I1Z8T/qMyp5nvZgHl7zJP5ODBeBggrBgEF\n"
-    "BQcBAQRSMFAwJwYIKwYBBQUHMAGGG2h0dHA6Ly9vLnBraS5nb29nL3Mvd2UxL3d3\n"
-    "QTAlBggrBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UxLmNydDAnBgNVHREE\n"
-    "IDAeggxvbnJlbmRlci5jb22CDioub25yZW5kZXIuY29tMBMGA1UdIAQMMAowCAYG\n"
-    "Z4EMAQIBMDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMS9a\n"
-    "SW92RnZHdUpNVS5jcmwwggEFBgorBgEEAdZ5AgQCBIH2BIHzAPEAdgCWl2S/VViX\n"
-    "rfdDh2g3CEJ36fA61fak8zZuRqQ/D8qpxgAAAZ02dne4AAAEAwBHMEUCICGkx1u+\n"
-    "5NyQNP7jCv9HDPtKFqiGoQ+tHYEeIvL6tGJrAiEAkppmOKEgMRf06VjbmZfYrG63\n"
-    "aPMqpI+KtTIZmZrOmasAdwBJnJtp3h187Pw23s2HZKa4W68Kh4AZ0VVS++nrKd34\n"
-    "wwAAAZ02dneYAAAEAwBIMEYCIQCTyHorghtn+KoDB+h+i+bMcaFCqSYobN1xC4yC\n"
-    "VOF/ywIhANzVCoeHsvj8yim9kG+2cdfD0/j0Z7Cbc84uFRD6zCnSMAoGCCqGSM49\n"
-    "BAMCA0kAMEYCIQDz+YFTNjl4HZlVndFK6Bm7rHFp1tgXJGsBrmj3deLMFgIhALYo\n"
-    "AUseygUBDupdArq6xYLCQJwj7n3VVzqlaEqMP3hR\n"
-    "-----END CERTIFICATE-----\n"
+static const char ONRENDER_CA_CHAIN_PEM[] =
     "-----BEGIN CERTIFICATE-----\n"
     "MIICjjCCAjOgAwIBAgIQf/NXaJvCTjAtkOGKQb0OHzAKBggqhkjOPQQDAjBQMSQw\n"
     "IgYDVQQLExtHbG9iYWxTaWduIEVDQyBSb290IENBIC0gUjQxEzARBgNVBAoTCkds\n"
@@ -75,6 +53,18 @@ static const char ONRENDER_CERT_CHAIN_PEM[] =
     "L2MucGtpLmdvb2cvci9nc3I0LmNybDATBgNVHSAEDDAKMAgGBmeBDAECATAKBggq\n"
     "hkjOPQQDAgNJADBGAiEAokJL0LgR6SOLR02WWxccAq3ndXp4EMRveXMUVUxMWSMC\n"
     "IQDspFWa3fj7nLgouSdkcPy1SdOR2AGm9OQWs7veyXsBwA==\n"
+    "-----END CERTIFICATE-----\n"
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIB3DCCAYOgAwIBAgINAgPlfvU/k/2lCSGypjAKBggqhkjOPQQDAjBQMSQwIgYD\n"
+    "VQQLExtHbG9iYWxTaWduIEVDQyBSb290IENBIC0gUjQxEzARBgNVBAoTCkdsb2Jh\n"
+    "bFNpZ24xEzARBgNVBAMTCkdsb2JhbFNpZ24wHhcNMTIxMTEzMDAwMDAwWhcNMzgw\n"
+    "MTE5MDMxNDA3WjBQMSQwIgYDVQQLExtHbG9iYWxTaWduIEVDQyBSb290IENBIC0g\n"
+    "UjQxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2JhbFNpZ24wWTAT\n"
+    "BgcqhkjOPQIBBggqhkjOPQMBBwNCAAS4xnnTj2wlDp8uORkcA6SumuU5BwkWymOx\n"
+    "uYb4ilfBV85C+nOh92VC/x7BALJucw7/xyHlGKSq2XE/qNS5zowdo0IwQDAOBgNV\n"
+    "HQ8BAf8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUVLB7rUW44kB/\n"
+    "+wpu+74zyTyjhNUwCgYIKoZIzj0EAwIDRwAwRAIgIk90crlgr/HmnKAWBVBfw147\n"
+    "bmF0774BxL4YSFlhgjICICadVGNA3jdgUM/I2O2dgq43mLyjj0xMqTQrbO/7lZsm\n"
     "-----END CERTIFICATE-----\n";
 
 #define NVS_NAMESPACE "config"
@@ -87,9 +77,14 @@ static const char ONRENDER_CERT_CHAIN_PEM[] =
 #define MAX_WIFI_PASS_LEN 64
 #define MAX_BACKEND_URL_LEN 160
 #define MAX_BOARD_API_KEY_LEN 128
-#define TELEMETRY_POST_INTERVAL_MS 2500
-#define BASE_STATUS_POST_INTERVAL_MS 5000
-#define REMOTE_COMMAND_POLL_INTERVAL_MS 250
+#define TELEMETRY_POST_INTERVAL_MS 200
+#define BASE_STATUS_POST_INTERVAL_MS 400
+#define REMOTE_COMMAND_POLL_INTERVAL_MS 120
+#define BACKEND_HTTP_TASK_STACK_SIZE 16384
+#define BACKEND_HTTP_TIMEOUT_MS 2500
+#define LORA_TASK_STACK_SIZE 6144
+#define DISPLAY_TASK_STACK_SIZE 6144
+#define RESTART_TASK_STACK_SIZE 3072
 
 #define LORA_FREQ_HZ     915000000
 #define LORA_TX_POWER_DBM 22
@@ -104,8 +99,9 @@ static const char ONRENDER_CERT_CHAIN_PEM[] =
 #define LORA_CRC_ON      true
 #define LORA_INVERT_IRQ  false
 
-#define LORA_CMD_MAX     200
-#define LORA_QUEUE_DEPTH 64
+#define LORA_CMD_MAX     384
+#define LORA_QUEUE_DEPTH 192
+#define LORA_RX_REASSEMBLY_MAX 1024
 
 static const char *TAG = "BASE";
 
@@ -116,19 +112,28 @@ static int sta_retry_count = 0;
 static bool sta_bootstrap_in_progress = false;
 #define STA_BOOTSTRAP_MAX_RETRIES 3
 static SemaphoreHandle_t status_lock;
+static SemaphoreHandle_t backend_http_lock;
+static SemaphoreHandle_t lora_lock;
 
 // Keep these reasonably sized so they fit in RAM while allowing escaped status payloads.
 static char status_json[3072] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"BOOT\"}";
 static char last_cmd[192]     = "none";
 static char last_cmd_id[64]   = "";
 static char last_cmd_status[32] = "idle";
-static char last_lora_rx[256] = "";
+static char last_lora_rx[LORA_RX_REASSEMBLY_MAX] = "";
+static char last_lora_json[LORA_RX_REASSEMBLY_MAX] = "";
 static char last_ack_rx[160] = "";
 static char current_state[32] = "BOOT";
 static char current_mode[16] = "BOOT";
 static char wifi_link_state[16] = "connecting";
 static char lora_link_state[16] = "idle";
 static uint32_t ack_count = 0;
+static uint32_t last_lora_rx_count = 0;
+static uint32_t last_lora_json_count = 0;
+static bool lora_stream_seq_init = false;
+static uint32_t lora_stream_expected_seq = 0;
+static char lora_stream_buf[LORA_RX_REASSEMBLY_MAX] = "";
+static size_t lora_stream_len = 0;
 
 static char provisioned_ssid[MAX_WIFI_SSID_LEN + 1] = "";
 static char provisioned_pass[MAX_WIFI_PASS_LEN + 1] = "";
@@ -190,10 +195,112 @@ static const char *backend_cert_pem_for_url(const char *url) {
     }
 
     if (strstr(url, ".onrender.com") || strstr(url, "onrender.com")) {
-        return ONRENDER_CERT_CHAIN_PEM;
+        return ONRENDER_CA_CHAIN_PEM;
     }
 
     return NULL;
+}
+
+typedef struct {
+    bool is_stream;
+    bool has_end;
+    uint32_t seq;
+    const char *payload;
+} lora_stream_frame_t;
+
+static lora_stream_frame_t parse_lora_stream_frame(char *text) {
+    lora_stream_frame_t out = {
+        .is_stream = false,
+        .has_end = true,
+        .seq = 0,
+        .payload = text,
+    };
+
+    if (!text || strncmp(text, "S:", 2) != 0) {
+        return out;
+    }
+
+    char *p = text + 2;
+    char *endptr = NULL;
+    unsigned long seq = strtoul(p, &endptr, 10);
+    if (endptr == p || !endptr || *endptr != ':') {
+        return out;
+    }
+
+    out.is_stream = true;
+    out.seq = (uint32_t)seq;
+
+    char *payload = endptr + 1;
+    if ((payload[0] == 'M' || payload[0] == 'E') && payload[1] == ':') {
+        out.has_end = (payload[0] == 'E');
+        out.payload = payload + 2;
+    } else {
+        out.has_end = true;
+        out.payload = payload;
+    }
+
+    return out;
+}
+
+static bool store_lora_rx_payload(char *text) {
+    if (!text) {
+        return false;
+    }
+
+    lora_stream_frame_t frame = parse_lora_stream_frame(text);
+    const char *payload = frame.payload ? frame.payload : "";
+
+    if (!frame.is_stream) {
+        snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", payload);
+        last_lora_rx_count++;
+        const char *p = payload;
+        while (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n') p++;
+        if (*p == '{') {
+            snprintf(last_lora_json, sizeof(last_lora_json), "%s", payload);
+            last_lora_json_count++;
+        }
+        return true;
+    }
+
+    if (!lora_stream_seq_init) {
+        lora_stream_expected_seq = frame.seq;
+        lora_stream_seq_init = true;
+    } else if (frame.seq != lora_stream_expected_seq) {
+        lora_stream_len = 0;
+        lora_stream_buf[0] = '\0';
+    }
+    lora_stream_expected_seq = frame.seq + 1;
+
+    size_t payload_len = strlen(payload);
+    if (payload_len > 0 && payload[payload_len - 1] == '\n') {
+        payload_len--;
+    }
+
+    size_t remaining = sizeof(lora_stream_buf) - 1 - lora_stream_len;
+    if (payload_len > remaining) {
+        payload_len = remaining;
+    }
+    if (payload_len > 0) {
+        memcpy(&lora_stream_buf[lora_stream_len], payload, payload_len);
+        lora_stream_len += payload_len;
+        lora_stream_buf[lora_stream_len] = '\0';
+    }
+
+    if (!frame.has_end) {
+        return false;
+    }
+
+    snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", lora_stream_buf);
+    last_lora_rx_count++;
+    const char *p = lora_stream_buf;
+    while (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n') p++;
+    if (*p == '{') {
+        snprintf(last_lora_json, sizeof(last_lora_json), "%s", lora_stream_buf);
+        last_lora_json_count++;
+    }
+    lora_stream_len = 0;
+    lora_stream_buf[0] = '\0';
+    return true;
 }
 
 static void capture_ack_if_present(const char *text) {
@@ -483,22 +590,35 @@ static esp_err_t post_json_to_backend(const char *url, const char *json_body) {
         return ESP_ERR_INVALID_ARG;
     }
 
+    bool http_locked = false;
+    if (backend_http_lock) {
+        if (xSemaphoreTake(backend_http_lock, pdMS_TO_TICKS(BACKEND_HTTP_TIMEOUT_MS)) != pdTRUE) {
+            ESP_LOGW(TAG, "Backend HTTP busy, skipping POST %s", url);
+            return ESP_ERR_TIMEOUT;
+        }
+        http_locked = true;
+    }
+
     const char *cert_pem = backend_cert_pem_for_url(url);
     if (cert_pem) {
-        ESP_LOGI(TAG, "Using pinned onrender cert chain for %s", url);
+        ESP_LOGI(TAG, "Using pinned onrender CA chain for %s", url);
     }
 
     esp_http_client_config_t config = {
         .url = url,
         .method = HTTP_METHOD_POST,
-        .timeout_ms = 10000,
+        .timeout_ms = BACKEND_HTTP_TIMEOUT_MS,
         .cert_pem = cert_pem,
+        .cert_len = cert_pem ? strlen(cert_pem) + 1 : 0,
         .crt_bundle_attach = cert_pem ? NULL : esp_crt_bundle_attach,
         .common_name = cert_pem ? "onrender.com" : NULL,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
     if (!client) {
+        if (http_locked) {
+            xSemaphoreGive(backend_http_lock);
+        }
         return ESP_FAIL;
     }
 
@@ -511,6 +631,9 @@ static esp_err_t post_json_to_backend(const char *url, const char *json_body) {
     esp_err_t err = esp_http_client_perform(client);
     int status_code = (err == ESP_OK) ? esp_http_client_get_status_code(client) : -1;
     esp_http_client_cleanup(client);
+    if (http_locked) {
+        xSemaphoreGive(backend_http_lock);
+    }
 
     if (err != ESP_OK) {
         return err;
@@ -529,22 +652,35 @@ static esp_err_t get_json_from_backend(const char *url, char *response_body, siz
 
     response_body[0] = '\0';
 
+    bool http_locked = false;
+    if (backend_http_lock) {
+        if (xSemaphoreTake(backend_http_lock, pdMS_TO_TICKS(BACKEND_HTTP_TIMEOUT_MS)) != pdTRUE) {
+            ESP_LOGW(TAG, "Backend HTTP busy, skipping GET %s", url);
+            return ESP_ERR_TIMEOUT;
+        }
+        http_locked = true;
+    }
+
     const char *cert_pem = backend_cert_pem_for_url(url);
     if (cert_pem) {
-        ESP_LOGI(TAG, "Using pinned onrender cert chain for %s", url);
+        ESP_LOGI(TAG, "Using pinned onrender CA chain for %s", url);
     }
 
     esp_http_client_config_t config = {
         .url = url,
         .method = HTTP_METHOD_GET,
-        .timeout_ms = 10000,
+        .timeout_ms = BACKEND_HTTP_TIMEOUT_MS,
         .cert_pem = cert_pem,
+        .cert_len = cert_pem ? strlen(cert_pem) + 1 : 0,
         .crt_bundle_attach = cert_pem ? NULL : esp_crt_bundle_attach,
         .common_name = cert_pem ? "onrender.com" : NULL,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
     if (!client) {
+        if (http_locked) {
+            xSemaphoreGive(backend_http_lock);
+        }
         return ESP_FAIL;
     }
 
@@ -570,6 +706,9 @@ static esp_err_t get_json_from_backend(const char *url, char *response_body, siz
 
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
+    if (http_locked) {
+        xSemaphoreGive(backend_http_lock);
+    }
     return err;
 }
 
@@ -623,7 +762,8 @@ static esp_err_t post_remote_command_ack(const char *command_id, const char *sta
 
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
     char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
-    char body[384] = {0};
+    static char body[384];
+    body[0] = '\0';
 
     xSemaphoreTake(status_lock, portMAX_DELAY);
     snprintf(backend_url, sizeof(backend_url), "%s", provisioned_backend_url);
@@ -655,7 +795,7 @@ static esp_err_t post_remote_command_ack(const char *command_id, const char *sta
 static bool fetch_remote_command_from_backend(char *cmd_out, size_t cmd_out_size, char *command_id_out, size_t command_id_size) {
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
     char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
-    char response[512] = {0};
+    static char response[512];
     int status_code = -1;
 
     if (!cmd_out || cmd_out_size == 0) {
@@ -734,30 +874,32 @@ static void backend_command_poll_task(void *arg) {
 
 static void telemetry_post_task(void *arg) {
     (void)arg;
-    char payload[sizeof(last_lora_rx)] = {0};
+    char payload[sizeof(last_lora_json)] = {0};
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
     char endpoint[MAX_BACKEND_URL_LEN + 48] = {0};
-    char last_sent[sizeof(last_lora_rx)] = {0};
     char wifi_state[sizeof(wifi_link_state)] = {0};
+    uint32_t payload_count = 0;
+    uint32_t last_sent_count = 0;
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(TELEMETRY_POST_INTERVAL_MS));
 
         xSemaphoreTake(status_lock, portMAX_DELAY);
-        snprintf(payload, sizeof(payload), "%s", last_lora_rx);
+        snprintf(payload, sizeof(payload), "%s", last_lora_json);
         snprintf(backend_url, sizeof(backend_url), "%s", provisioned_backend_url);
         snprintf(wifi_state, sizeof(wifi_state), "%s", wifi_link_state);
+        payload_count = last_lora_json_count;
         xSemaphoreGive(status_lock);
 
         if (strcmp(wifi_state, "online") != 0) continue;
         if (backend_url[0] == '\0') continue;
         if (payload[0] != '{') continue;
-        if (strcmp(payload, last_sent) == 0) continue;
+        if (payload_count == 0 || payload_count == last_sent_count) continue;
         if (!build_backend_endpoint(backend_url, "/api/telemetry", endpoint, sizeof(endpoint))) continue;
 
         esp_err_t err = post_json_to_backend(endpoint, payload);
         if (err == ESP_OK) {
-            snprintf(last_sent, sizeof(last_sent), "%s", payload);
+            last_sent_count = payload_count;
             ESP_LOGI(TAG, "Telemetry pushed to backend");
         } else {
             ESP_LOGW(TAG, "Telemetry push failed: %s", esp_err_to_name(err));
@@ -874,7 +1016,7 @@ static esp_err_t setup_network_post_handler(httpd_req_t *req) {
 
     httpd_resp_set_type(req, "application/json");
     httpd_resp_sendstr(req, "{\"ok\":true,\"message\":\"Wi-Fi saved. Restarting base station.\"}");
-    xTaskCreate(delayed_restart_task, "restart", 2048, NULL, 3, NULL);
+    xTaskCreate(delayed_restart_task, "restart", RESTART_TASK_STACK_SIZE, NULL, 3, NULL);
     return ESP_OK;
 }
 
@@ -1107,18 +1249,24 @@ static void lora_tx_task(void *arg) {
             if (c.len > 0) {
                 ESP_LOGI(TAG, "LoRa TX: %.*s", c.len, c.payload);
                 bool sent = false;
-                int send_result = 0;
+                bool send_result = false;
                 for (int retry = 0; retry < 3; retry++) {
+                    if (lora_lock) {
+                        xSemaphoreTake(lora_lock, portMAX_DELAY);
+                    }
                     send_result = LoRaSend((uint8_t *)c.payload, c.len, SX126x_TXMODE_SYNC);
-                    if (send_result == 0) {
+                    if (lora_lock) {
+                        xSemaphoreGive(lora_lock);
+                    }
+                    if (send_result) {
                         sent = true;
                         break;
                     }
-                    ESP_LOGW(TAG, "LoRaSend retry %d/3 failed with code %d", retry + 1, send_result);
+                    ESP_LOGW(TAG, "LoRaSend retry %d/3 failed", retry + 1);
                     vTaskDelay(pdMS_TO_TICKS(50));
                 }
                 if (!sent) {
-                    ESP_LOGE(TAG, "LoRaSend failed after retries with code: %d", send_result);
+                    ESP_LOGE(TAG, "LoRaSend failed after retries");
                     snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
                     snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
                 } else {
@@ -1135,20 +1283,34 @@ static void lora_rx_task(void *arg) {
     uint8_t rx[255];
 
     while (1) {
-        uint8_t n = LoRaReceive(rx, sizeof(rx) - 1);
+        uint8_t n = 0;
+        if (lora_lock) {
+            xSemaphoreTake(lora_lock, portMAX_DELAY);
+        }
+        n = LoRaReceive(rx, sizeof(rx) - 1);
+        if (lora_lock) {
+            xSemaphoreGive(lora_lock);
+        }
         if (n > 0) {
             rx[n] = '\0';
 
+            bool payload_complete = false;
             xSemaphoreTake(status_lock, portMAX_DELAY);
-            snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", (char *)rx);
-            capture_ack_if_present((char *)rx);
-            snprintf(current_state, sizeof(current_state), "IDLE");
-            snprintf(current_mode, sizeof(current_mode), "LORA");
-            snprintf(lora_link_state, sizeof(lora_link_state), "online");
-            refresh_status_json();
+            payload_complete = store_lora_rx_payload((char *)rx);
+            if (payload_complete) {
+                capture_ack_if_present(last_lora_rx);
+                snprintf(current_state, sizeof(current_state), "IDLE");
+                snprintf(current_mode, sizeof(current_mode), "LORA");
+                snprintf(lora_link_state, sizeof(lora_link_state), "online");
+                refresh_status_json();
+            }
             xSemaphoreGive(status_lock);
 
-            ESP_LOGI(TAG, "LoRa RX (%d): %s", n, (char *)rx);
+            if (payload_complete) {
+                ESP_LOGI(TAG, "LoRa RX (%d): %s", n, last_lora_rx);
+            } else {
+                ESP_LOGI(TAG, "LoRa RX chunk (%d): %s", n, (char *)rx);
+            }
         }
         vTaskDelay(pdMS_TO_TICKS(5));
     }
@@ -1160,6 +1322,8 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     status_lock = xSemaphoreCreateMutex();
+    backend_http_lock = xSemaphoreCreateMutex();
+    lora_lock = xSemaphoreCreateMutex();
 
     display_available = display_init();
     if (display_available) {
@@ -1172,14 +1336,14 @@ void app_main(void) {
 
     lora_cmd_q = xQueueCreate(LORA_QUEUE_DEPTH, sizeof(lora_cmd_t));
     lora_init();
-    xTaskCreate(lora_tx_task, "lora_tx", 4096, NULL, 5, NULL);
-    xTaskCreate(lora_rx_task, "lora_rx", 4096, NULL, 5, NULL);
-    xTaskCreate(telemetry_post_task, "telemetry_post", 12288, NULL, 4, NULL);
-    xTaskCreate(base_status_post_task, "base_status_post", 12288, NULL, 4, NULL);
-    xTaskCreate(backend_command_poll_task, "backend_poll", 12288, NULL, 4, NULL);
+    xTaskCreate(lora_tx_task, "lora_tx", LORA_TASK_STACK_SIZE, NULL, 5, NULL);
+    xTaskCreate(lora_rx_task, "lora_rx", LORA_TASK_STACK_SIZE, NULL, 5, NULL);
+    xTaskCreate(telemetry_post_task, "telemetry_post", BACKEND_HTTP_TASK_STACK_SIZE, NULL, 4, NULL);
+    xTaskCreate(base_status_post_task, "base_status_post", BACKEND_HTTP_TASK_STACK_SIZE, NULL, 4, NULL);
+    xTaskCreate(backend_command_poll_task, "backend_poll", BACKEND_HTTP_TASK_STACK_SIZE, NULL, 4, NULL);
 
     if (display_available) {
-        xTaskCreate(display_task, "display", 4096, NULL, 3, NULL);
+        xTaskCreate(display_task, "display", DISPLAY_TASK_STACK_SIZE, NULL, 3, NULL);
     }
 }
 

@@ -2,7 +2,13 @@
 #define MAIN_SSD1306_H_
 
 #include "driver/spi_master.h"
+#include "esp_idf_version.h"
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+#include "driver/i2c_master.h"
+#include "driver/i2c_types.h"
+#else
 #include "driver/i2c.h"
+#endif
 
 // Following definitions are bollowed from 
 // http://robotcantalk.blogspot.com/2015/03/interfacing-arduino-with-ssd1306-driven.html
@@ -107,6 +113,10 @@ typedef struct {
 	PAGE_t _page[8];
 	bool _flip;
 	i2c_port_t _i2c_num;
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+	i2c_master_bus_handle_t _i2c_bus_handle;
+	i2c_master_dev_handle_t _i2c_dev_handle;
+#endif
 	spi_device_handle_t _spi_device_handle;
 } SSD1306_t;
 

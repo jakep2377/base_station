@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <string.h>
 
 #include "freertos/FreeRTOS.h"
@@ -9,11 +10,64 @@
 #include "font8x8_basic.h"
 
 #define PACK8 __attribute__((aligned( __alignof__( uint8_t ) ), packed ))
+#define SSD1306_GLYPH_WIDTH 6
 
 typedef union out_column_t {
 	uint32_t u32;
 	uint8_t  u8[4];
 } PACK8 out_column_t;
+
+static void glyph_for_char(char c, uint8_t out[5])
+{
+	memset(out, 0, 5);
+	c = (char)toupper((unsigned char)c);
+	switch (c) {
+		case '0': out[0] = 0x3E; out[1] = 0x51; out[2] = 0x49; out[3] = 0x45; out[4] = 0x3E; break;
+		case '1': out[0] = 0x00; out[1] = 0x42; out[2] = 0x7F; out[3] = 0x40; out[4] = 0x00; break;
+		case '2': out[0] = 0x62; out[1] = 0x51; out[2] = 0x49; out[3] = 0x49; out[4] = 0x46; break;
+		case '3': out[0] = 0x22; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x36; break;
+		case '4': out[0] = 0x18; out[1] = 0x14; out[2] = 0x12; out[3] = 0x7F; out[4] = 0x10; break;
+		case '5': out[0] = 0x2F; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x31; break;
+		case '6': out[0] = 0x3E; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x32; break;
+		case '7': out[0] = 0x01; out[1] = 0x71; out[2] = 0x09; out[3] = 0x05; out[4] = 0x03; break;
+		case '8': out[0] = 0x36; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x36; break;
+		case '9': out[0] = 0x26; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x3E; break;
+		case 'A': out[0] = 0x7E; out[1] = 0x09; out[2] = 0x09; out[3] = 0x09; out[4] = 0x7E; break;
+		case 'B': out[0] = 0x7F; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x36; break;
+		case 'C': out[0] = 0x3E; out[1] = 0x41; out[2] = 0x41; out[3] = 0x41; out[4] = 0x22; break;
+		case 'D': out[0] = 0x7F; out[1] = 0x41; out[2] = 0x41; out[3] = 0x22; out[4] = 0x1C; break;
+		case 'E': out[0] = 0x7F; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x41; break;
+		case 'F': out[0] = 0x7F; out[1] = 0x09; out[2] = 0x09; out[3] = 0x09; out[4] = 0x01; break;
+		case 'G': out[0] = 0x3E; out[1] = 0x41; out[2] = 0x49; out[3] = 0x49; out[4] = 0x7A; break;
+		case 'H': out[0] = 0x7F; out[1] = 0x08; out[2] = 0x08; out[3] = 0x08; out[4] = 0x7F; break;
+		case 'I': out[0] = 0x00; out[1] = 0x41; out[2] = 0x7F; out[3] = 0x41; out[4] = 0x00; break;
+		case 'J': out[0] = 0x20; out[1] = 0x40; out[2] = 0x41; out[3] = 0x3F; out[4] = 0x01; break;
+		case 'K': out[0] = 0x7F; out[1] = 0x08; out[2] = 0x14; out[3] = 0x22; out[4] = 0x41; break;
+		case 'L': out[0] = 0x7F; out[1] = 0x40; out[2] = 0x40; out[3] = 0x40; out[4] = 0x40; break;
+		case 'M': out[0] = 0x7F; out[1] = 0x02; out[2] = 0x0C; out[3] = 0x02; out[4] = 0x7F; break;
+		case 'N': out[0] = 0x7F; out[1] = 0x04; out[2] = 0x08; out[3] = 0x10; out[4] = 0x7F; break;
+		case 'O': out[0] = 0x3E; out[1] = 0x41; out[2] = 0x41; out[3] = 0x41; out[4] = 0x3E; break;
+		case 'P': out[0] = 0x7F; out[1] = 0x09; out[2] = 0x09; out[3] = 0x09; out[4] = 0x06; break;
+		case 'Q': out[0] = 0x3E; out[1] = 0x41; out[2] = 0x51; out[3] = 0x21; out[4] = 0x5E; break;
+		case 'R': out[0] = 0x7F; out[1] = 0x09; out[2] = 0x19; out[3] = 0x29; out[4] = 0x46; break;
+		case 'S': out[0] = 0x26; out[1] = 0x49; out[2] = 0x49; out[3] = 0x49; out[4] = 0x32; break;
+		case 'T': out[0] = 0x01; out[1] = 0x01; out[2] = 0x7F; out[3] = 0x01; out[4] = 0x01; break;
+		case 'U': out[0] = 0x3F; out[1] = 0x40; out[2] = 0x40; out[3] = 0x40; out[4] = 0x3F; break;
+		case 'V': out[0] = 0x1F; out[1] = 0x20; out[2] = 0x40; out[3] = 0x20; out[4] = 0x1F; break;
+		case 'W': out[0] = 0x7F; out[1] = 0x20; out[2] = 0x18; out[3] = 0x20; out[4] = 0x7F; break;
+		case 'X': out[0] = 0x63; out[1] = 0x14; out[2] = 0x08; out[3] = 0x14; out[4] = 0x63; break;
+		case 'Y': out[0] = 0x03; out[1] = 0x04; out[2] = 0x78; out[3] = 0x04; out[4] = 0x03; break;
+		case 'Z': out[0] = 0x61; out[1] = 0x51; out[2] = 0x49; out[3] = 0x45; out[4] = 0x43; break;
+		case ':': out[0] = 0x00; out[1] = 0x36; out[2] = 0x36; out[3] = 0x00; out[4] = 0x00; break;
+		case '-': out[0] = 0x08; out[1] = 0x08; out[2] = 0x08; out[3] = 0x08; out[4] = 0x08; break;
+		case '>': out[0] = 0x00; out[1] = 0x41; out[2] = 0x22; out[3] = 0x14; out[4] = 0x08; break;
+		case '!': out[0] = 0x00; out[1] = 0x00; out[2] = 0x5F; out[3] = 0x00; out[4] = 0x00; break;
+		case '.': out[0] = 0x00; out[1] = 0x60; out[2] = 0x60; out[3] = 0x00; out[4] = 0x00; break;
+		case ',': out[0] = 0x00; out[1] = 0x80; out[2] = 0x60; out[3] = 0x00; out[4] = 0x00; break;
+		case '/': out[0] = 0x20; out[1] = 0x10; out[2] = 0x08; out[3] = 0x04; out[4] = 0x02; break;
+		case ' ': default: break;
+	}
+}
 
 void ssd1306_init(SSD1306_t * dev, int width, int height)
 {
@@ -99,16 +153,18 @@ void ssd1306_display_text(SSD1306_t * dev, int page, const char * text, int text
 {
 	if (page >= dev->_pages) return;
 	int _text_len = text_len;
-	if (_text_len > 16) _text_len = 16;
+	int max_chars = dev->_width / SSD1306_GLYPH_WIDTH;
+	if (_text_len > max_chars) _text_len = max_chars;
 
 	int seg = 0;
-	uint8_t image[8];
+	uint8_t image[SSD1306_GLYPH_WIDTH];
 	for (int i = 0; i < _text_len; i++) {
-		memcpy(image, font8x8_basic_tr[(uint8_t)text[i]], 8);
-		if (invert) ssd1306_invert(image, 8);
-		if (dev->_flip) ssd1306_flip(image, 8);
-		ssd1306_display_image(dev, page, seg, image, 8);
-		seg = seg + 8;
+		glyph_for_char(text[i], image);
+		image[5] = 0x00;
+		if (invert) ssd1306_invert(image, SSD1306_GLYPH_WIDTH);
+		if (dev->_flip) ssd1306_flip(image, SSD1306_GLYPH_WIDTH);
+		ssd1306_display_image(dev, page, seg, image, SSD1306_GLYPH_WIDTH);
+		seg = seg + SSD1306_GLYPH_WIDTH;
 	}
 }
 
@@ -255,18 +311,18 @@ ssd1306_display_text_x3(SSD1306_t * dev, int page, const char * text, int text_l
 
 void ssd1306_clear_screen(SSD1306_t * dev, bool invert)
 {
-	char space[16];
-	memset(space, 0x00, sizeof(space));
+	uint8_t blank[128];
+	memset(blank, invert ? 0xFF : 0x00, sizeof(blank));
 	for (int page = 0; page < dev->_pages; page++) {
-		ssd1306_display_text(dev, page, space, sizeof(space), invert);
+		ssd1306_display_image(dev, page, 0, blank, dev->_width);
 	}
 }
 
 void ssd1306_clear_line(SSD1306_t * dev, int page, bool invert)
 {
-	char space[16];
-	memset(space, 0x00, sizeof(space));
-	ssd1306_display_text(dev, page, space, sizeof(space), invert);
+	uint8_t blank[128];
+	memset(blank, invert ? 0xFF : 0x00, sizeof(blank));
+	ssd1306_display_image(dev, page, 0, blank, dev->_width);
 }
 
 void ssd1306_contrast(SSD1306_t * dev, int contrast)
