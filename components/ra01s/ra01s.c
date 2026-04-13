@@ -28,6 +28,8 @@ static SemaphoreHandle_t SpiMutex;
 
 // Global Stuff
 static uint8_t PacketParams[6];
+static uint8_t GfskPacketParams[9];
+static uint8_t CurrentPacketType = SX126X_PACKET_TYPE_LORA;
 static bool txActive;
 static int txLost = 0;
 static bool debugPrint;
@@ -40,6 +42,8 @@ static int SX126x_RXEN;
 // Arduino compatible macros
 #define delayMicroseconds(us) esp_rom_delay_us(us)
 #define delay(ms) esp_rom_delay_us(ms*1000)
+
+#define GFSK_FIXED_PAYLOAD_MAX 64
 
 
 void LoRaErrorDefault(int error)
@@ -277,6 +281,7 @@ void LoRaConfig(uint8_t spreadingFactor, uint8_t bandwidth, uint8_t codingRate, 
 	SetStopRxTimerOnPreambleDetect(false);
 	SetLoRaSymbNumTimeout(0); 
 	SetPacketType(SX126X_PACKET_TYPE_LORA); // SX126x.ModulationParams.PacketType : MODEM_LORA
+	CurrentPacketType = SX126X_PACKET_TYPE_LORA;
 	uint8_t ldro = 0; // LowDataRateOptimize OFF
 	SetModulationParams(spreadingFactor, bandwidth, codingRate, ldro);
 	
@@ -319,6 +324,60 @@ void LoRaConfig(uint8_t spreadingFactor, uint8_t bandwidth, uint8_t codingRate, 
 	SetRx(0xFFFFFF);
 }
 
+void GFSKConfig(uint32_t bitRate, uint32_t freqDeviation, uint8_t rxBandwidth, uint16_t preambleLengthBits, uint8_t syncWordLengthBits, uint8_t fixedPayloadLen, bool whiteningOn)
+{
+	uint8_t modulation[8];
+	uint8_t syncWord[4] = { 'R', 'A', 'I', 'S' };
+
+	if (bitRate == 0) {
+		bitRate = 100000;
+	}
+	if (fixedPayloadLen == 0 || fixedPayloadLen > GFSK_FIXED_PAYLOAD_MAX) {
+		fixedPayloadLen = GFSK_FIXED_PAYLOAD_MAX;
+	}
+	if (syncWordLengthBits == 0 || syncWordLengthBits > 32) {
+		syncWordLengthBits = 32;
+	}
+	if (preambleLengthBits == 0) {
+		preambleLengthBits = 32;
+	}
+
+	SetPacketType(SX126X_PACKET_TYPE_GFSK);
+	CurrentPacketType = SX126X_PACKET_TYPE_GFSK;
+
+	uint32_t br = (uint32_t)((32.0 * XTAL_FREQ) / (double)bitRate);
+	if (br == 0) {
+		br = 1;
+	}
+	uint32_t fdev = (uint32_t)(((double)freqDeviation * (double)(1UL << 25)) / XTAL_FREQ);
+
+	modulation[0] = (uint8_t)((br >> 16) & 0xFF);
+	modulation[1] = (uint8_t)((br >> 8) & 0xFF);
+	modulation[2] = (uint8_t)(br & 0xFF);
+	modulation[3] = SX126X_GFSK_FILTER_NONE;
+	modulation[4] = rxBandwidth;
+	modulation[5] = (uint8_t)((fdev >> 16) & 0xFF);
+	modulation[6] = (uint8_t)((fdev >> 8) & 0xFF);
+	modulation[7] = (uint8_t)(fdev & 0xFF);
+	WriteCommand(SX126X_CMD_SET_MODULATION_PARAMS, modulation, 8);
+
+	WriteRegister(SX126X_REG_SYNC_WORD_0, syncWord, sizeof(syncWord));
+
+	GfskPacketParams[0] = (uint8_t)((preambleLengthBits >> 8) & 0xFF);
+	GfskPacketParams[1] = (uint8_t)(preambleLengthBits & 0xFF);
+	GfskPacketParams[2] = SX126X_GFSK_PREAMBLE_DETECT_16;
+	GfskPacketParams[3] = syncWordLengthBits;
+	GfskPacketParams[4] = SX126X_GFSK_ADDRESS_FILT_OFF;
+	GfskPacketParams[5] = SX126X_GFSK_PACKET_FIXED;
+	GfskPacketParams[6] = fixedPayloadLen;
+	GfskPacketParams[7] = SX126X_GFSK_CRC_OFF;
+	GfskPacketParams[8] = whiteningOn ? SX126X_GFSK_WHITENING_ON : SX126X_GFSK_WHITENING_OFF;
+	WriteCommand(SX126X_CMD_SET_PACKET_PARAMS, GfskPacketParams, 9);
+
+	SetDioIrqParams(SX126X_IRQ_ALL, SX126X_IRQ_NONE, SX126X_IRQ_NONE, SX126X_IRQ_NONE);
+	SetRx(0xFFFFFF);
+}
+
 
 void LoRaDebugPrint(bool enable) 
 {
@@ -347,19 +406,35 @@ bool LoRaSend(uint8_t *pData, int16_t len, uint8_t mode)
 {
 	uint16_t irqStatus;
 	bool rv = false;
+	uint8_t gfskFrame[GFSK_FIXED_PAYLOAD_MAX];
 	
 	if ( txActive == false )
 	{
 		txActive = true;
-		if (PacketParams[2] == 0x00) { // Variable length packet (explicit header)
+		if (CurrentPacketType == SX126X_PACKET_TYPE_LORA && PacketParams[2] == 0x00) { // Variable length packet (explicit header)
 			PacketParams[3] = len;
 		}
-		WriteCommand(SX126X_CMD_SET_PACKET_PARAMS, PacketParams, 6); // 0x8C
+		if (CurrentPacketType == SX126X_PACKET_TYPE_GFSK) {
+			WriteCommand(SX126X_CMD_SET_PACKET_PARAMS, GfskPacketParams, 9); // 0x8C
+		} else {
+			WriteCommand(SX126X_CMD_SET_PACKET_PARAMS, PacketParams, 6); // 0x8C
+		}
 		
 		//ClearIrqStatus(SX126X_IRQ_TX_DONE | SX126X_IRQ_TIMEOUT);
 		ClearIrqStatus(SX126X_IRQ_ALL);
 		
-		WriteBuffer(pData, len);
+		if (CurrentPacketType == SX126X_PACKET_TYPE_GFSK) {
+			if (len > GfskPacketParams[6]) {
+				len = GfskPacketParams[6];
+			}
+			memset(gfskFrame, 0, sizeof(gfskFrame));
+			if (len > 0) {
+				memcpy(gfskFrame, pData, len);
+			}
+			WriteBuffer(gfskFrame, GfskPacketParams[6]);
+		} else {
+			WriteBuffer(pData, len);
+		}
 		SetTx(500);
 
 		if ( mode & SX126x_TXMODE_SYNC )
@@ -397,6 +472,11 @@ bool LoRaSend(uint8_t *pData, int16_t len, uint8_t mode)
 	}
 	if (rv == false) txLost++;
 	return rv;
+}
+
+uint8_t RadioGetPacketType(void)
+{
+	return CurrentPacketType;
 }
 
 
