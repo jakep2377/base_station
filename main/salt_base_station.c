@@ -199,6 +199,10 @@ static bool is_motion_command(const char *command) {
            strcmp(command, "RIGHT") == 0;
 }
 
+static bool is_manual_motion_only_command(const char *command) {
+    return is_motion_command(command);
+}
+
 static bool command_has_drive_sequence(const char *command) {
     return command && (strstr(command, ",S:") != NULL || strncmp(command, "J:", 2) == 0);
 }
@@ -1111,6 +1115,11 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
     bool motion_cmd = is_motion_command(command);
     bool mode_cmd = is_mode_command(command);
     TickType_t now = xTaskGetTickCount();
+
+    if (is_manual_motion_only_command(command) && s_radio_mode != RADIO_MODE_GFSK) {
+        ESP_LOGW(TAG, "Rejecting manual motion command while radio is not in GFSK mode: %s", command);
+        return ESP_ERR_INVALID_STATE;
+    }
     if (motion_cmd
         && !command_has_drive_sequence(command)
         && strcmp(last_motion_cmd, command) == 0
