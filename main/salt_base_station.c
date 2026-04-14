@@ -33,7 +33,7 @@
 
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
-#define GATEWAY_MANUAL_URL "http://192.168.4.2"
+#define GATEWAY_MANUAL_URL "http://172.20.10.2"
 #define GATEWAY_WIFI_CFG_PREFIX "GWCFG:WIFI:"
 #define MDNS_HOSTNAME "base-station"
 #define MDNS_INSTANCE "Salt Robot Base Station"
@@ -186,6 +186,18 @@ static volatile radio_mode_t s_radio_mode = RADIO_MODE_LORA;
 static const char RADIO_SWITCH_TO_GFSK_FRAME[] = "RADIO:GFSK";
 static const char RADIO_SWITCH_TO_LORA_FRAME[] = "RADIO:LORA";
 
+static bool matches_any_token(const char *value, const char *const *tokens, size_t token_count) {
+    if (!value || !tokens || token_count == 0) {
+        return false;
+    }
+    for (size_t i = 0; i < token_count; i++) {
+        if (tokens[i] && strcmp(value, tokens[i]) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static bool is_motion_command(const char *command) {
     if (!command || command[0] == '\0') {
         return false;
@@ -217,6 +229,12 @@ static bool command_has_drive_sequence(const char *command) {
 }
 
 static bool is_mode_command(const char *command) {
+    static const char *const mode_tokens[] = {
+        "MANUAL", "AUTO", "PAUSE", "ESTOP", "RESET",
+        "CMD:M", "CMD:A", "CMD:P", "CMD:E", "CMD:X",
+        "CMD:MANUAL", "CMD:AUTO", "CMD:PAUSE", "CMD:ESTOP", "CMD:RESET",
+    };
+
     if (!command || command[0] == '\0') {
         return false;
     }
@@ -226,53 +244,30 @@ static bool is_mode_command(const char *command) {
         return true;
     }
 
-    return strcmp(command, "MANUAL") == 0 ||
-           strcmp(command, "AUTO") == 0 ||
-           strcmp(command, "PAUSE") == 0 ||
-           strcmp(command, "ESTOP") == 0 ||
-           strcmp(command, "RESET") == 0 ||
-           strcmp(command, "CMD:M") == 0 ||
-           strcmp(command, "CMD:A") == 0 ||
-           strcmp(command, "CMD:P") == 0 ||
-           strcmp(command, "CMD:E") == 0 ||
-           strcmp(command, "CMD:X") == 0 ||
-           strcmp(command, "CMD:MANUAL") == 0 ||
-           strcmp(command, "CMD:AUTO") == 0 ||
-           strcmp(command, "CMD:PAUSE") == 0 ||
-           strcmp(command, "CMD:ESTOP") == 0 ||
-           strcmp(command, "CMD:RESET") == 0;
+    return matches_any_token(command, mode_tokens, sizeof(mode_tokens) / sizeof(mode_tokens[0]));
 }
 
 static bool is_manual_entry_command(const char *command) {
+    static const char *const manual_entry_tokens[] = {
+        "MANUAL", "M", "CMD:M", "CMD:MANUAL",
+    };
+
     if (!command) {
         return false;
     }
-    return strcmp(command, "MANUAL") == 0 ||
-           strcmp(command, "M") == 0 ||
-           strcmp(command, "CMD:M") == 0 ||
-           strcmp(command, "CMD:MANUAL") == 0;
+    return matches_any_token(command, manual_entry_tokens, sizeof(manual_entry_tokens) / sizeof(manual_entry_tokens[0]));
 }
 
 static bool is_lora_restore_command(const char *command) {
+    static const char *const restore_tokens[] = {
+        "AUTO", "A", "PAUSE", "P", "ESTOP", "E", "RESET", "X",
+        "CMD:A", "CMD:AUTO", "CMD:P", "CMD:PAUSE", "CMD:E", "CMD:ESTOP", "CMD:X", "CMD:RESET",
+    };
+
     if (!command) {
         return false;
     }
-    return strcmp(command, "AUTO") == 0 ||
-           strcmp(command, "A") == 0 ||
-           strcmp(command, "PAUSE") == 0 ||
-           strcmp(command, "P") == 0 ||
-           strcmp(command, "ESTOP") == 0 ||
-           strcmp(command, "E") == 0 ||
-           strcmp(command, "RESET") == 0 ||
-           strcmp(command, "X") == 0 ||
-           strcmp(command, "CMD:A") == 0 ||
-           strcmp(command, "CMD:AUTO") == 0 ||
-           strcmp(command, "CMD:P") == 0 ||
-           strcmp(command, "CMD:PAUSE") == 0 ||
-           strcmp(command, "CMD:E") == 0 ||
-           strcmp(command, "CMD:ESTOP") == 0 ||
-           strcmp(command, "CMD:X") == 0 ||
-           strcmp(command, "CMD:RESET") == 0;
+    return matches_any_token(command, restore_tokens, sizeof(restore_tokens) / sizeof(restore_tokens[0]));
 }
 
 static const char *radio_mode_name(radio_mode_t mode) {
