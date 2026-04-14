@@ -34,6 +34,7 @@
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
 #define GATEWAY_MANUAL_URL "http://192.168.4.2"
+#define GATEWAY_WIFI_CFG_PREFIX "GWCFG:WIFI:"
 #define MDNS_HOSTNAME "base-station"
 #define MDNS_INSTANCE "Salt Robot Base Station"
 #define DEFAULT_BACKEND_URL "https://robot-lora-server.onrender.com"
@@ -165,6 +166,8 @@ static bool wifi_configured = false;
 static bool ap_setup_mode = false;
 static bool sta_netif_created = false;
 static bool ap_netif_created = false;
+static char active_sta_ssid[MAX_WIFI_SSID_LEN + 1] = "";
+static char active_sta_pass[MAX_WIFI_PASS_LEN + 1] = "";
 
 typedef enum {
     RADIO_MODE_LORA = 0,
@@ -1252,6 +1255,30 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
     return ESP_OK;
 }
 
+static void send_gateway_wifi_cfg_if_ready(void) {
+    if (!lora_cmd_q) {
+        return;
+    }
+    if (active_sta_ssid[0] == '\0') {
+        return;
+    }
+
+    char frame[LORA_CMD_MAX];
+    int len = snprintf(frame, sizeof(frame), "%s%s|%s",
+                       GATEWAY_WIFI_CFG_PREFIX,
+                       active_sta_ssid,
+                       active_sta_pass);
+    if (len <= 0 || len >= (int)sizeof(frame)) {
+        ESP_LOGW(TAG, "Gateway Wi-Fi cfg frame too long; skipping");
+        return;
+    }
+
+    ESP_LOGI(TAG, "Sending gateway Wi-Fi cfg over LoRa for SSID=%s", active_sta_ssid);
+    (void)queue_command_for_lora(frame, "gw-wifi-cfg");
+    vTaskDelay(pdMS_TO_TICKS(120));
+    (void)queue_command_for_lora(frame, "gw-wifi-cfg");
+}
+
 static esp_err_t post_remote_command_ack(const char *command_id, const char *status, const char *error_message) {
     if (!command_id || !command_id[0]) {
         return ESP_OK;
@@ -1736,6 +1763,8 @@ static bool try_sta_mode(const char *ssid, const char *password) {
         ESP_LOGI(TAG, "STA connected (got IP). Disabling setup AP.");
         ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
         ap_setup_mode = false;
+        snprintf(active_sta_ssid, sizeof(active_sta_ssid), "%s", ssid ? ssid : "");
+        snprintf(active_sta_pass, sizeof(active_sta_pass), "%s", password ? password : "");
         snprintf(current_state, sizeof(current_state), "IDLE");
         snprintf(current_mode, sizeof(current_mode), "STA");
         snprintf(wifi_link_state, sizeof(wifi_link_state), "online");
@@ -1957,6 +1986,7 @@ void app_main(void) {
     lora_init();
     xTaskCreate(lora_tx_task, "lora_tx", LORA_TASK_STACK_SIZE, NULL, 5, NULL);
     xTaskCreate(lora_rx_task, "lora_rx", LORA_TASK_STACK_SIZE, NULL, 5, NULL);
+    send_gateway_wifi_cfg_if_ready();
     xTaskCreate(backend_sync_task, "backend_sync", BACKEND_HTTP_TASK_STACK_SIZE, NULL, 4, NULL);
 
     if (display_available) {
