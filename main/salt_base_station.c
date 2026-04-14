@@ -142,11 +142,20 @@ static char lora_link_state[16] = "idle";
 static uint32_t ack_count = 0;
 static uint32_t last_lora_rx_count = 0;
 static uint32_t last_lora_json_count = 0;
+static TickType_t last_lora_rx_tick = 0;
+static TickType_t last_lora_json_tick = 0;
+static TickType_t last_ack_tick = 0;
+static TickType_t last_cmd_status_tick = 0;
 static bool lora_stream_seq_init = false;
 static uint32_t lora_stream_expected_seq = 0;
 static char lora_stream_buf[LORA_RX_REASSEMBLY_MAX] = "";
 static size_t lora_stream_len = 0;
 static uint32_t lora_rx_chain_id = 0;
+
+#define LORA_RX_STALE_MS             4500
+#define LORA_JSON_STALE_MS           4500
+#define LORA_ACK_STALE_MS            3000
+#define CMD_STATUS_RESET_MS          2500
 
 static char provisioned_ssid[MAX_WIFI_SSID_LEN + 1] = "";
 static char provisioned_pass[MAX_WIFI_PASS_LEN + 1] = "";
@@ -324,6 +333,7 @@ static bool lora_send_payload_with_retries_locked(const char *payload, int burst
 }
 
 static void refresh_status_json(void);
+static void refresh_runtime_status_locked(void);
 
 static bool system_time_is_valid(void) {
     time_t now = 0;
@@ -608,9 +618,11 @@ static bool store_lora_rx_payload(char *text) {
                 log_lora_rx_chain_event("complete", lora_rx_chain_id, lora_stream_buf, lora_stream_len);
                 snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", lora_stream_buf);
                 last_lora_rx_count++;
+                last_lora_rx_tick = xTaskGetTickCount();
                 if (looks_like_supported_telemetry_frame(lora_stream_buf)) {
                     snprintf(last_lora_json, sizeof(last_lora_json), "%s", lora_stream_buf);
                     last_lora_json_count++;
+                    last_lora_json_tick = last_lora_rx_tick;
                 }
                 lora_stream_len = 0;
                 lora_stream_buf[0] = '\0';
@@ -633,9 +645,11 @@ static bool store_lora_rx_payload(char *text) {
 
         snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", payload);
         last_lora_rx_count++;
+        last_lora_rx_tick = xTaskGetTickCount();
         if (looks_like_supported_telemetry_frame(p) && looks_like_complete_supported_telemetry_frame(p)) {
             snprintf(last_lora_json, sizeof(last_lora_json), "%s", payload);
             last_lora_json_count++;
+            last_lora_json_tick = last_lora_rx_tick;
         }
         return true;
     }
@@ -685,10 +699,12 @@ static bool store_lora_rx_payload(char *text) {
     log_lora_rx_chain_event("stream-complete", lora_rx_chain_id, assembled, lora_stream_len);
     snprintf(last_lora_rx, sizeof(last_lora_rx), "%s", lora_stream_buf);
     last_lora_rx_count++;
+    last_lora_rx_tick = xTaskGetTickCount();
     const char *p = assembled;
     if (looks_like_supported_telemetry_frame(p)) {
         snprintf(last_lora_json, sizeof(last_lora_json), "%s", lora_stream_buf);
         last_lora_json_count++;
+        last_lora_json_tick = last_lora_rx_tick;
     }
     lora_stream_len = 0;
     lora_stream_buf[0] = '\0';
@@ -703,6 +719,44 @@ static void capture_ack_if_present(const char *text) {
     snprintf(last_cmd_status, sizeof(last_cmd_status), "acknowledged");
     snprintf(lora_link_state, sizeof(lora_link_state), "online");
     ack_count++;
+    last_ack_tick = xTaskGetTickCount();
+    last_cmd_status_tick = last_ack_tick;
+}
+
+static void refresh_runtime_status_locked(void) {
+    const TickType_t now = xTaskGetTickCount();
+    const int queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
+
+    if (last_lora_rx_tick != 0 && (now - last_lora_rx_tick) > pdMS_TO_TICKS(LORA_RX_STALE_MS)) {
+        last_lora_rx[0] = '\0';
+        last_lora_rx_tick = 0;
+        if (last_lora_json_tick == 0 || (now - last_lora_json_tick) > pdMS_TO_TICKS(LORA_JSON_STALE_MS)) {
+            snprintf(lora_link_state, sizeof(lora_link_state), "%s", queue_depth > 0 ? "degraded" : "stale");
+        }
+    }
+
+    if (last_lora_json_tick != 0 && (now - last_lora_json_tick) > pdMS_TO_TICKS(LORA_JSON_STALE_MS)) {
+        last_lora_json[0] = '\0';
+        last_lora_json_tick = 0;
+        if (queue_depth <= 0) {
+            snprintf(lora_link_state, sizeof(lora_link_state), "stale");
+        }
+    }
+
+    if (last_ack_tick != 0 && (now - last_ack_tick) > pdMS_TO_TICKS(LORA_ACK_STALE_MS)) {
+        last_ack_rx[0] = '\0';
+        last_ack_tick = 0;
+    }
+
+    if (queue_depth <= 0
+        && last_cmd_status_tick != 0
+        && (now - last_cmd_status_tick) > pdMS_TO_TICKS(CMD_STATUS_RESET_MS)
+        && (strcmp(last_cmd_status, "sent") == 0
+            || strcmp(last_cmd_status, "acknowledged") == 0
+            || strcmp(last_cmd_status, "forwarded") == 0)) {
+        snprintf(last_cmd_status, sizeof(last_cmd_status), "%s", last_lora_rx_tick ? "idle" : "stale");
+        last_cmd_status_tick = 0;
+    }
 }
 
 static void json_escape_string(const char *src, char *dst, size_t dst_size) {
@@ -763,6 +817,8 @@ static void refresh_status_json(void) {
     static char backend_url_escaped[sizeof(provisioned_backend_url) * 2];
     static char ap_ssid_escaped[sizeof(AP_SSID) * 2];
 
+    refresh_runtime_status_locked();
+
     json_escape_string(current_state, state_escaped, sizeof(state_escaped));
     json_escape_string(current_mode, mode_escaped, sizeof(mode_escaped));
     json_escape_string(radio_mode_name(s_radio_mode), radio_mode_escaped, sizeof(radio_mode_escaped));
@@ -775,8 +831,12 @@ static void refresh_status_json(void) {
     json_escape_string(provisioned_backend_url, backend_url_escaped, sizeof(backend_url_escaped));
     json_escape_string(AP_SSID, ap_ssid_escaped, sizeof(ap_ssid_escaped));
 
+    const TickType_t now = xTaskGetTickCount();
+    const uint32_t last_lora_age_ms = last_lora_rx_tick ? (uint32_t)((now - last_lora_rx_tick) * portTICK_PERIOD_MS) : 0;
+    const uint32_t last_ack_age_ms = last_ack_tick ? (uint32_t)((now - last_ack_tick) * portTICK_PERIOD_MS) : 0;
+
     snprintf(status_json, sizeof(status_json),
-             "{\"status_version\":3,\"battery\":85,\"state\":\"%s\",\"mode\":\"%s\",\"radio_mode\":\"%s\",\"wifi_link_state\":\"%s\",\"lora_link_state\":\"%s\",\"last_cmd\":\"%s\",\"last_cmd_id\":\"%s\",\"last_cmd_status\":\"%s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%s\",\"configured\":%s,\"backend_url\":\"%s\",\"ap_ssid\":\"%s\"}",
+             "{\"status_version\":4,\"battery\":85,\"state\":\"%s\",\"mode\":\"%s\",\"radio_mode\":\"%s\",\"wifi_link_state\":\"%s\",\"lora_link_state\":\"%s\",\"last_cmd\":\"%s\",\"last_cmd_id\":\"%s\",\"last_cmd_status\":\"%s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%s\",\"last_lora_age_ms\":%lu,\"last_ack_age_ms\":%lu,\"configured\":%s,\"backend_url\":\"%s\",\"ap_ssid\":\"%s\"}",
              state_escaped,
              mode_escaped,
              radio_mode_escaped,
@@ -788,6 +848,8 @@ static void refresh_status_json(void) {
              (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0),
              (unsigned long)ack_count,
              ack_escaped,
+             (unsigned long)last_lora_age_ms,
+             (unsigned long)last_ack_age_ms,
              wifi_configured ? "true" : "false",
              backend_url_escaped,
              ap_ssid_escaped);
@@ -811,9 +873,11 @@ static void display_task(void *arg) {
     (void)arg;
 
     char mode[sizeof(current_mode)] = {0};
+    char state[sizeof(current_state)] = {0};
     char wifi[sizeof(wifi_link_state)] = {0};
     char lora[sizeof(lora_link_state)] = {0};
     char cmd[20] = {0};
+    char cmd_status[sizeof(last_cmd_status)] = {0};
     char ack[20] = {0};
     char target_network[MAX_WIFI_SSID_LEN + 1] = {0};
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
@@ -828,9 +892,11 @@ static void display_task(void *arg) {
 
         xSemaphoreTake(status_lock, portMAX_DELAY);
         snprintf(mode, sizeof(mode), "%s", current_mode);
+        snprintf(state, sizeof(state), "%s", current_state);
         snprintf(wifi, sizeof(wifi), "%s", wifi_link_state);
         snprintf(lora, sizeof(lora), "%s", lora_link_state);
         snprintf(cmd, sizeof(cmd), "%.18s", last_cmd);
+        snprintf(cmd_status, sizeof(cmd_status), "%s", last_cmd_status);
         snprintf(ack, sizeof(ack), "%.18s", last_ack_rx[0] ? last_ack_rx : "-");
         snprintf(target_network, sizeof(target_network), "%s", provisioned_ssid[0] ? provisioned_ssid : AP_SSID);
         snprintf(backend_url, sizeof(backend_url), "%s", provisioned_backend_url);
@@ -838,7 +904,7 @@ static void display_task(void *arg) {
         queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
         xSemaphoreGive(status_lock);
 
-        display_show_status(mode, wifi, lora, target_network, backend_url, queue_depth, cmd, ack, local_ack_count);
+        display_show_status(mode, state, wifi, lora, target_network, backend_url, queue_depth, cmd, cmd_status, ack, local_ack_count);
         vTaskDelay(pdMS_TO_TICKS(750));
     }
 }
@@ -1130,6 +1196,7 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
     snprintf(lora_link_state, sizeof(lora_link_state), "idle");
     snprintf(current_state, sizeof(current_state), "CMD_QUEUED");
     snprintf(current_mode, sizeof(current_mode), "HTTP");
+    last_cmd_status_tick = now;
     refresh_status_json();
     xSemaphoreGive(status_lock);
 
@@ -1166,6 +1233,7 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
         xSemaphoreTake(status_lock, portMAX_DELAY);
         snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
         snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
+        last_cmd_status_tick = xTaskGetTickCount();
         refresh_status_json();
         xSemaphoreGive(status_lock);
         return ESP_ERR_TIMEOUT;
@@ -1178,6 +1246,7 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
 
     xSemaphoreTake(status_lock, portMAX_DELAY);
     snprintf(last_cmd_status, sizeof(last_cmd_status), "forwarded");
+    last_cmd_status_tick = xTaskGetTickCount();
     refresh_status_json();
     xSemaphoreGive(status_lock);
     return ESP_OK;
@@ -1439,6 +1508,7 @@ static esp_err_t status_get_handler(httpd_req_t *req) {
 
 static esp_err_t last_lora_get_handler(httpd_req_t *req) {
     xSemaphoreTake(status_lock, portMAX_DELAY);
+    refresh_runtime_status_locked();
     httpd_resp_set_type(req, "text/plain");
     httpd_resp_send(req, last_lora_rx, HTTPD_RESP_USE_STRLEN);
     xSemaphoreGive(status_lock);
@@ -1789,9 +1859,11 @@ static void lora_tx_task(void *arg) {
                     ESP_LOGE(TAG, "LoRaSend failed after retries");
                     snprintf(last_cmd_status, sizeof(last_cmd_status), "failed");
                     snprintf(lora_link_state, sizeof(lora_link_state), "degraded");
+                    last_cmd_status_tick = xTaskGetTickCount();
                 } else {
                     snprintf(last_cmd_status, sizeof(last_cmd_status), "sent");
                     snprintf(lora_link_state, sizeof(lora_link_state), "online");
+                    last_cmd_status_tick = xTaskGetTickCount();
                 }
             }
         }
