@@ -33,6 +33,7 @@
 
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
+#define GATEWAY_MANUAL_URL "http://192.168.4.2"
 #define MDNS_HOSTNAME "base-station"
 #define MDNS_INSTANCE "Salt Robot Base Station"
 #define DEFAULT_BACKEND_URL "https://robot-lora-server.onrender.com"
@@ -111,7 +112,7 @@ static const char ONRENDER_CA_CHAIN_PEM[] =
 #define LORA_CMD_MAX     384
 #define LORA_QUEUE_DEPTH 16
 #define LORA_RX_REASSEMBLY_MAX 1024
-#define BASE_AUTO_RADIO_MODE_SWITCH 1
+#define BASE_AUTO_RADIO_MODE_SWITCH 0
 
 static const char *TAG = "BASE";
 
@@ -197,10 +198,6 @@ static bool is_motion_command(const char *command) {
            strcmp(command, "BACKWARD") == 0 ||
            strcmp(command, "LEFT") == 0 ||
            strcmp(command, "RIGHT") == 0;
-}
-
-static bool is_manual_motion_only_command(const char *command) {
-    return is_motion_command(command);
 }
 
 static bool command_has_drive_sequence(const char *command) {
@@ -1115,11 +1112,6 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
     bool motion_cmd = is_motion_command(command);
     bool mode_cmd = is_mode_command(command);
     TickType_t now = xTaskGetTickCount();
-
-    if (is_manual_motion_only_command(command) && s_radio_mode != RADIO_MODE_GFSK) {
-        ESP_LOGW(TAG, "Rejecting manual motion command while radio is not in GFSK mode: %s", command);
-        return ESP_ERR_INVALID_STATE;
-    }
     if (motion_cmd
         && !command_has_drive_sequence(command)
         && strcmp(last_motion_cmd, command) == 0
@@ -1457,14 +1449,14 @@ static esp_err_t setup_status_get_handler(httpd_req_t *req) {
     char body[512];
     xSemaphoreTake(status_lock, portMAX_DELAY);
     snprintf(body, sizeof(body),
-             "{\"ok\":true,\"configured\":%s,\"mode\":\"%.16s\",\"radioMode\":\"%s\",\"state\":\"%.32s\",\"apSsid\":\"%s\",\"savedSsid\":\"%.32s\",\"backendUrl\":\"%.150s\",\"wifiLinkState\":\"%.16s\",\"boardApiKeySet\":%s}",
+             "{\"ok\":true,\"configured\":%s,\"mode\":\"%.16s\",\"radioMode\":\"LORA\",\"state\":\"%.32s\",\"apSsid\":\"%s\",\"savedSsid\":\"%.32s\",\"backendUrl\":\"%.150s\",\"gatewayManualUrl\":\"%s\",\"wifiLinkState\":\"%.16s\",\"boardApiKeySet\":%s}",
              wifi_configured ? "true" : "false",
              current_mode,
-             radio_mode_name(s_radio_mode),
              current_state,
              AP_SSID,
              provisioned_ssid,
              provisioned_backend_url,
+             GATEWAY_MANUAL_URL,
              wifi_link_state,
              provisioned_board_api_key[0] ? "true" : "false");
     xSemaphoreGive(status_lock);
