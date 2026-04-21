@@ -13,8 +13,8 @@ end
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file C:/Users/jakep/Documents/ESP32/salt_base_station/build/bootloader/bootloader.elf
+    add-symbol-file C:/Users/gdm35/Downloads/base_station-master/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file C:/Users/jakep/Documents/ESP32/salt_base_station/build/salt_base_station.elf
+file C:/Users/gdm35/Downloads/base_station-master/build/salt_base_station.elf

@@ -39,16 +39,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
-  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/mbedtls/tf-psa-crypto/cmake_install.cmake")
-  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
-  include("C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
+  include("C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/mbedtls/tf-psa-crypto/cmake_install.cmake")
+  include("C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
 
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/mbedtls/install_local_manifest.txt"
+  file(WRITE "C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/mbedtls/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -27,6 +27,10 @@
 
 #include "ra01s.h"
 
+// The base station is the orchestration layer for the field system. It exposes
+// a local setup/control UI, relays commands over LoRa, and keeps the cloud
+// backend synchronized with both robot telemetry and recent command state.
+
 // ---------------- Wi-Fi Credentials ----------------
 #define STA_SSID "JakesiPhone"
 #define STA_PASS "password123"
@@ -147,6 +151,8 @@ static TickType_t last_lora_rx_tick = 0;
 static TickType_t last_lora_json_tick = 0;
 static TickType_t last_ack_tick = 0;
 static TickType_t last_cmd_status_tick = 0;
+// Stream reassembly lets the base station stitch together chunked LoRa payloads
+// before they are exposed to the dashboard or forwarded to the backend.
 static bool lora_stream_seq_init = false;
 static uint32_t lora_stream_expected_seq = 0;
 static char lora_stream_buf[LORA_RX_REASSEMBLY_MAX] = "";
@@ -725,6 +731,8 @@ static void refresh_runtime_status_locked(void) {
     const TickType_t now = xTaskGetTickCount();
     const int queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
 
+    // Age out stale receive-side state so the dashboard reflects transport
+    // freshness instead of keeping the last good packet forever.
     if (last_lora_rx_tick != 0 && (now - last_lora_rx_tick) > pdMS_TO_TICKS(LORA_RX_STALE_MS)) {
         last_lora_rx[0] = '\0';
         last_lora_rx_tick = 0;
@@ -833,6 +841,8 @@ static void refresh_status_json(void) {
     const uint32_t last_lora_age_ms = last_lora_rx_tick ? (uint32_t)((now - last_lora_rx_tick) * portTICK_PERIOD_MS) : 0;
     const uint32_t last_ack_age_ms = last_ack_tick ? (uint32_t)((now - last_ack_tick) * portTICK_PERIOD_MS) : 0;
 
+    // Build a single cached JSON snapshot so HTTP handlers can answer quickly
+    // without recomputing transport state while requests are in flight.
     snprintf(status_json, sizeof(status_json),
              "{\"status_version\":4,\"battery\":85,\"state\":\"%s\",\"mode\":\"%s\",\"radio_mode\":\"%s\",\"wifi_link_state\":\"%s\",\"lora_link_state\":\"%s\",\"last_cmd\":\"%s\",\"last_cmd_id\":\"%s\",\"last_cmd_status\":\"%s\",\"queue_depth\":%d,\"ack_count\":%lu,\"last_ack\":\"%s\",\"last_lora_age_ms\":%lu,\"last_ack_age_ms\":%lu,\"configured\":%s,\"backend_url\":\"%s\",\"ap_ssid\":\"%s\"}",
              state_escaped,
@@ -1406,6 +1416,9 @@ static void backend_sync_task(void *arg) {
     TickType_t last_telemetry_post = 0;
     TickType_t last_status_post = 0;
 
+    // This loop is intentionally centralized: it polls for remote commands,
+    // pushes robot telemetry, and posts base-station heartbeat state on their
+    // own cadences so the cloud never needs to infer transport health.
     while (1) {
         TickType_t now = xTaskGetTickCount();
 
@@ -1424,6 +1437,9 @@ static void backend_sync_task(void *arg) {
                     if (command_id[0] != '\0' && strcmp(command_id, last_remote_command_id) == 0) {
                         (void)post_remote_command_ack(command_id, "forwarded", NULL);
                     } else {
+                        // Motion commands are the noisiest path, so we suppress
+                        // immediate duplicates to avoid reflooding LoRa when the
+                        // backend repeats a still-pending operator intent.
                         bool same_cmd_recent = is_motion_command(command)
                             && (last_remote_command[0] != '\0')
                             && (strcmp(command, last_remote_command) == 0)
@@ -1473,6 +1489,9 @@ static void backend_sync_task(void *arg) {
                     && telemetry_count != 0
                     && telemetry_count != last_sent_telemetry_count
                     && build_backend_endpoint(backend_url, "/api/telemetry", endpoint, sizeof(endpoint))) {
+                    // Only post each completed telemetry sample once; retries are
+                    // reserved for transport failures rather than repeated local
+                    // observations of the same payload.
                     esp_err_t err = post_payload_to_backend(endpoint, telemetry_payload);
                     if (err == ESP_OK) {
                         last_sent_telemetry_count = telemetry_count;

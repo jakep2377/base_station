@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)

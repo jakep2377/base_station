@@ -6258,7 +6258,7 @@
                 ],
                 "depends_on": null,
                 "help": "Select Frequency to use.",
-                "id": "sx126x-configuration-frequency-to-use-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-12",
+                "id": "sx126x-configuration-frequency-to-use-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-12",
                 "name": "FREQUENCY",
                 "title": "Frequency to use",
                 "type": "choice"
@@ -6453,14 +6453,14 @@
                 ],
                 "depends_on": null,
                 "help": "Select SPI peripheral that controls this bus.",
-                "id": "sx126x-configuration-spi-peripheral-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-147",
+                "id": "sx126x-configuration-spi-peripheral-that-controls-this-bus-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-147",
                 "name": "SPI_HOST",
                 "title": "SPI peripheral that controls this bus",
                 "type": "choice"
             }
         ],
         "depends_on": null,
-        "id": "sx126x-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ra01s-Kconfig.projbuild-1",
+        "id": "sx126x-configuration-C:-Users-gdm35-Downloads-base_station-master-components-ra01s-Kconfig.projbuild-1",
         "title": "SX126X Configuration",
         "type": "menu"
     },
@@ -6501,7 +6501,7 @@
                 ],
                 "depends_on": null,
                 "help": "Select Interface.",
-                "id": "ssd1306-configuration-interface-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-13",
+                "id": "ssd1306-configuration-interface-C:-Users-gdm35-Downloads-base_station-master-components-ssd1306-Kconfig.projbuild-13",
                 "name": "INTERFACE",
                 "title": "Interface",
                 "type": "choice"
@@ -6531,7 +6531,7 @@
                 ],
                 "depends_on": null,
                 "help": "Select Panel Type.",
-                "id": "ssd1306-configuration-panel-type-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-28",
+                "id": "ssd1306-configuration-panel-type-C:-Users-gdm35-Downloads-base_station-master-components-ssd1306-Kconfig.projbuild-28",
                 "name": "PANEL",
                 "title": "Panel Type",
                 "type": "choice"
@@ -6669,7 +6669,7 @@
                 ],
                 "depends_on": "I2C_INTERFACE",
                 "help": "Select I2C port that controls this bus.",
-                "id": "ssd1306-configuration-i2c-port-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-144",
+                "id": "ssd1306-configuration-i2c-port-that-controls-this-bus-C:-Users-gdm35-Downloads-base_station-master-components-ssd1306-Kconfig.projbuild-144",
                 "name": "I2C_PORT",
                 "title": "I2C port that controls this bus",
                 "type": "choice"
@@ -6709,14 +6709,14 @@
                 ],
                 "depends_on": "SPI_INTERFACE",
                 "help": "Select SPI peripheral that controls this bus.",
-                "id": "ssd1306-configuration-spi-peripheral-that-controls-this-bus-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-168",
+                "id": "ssd1306-configuration-spi-peripheral-that-controls-this-bus-C:-Users-gdm35-Downloads-base_station-master-components-ssd1306-Kconfig.projbuild-168",
                 "name": "SPI_HOST",
                 "title": "SPI peripheral that controls this bus",
                 "type": "choice"
             }
         ],
         "depends_on": null,
-        "id": "ssd1306-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-ssd1306-Kconfig.projbuild-1",
+        "id": "ssd1306-configuration-C:-Users-gdm35-Downloads-base_station-master-components-ssd1306-Kconfig.projbuild-1",
         "title": "SSD1306 Configuration",
         "type": "menu"
     },
@@ -36434,7 +36434,7 @@
                         ],
                         "depends_on": null,
                         "help": "Allows setting mDNS tasks affinity, i.e. whether the task is pinned to\nCPU0, pinned to CPU1, or allowed to run on any CPU.",
-                        "id": "component-config-mdns-mdns-task-affinity-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-41",
+                        "id": "component-config-mdns-mdns-task-affinity-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-41",
                         "name": "MDNS_TASK_AFFINITY",
                         "title": "mDNS task affinity",
                         "type": "choice"
@@ -36476,7 +36476,7 @@
                                 ],
                                 "depends_on": null,
                                 "help": null,
-                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-task-create-on-which-type-of-memory-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-66",
+                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-task-create-on-which-type-of-memory-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-66",
                                 "name": "MDNS_TASK_MEMORY_ALLOC_FROM",
                                 "title": "Select mDNS task create on which type of memory",
                                 "type": "choice"
@@ -36506,7 +36506,7 @@
                                 ],
                                 "depends_on": null,
                                 "help": null,
-                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-memory-allocation-type-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-83",
+                                "id": "component-config-mdns-mdns-memory-configuration-select-mdns-memory-allocation-type-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-83",
                                 "name": "MDNS_MEMORY_ALLOC_FROM",
                                 "title": "Select mDNS memory allocation type",
                                 "type": "choice"
@@ -36523,7 +36523,7 @@
                             }
                         ],
                         "depends_on": null,
-                        "id": "component-config-mdns-mdns-memory-configuration-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-64",
+                        "id": "component-config-mdns-mdns-memory-configuration-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-64",
                         "title": "MDNS Memory Configuration",
                         "type": "menu"
                     },
@@ -36669,13 +36669,13 @@
                             }
                         ],
                         "depends_on": null,
-                        "id": "component-config-mdns-mdns-predefined-interfaces-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-178",
+                        "id": "component-config-mdns-mdns-predefined-interfaces-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-178",
                         "title": "MDNS Predefined interfaces",
                         "type": "menu"
                     }
                 ],
                 "depends_on": null,
-                "id": "component-config-mdns-C:-Users-jakep-Documents-ESP32-salt_base_station-components-mdns-Kconfig-1",
+                "id": "component-config-mdns-C:-Users-gdm35-Downloads-base_station-master-components-mdns-Kconfig-1",
                 "title": "mDNS",
                 "type": "menu"
             },

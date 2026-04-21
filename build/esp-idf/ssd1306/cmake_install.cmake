@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/jakep/Documents/ESP32/salt_base_station/components/ssd1306
+# Install script for directory: C:/Users/gdm35/Downloads/base_station-master/components/ssd1306
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/jakep/Documents/ESP32/salt_base_station/build/esp-idf/ssd1306/install_local_manifest.txt"
+  file(WRITE "C:/Users/gdm35/Downloads/base_station-master/build/esp-idf/ssd1306/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

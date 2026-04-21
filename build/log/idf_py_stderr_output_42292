@@ -1,4 +1,4 @@
-Command: cmake -G Ninja -B C:\Users\jakep\Documents\ESP32\salt_base_station\build -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=False C:\Users\jakep\Documents\ESP32\salt_base_station
+Command: cmake -G Ninja -B C:\Users\gdm35\Downloads\base_station-master\build -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=False C:\Users\gdm35\Downloads\base_station-master
 fatal: bad config line 2 in file C:/esp/v6.0/esp-idf/.git/modules/components/bootloader/subproject/components/micro-ecc/micro-ecc/config
 Configuration Report                                                           
 +-----------------------------------------------------------------------------+
@@ -14,56 +14,56 @@ Configuration Report
 | | https://docs.espressif.com/projects/esp-idf-kconfig/en/latest/kconfiglà | |
 | | for more information.                                                   | |
 | | GPIO_RANGE_MAX                                                          | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
 | | SCLK_GPIO                                                               | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
 | | MOSI_GPIO                                                               | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
 | | SPI2_HOST                                                               | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
 | | SPI3_HOST                                                               | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
 | | SPI_HOST                                                                | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\raà | |
-| |         C:\Users\jakep\Documents\ESP32\salt_base_station\components\ssà | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ssd130à | |
+| |         C:\Users\gdm35\Downloads\base_station-master\components\ra01s\à | |
 | +-------------------------------------------------------------------------+ |
 | Disabled Symbols/Choices With User-Set Value                                |
 | +-------------------------------------------------------------------------+ |
 | | * PARTITION_TABLE_CUSTOM_FILENAME (defined at                           | |
 | | C:/esp/v6.0/esp-idf/components/partition_table/Kconfig.projbuild:129)   | |
 | | with user-set value partitions.csv from                                 | |
-| | C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag                  | |
+| | C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups                  | |
 | | * ESP_INTR_IN_IRAM (defined at                                          | |
 | | C:/esp/v6.0/esp-idf/components/esp_hw_support/Kconfig:326) with         | |
 | | user-set value y from                                                   | |
-| | C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag                  | |
+| | C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups                  | |
 | | * LIBC_MISC_IN_IRAM (defined at                                         | |
 | | C:/esp/v6.0/esp-idf/components/esp_libc/Kconfig:45) with user-set value | |
-| | y from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag           | |
+| | y from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups           | |
 | | * ESP_ROM_PRINT_IN_IRAM (defined at                                     | |
 | | C:/esp/v6.0/esp-idf/components/esp_rom/Kconfig:3) with user-set value y | |
-| | from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag             | |
+| | from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups             | |
 | | * ESP_CONSOLE_UART_BAUDRATE (defined at                                 | |
 | | C:/esp/v6.0/esp-idf/components/esp_stdio/Kconfig:150) with user-set     | |
 | | value 115200 from                                                       | |
-| | C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag                  | |
+| | C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups                  | |
 | | * ESP_SYSTEM_IN_IRAM (defined at                                        | |
 | | C:/esp/v6.0/esp-idf/components/esp_system/Kconfig:12) with user-set     | |
-| | value y from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag     | |
+| | value y from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups     | |
 | | * ESP_TIMER_IN_IRAM (defined at                                         | |
 | | C:/esp/v6.0/esp-idf/components/esp_timer/Kconfig:3) with user-set value | |
-| | y from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag           | |
+| | y from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups           | |
 | | * LOG_IN_IRAM (defined at                                               | |
 | | C:/esp/v6.0/esp-idf/components/log/Kconfig:55) with user-set value y    | |
-| | from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag             | |
+| | from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups             | |
 | | * SPI_FLASH_PLACE_FUNCTIONS_IN_IRAM (defined at                         | |
 | | C:/esp/v6.0/esp-idf/components/spi_flash/Kconfig:179) with user-set     | |
-| | value y from C:\Users\jakep\AppData\Local\Temp\kconfgen_tmp3ush96ag     | |
+| | value y from C:\Users\gdm35\AppData\Local\Temp\kconfgen_tmpx9fx8ups     | |
 | +-------------------------------------------------------------------------+ |
 +-----------------------------------------------------------------------------+
 fatal: bad config line 2 in file C:/esp/v6.0/esp-idf/.git/modules/components/openthread/openthread/config
