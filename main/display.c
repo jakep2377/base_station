@@ -1,3 +1,15 @@
+// display.c — SSD1306 OLED driver and status-page rendering for the base station.
+//
+// Responsibilities:
+//   • Hardware init: GPIO power-rail (VEXT) and reset sequencing, I2C bring-up.
+//   • OLED address probing (0x3C / 0x3D) to tolerate board variants.
+//   • Line-level write caching: only rows whose content has changed are sent to
+//     the driver, avoiding full-screen flicker on every update cycle.
+//   • Page cycling: the status display cycles through two or three pages on a
+//     fixed timer interval; an alert page is added whenever any link is not OK.
+//   • Label compaction: long strings (URLs, state names, token payloads) are
+//     trimmed to fit the 21-character display width before rendering.
+
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
@@ -11,17 +23,28 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 
+// GPIO pin assignments for the Heltec WiFi LoRa 32 (V3) OLED circuit.
 #define OLED_SDA 17
 #define OLED_SCL 18
 #define OLED_RST 21
-#define OLED_VEXT 36
+#define OLED_VEXT 36           // Active-low external power rail for the panel.
 #define OLED_I2C_PORT I2C_NUM_0
+
+// The SSD1306 is 128 pixels wide; each 6-pixel-wide character gives 21 columns.
 #define OLED_TEXT_LINE_LEN 21
+
+// How long each page is displayed before advancing to the next (ms).
+// 7 s gives operators time to read a full page before it cycles.
 #define OLED_PAGE_SWITCH_MS 7000
 
 static SSD1306_t dev;
 static const char *TAG = "DISPLAY";
 
+// Write a single row to the OLED, optionally with inverted colours.
+// The row content is compared against `cache` before issuing any SPI/I2C
+// traffic: if nothing changed and invert is off the write is skipped entirely,
+// which prevents per-row flicker when only a few values update between calls.
+// Inverted rows (alert page) are always redrawn so the highlight stays visible.
 static void write_line_ex(int row, const char *text, char *cache, size_t cache_size, bool invert) {
     char buffer[OLED_TEXT_LINE_LEN + 1];
     snprintf(buffer, sizeof(buffer), "%-21.21s", text ? text : "");
@@ -34,10 +57,17 @@ static void write_line_ex(int row, const char *text, char *cache, size_t cache_s
     snprintf(cache, cache_size, "%s", buffer);
 }
 
+// Convenience wrapper for the common non-inverted case.
 static void write_line(int row, const char *text, char *cache, size_t cache_size) {
     write_line_ex(row, text, cache, cache_size, false);
 }
 
+// Reduce a full backend URL to a short hostname label that fits `out_size`.
+// Strategy:
+//   1. Strip the scheme ("http://", "https://") and any trailing path.
+//   2. If the bare hostname still exceeds the buffer, walk backward through
+//      dots and keep only the last two labels (e.g. "api.example.com" → "example.com").
+//   3. Return "none" for a NULL, empty, or scheme-only URL.
 static void compact_backend_label(const char *backend_url, char *out, size_t out_size) {
     if (!out || out_size == 0) {
         return;
@@ -75,6 +105,9 @@ static void compact_backend_label(const char *backend_url, char *out, size_t out
     snprintf(out, out_size, "%.*s", (int)((len < out_size - 1) ? len : out_size - 1), start);
 }
 
+// Skip optional "CMD:" or "ACK:" prefix and leading whitespace so that raw
+// protocol tokens (e.g. "CMD: FORWARD") surface only the payload portion.
+// Returns a pointer into `input`; never returns NULL (falls back to "none").
 static const char *display_value_start(const char *input) {
     static const char empty[] = "none";
 
@@ -93,6 +126,9 @@ static const char *display_value_start(const char *input) {
     return *start ? start : empty;
 }
 
+// Extract the first space- or comma-delimited token from a (possibly prefixed)
+// input string so that multi-field payloads like "ACK: FORWARD,seq=3" collapse
+// to just "FORWARD" for display.  Writes "none" if nothing usable is found.
 static void compact_token_label(const char *input, char *out, size_t out_size) {
     if (!out || out_size == 0) {
         return;
@@ -112,6 +148,11 @@ static void compact_token_label(const char *input, char *out, size_t out_size) {
     }
 }
 
+// Copy a width-limited substring of `input` starting at `offset` characters
+// from the beginning.  When the string fits within `out_size - 1` characters
+// it is copied in full; otherwise a sliding window of exactly that width is
+// extracted.  Used to pan long strings (SSIDs, hostnames) across the 21-char
+// display without truncating silently.
 static void copy_windowed_text(const char *input, char *out, size_t out_size, size_t offset) {
     if (!out || out_size == 0) {
         return;
@@ -132,6 +173,11 @@ static void copy_windowed_text(const char *input, char *out, size_t out_size, si
     snprintf(out, out_size, "%.*s", (int)width, start + begin);
 }
 
+// Normalize an arbitrary state/link string to a short uppercase label that
+// fits in the tight display columns.  Recognizes common "good" values
+// (connected, online, ready, ok, committed) → "OK"; setup/config variants
+// → "SETUP"; degraded/stale/warn variants → "WARN"; off/disconnected → "OFF";
+// anything else is uppercased and passed through as-is (up to out_size - 1 chars).
 static void compact_state_label(const char *input, char *out, size_t out_size) {
     char token[16];
     compact_token_label(input, token, sizeof(token));
@@ -163,6 +209,13 @@ static void compact_state_label(const char *input, char *out, size_t out_size) {
     }
 }
 
+// Build a single-line alert summary in priority order:
+//   1. Wi-Fi not OK  →  "WIFI <label>"
+//   2. LoRa not OK   →  "RADIO <label>"
+//   3. Non-empty TX queue  →  "QUEUE <depth>"
+//   4. Command status not idle/ok  →  "CMD <status>"
+//   5. Fallback  →  "CHECK LINKS"
+// This is displayed as the second inverted row on the alert page.
 static void build_alert_headline(const char *wifi_label,
                                  const char *lora_label,
                                  int queue_depth,
@@ -186,6 +239,9 @@ static void build_alert_headline(const char *wifi_label,
     }
 }
 
+// Probe both common SSD1306 I2C addresses (0x3C and 0x3D) and record
+// whichever responds so the rest of the driver uses the correct address.
+// Returns false without configuring `dev._address` if neither address ACKs.
 static bool oled_probe(void) {
     const uint8_t addresses[] = {0x3C, 0x3D};
 
@@ -223,6 +279,13 @@ static bool oled_probe(void) {
     return false;
 }
 
+// Bring up the OLED hardware in the correct sequence:
+//   1. Assert VEXT low to enable the panel power rail; wait 100 ms for rail to stabilize.
+//   2. Toggle RST low→high to reset the controller; 20 ms each edge.
+//   3. Initialize the I2C master and probe for the SSD1306 address.
+//   4. Configure the display for 128×64 and run a brief self-test pattern.
+// Returns false (without crashing) if the probe fails so the caller can
+// choose to run headless.
 bool display_init(void) {
     gpio_config_t vext_conf = {
         .pin_bit_mask = 1ULL << OLED_VEXT,
@@ -265,6 +328,9 @@ bool display_init(void) {
     return true;
 }
 
+// Display a fixed-layout boot splash.  Uses absolute row addresses (not the
+// caching layer) so it renders correctly on a freshly cleared screen even
+// before display_show_status has been called for the first time.
 void display_show_splash(const char *line1, const char *line2) {
     ssd1306_clear_screen(&dev, false);
     ssd1306_display_text(&dev, 1, "NAVIGATOR BASE", 14, false);
@@ -283,7 +349,12 @@ void display_show_status(const char *mode,
                          const char *cmd_status,
                          const char *ack,
                          uint32_t ack_count) {
+    // Per-row line cache: avoids sending unchanged rows to the SSD1306 driver.
+    // Indexed by row number (0-7); cleared to zero on every page transition so
+    // rows from the previous page don't bleed into the new layout.
     static char cache[8][OLED_TEXT_LINE_LEN + 1] = {{0}};
+    // Track which page was rendered last so we can detect page transitions and
+    // invalidate the cache when the layout changes entirely.
     static int last_page = -1;
     char line[OLED_TEXT_LINE_LEN + 1];
     char detail[OLED_TEXT_LINE_LEN + 1];
@@ -308,13 +379,21 @@ void display_show_status(const char *mode,
     compact_token_label(ack, ack_label, sizeof(ack_label));
     build_alert_headline(wifi_label, lora_label, queue_depth, cmd_status_label, alert_headline, sizeof(alert_headline));
 
+    // Determine whether any subsystem needs attention.  If so, add a third
+    // page (page 2) that renders entirely in inverted video as a visual alarm.
+    // cmd_status values "OK" and "IDLE" are treated as non-alerting so routine
+    // idle state doesn't permanently enable the alert page.
     bool show_alert = (strcmp(wifi_label, "OK") != 0) ||
                       (strcmp(lora_label, "OK") != 0) ||
                       (queue_depth > 0) ||
                       (strcmp(cmd_status_label, "OK") != 0 && strcmp(cmd_status_label, "IDLE") != 0);
     int page_count = show_alert ? 3 : 2;
+    // Derive the current page from the tick count so page advances are
+    // time-driven and don't require any explicit state machine.
     int page = (int)((now / pdMS_TO_TICKS(OLED_PAGE_SWITCH_MS)) % page_count);
 
+    // On a page boundary, wipe the cache and clear the physical screen so
+    // content from the old layout doesn't linger behind the new one.
     if (page != last_page) {
         memset(cache, 0, sizeof(cache));
         ssd1306_clear_screen(&dev, false);
@@ -322,6 +401,7 @@ void display_show_status(const char *mode,
     }
 
     if (page == 0) {
+        // Page 0 — overview: mode, state, link health, SSID, and API host.
         write_line(0, "BASE STATUS P1", cache[0], sizeof(cache[0]));
 
         snprintf(line, sizeof(line), "MODE:%-.10s", mode_label);
@@ -341,6 +421,7 @@ void display_show_status(const char *mode,
         copy_windowed_text(backend_label, detail, sizeof(detail), 0);
         write_line(7, detail, cache[7], sizeof(cache[7]));
     } else if (page == 1) {
+        // Page 1 — detail: last command, delivery status, ACK, and queue depth.
         write_line(0, "BASE DETAIL P2", cache[0], sizeof(cache[0]));
 
         write_line(1, "CMD", cache[1], sizeof(cache[1]));
@@ -358,6 +439,9 @@ void display_show_status(const char *mode,
         snprintf(line, sizeof(line), "M:%.4s S:%.6s", mode_label, state_label);
         write_line(7, line, cache[7], sizeof(cache[7]));
     } else {
+        // Page 2 (alert) — all rows rendered inverted so the operator sees an
+        // immediate visual alarm.  The headline row summarises the highest-priority
+        // problem; subsequent rows expose the raw values for diagnosis.
         write_line_ex(0, "!!! BASE ALERT", cache[0], sizeof(cache[0]), true);
 
         write_line_ex(1, alert_headline, cache[1], sizeof(cache[1]), true);

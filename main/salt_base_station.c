@@ -31,10 +31,16 @@
 // a local setup/control UI, relays commands over LoRa, and keeps the cloud
 // backend synchronized with both robot telemetry and recent command state.
 
-// ---------------- Wi-Fi Credentials ----------------
+// ------------ Compile-time Wi-Fi fallback credentials ---------------
+// These credentials are used only when NVS contains no provisioned SSID.
+// In a production build the provisioned credentials stored in NVS take
+// precedence; these constants act as a last-resort development shortcut.
 #define STA_SSID "JakesiPhone"
 #define STA_PASS "password123"
 
+// Access-point credentials for the local setup/recovery UI.
+// The AP is kept alive during the STA association attempt so operators
+// can still reach the setup portal if the STA handshake fails.
 #define AP_SSID  "SaltRobot_Base"
 #define AP_PASS  "saltrobot123"
 #define GATEWAY_MANUAL_URL "http://172.20.10.2"
@@ -73,6 +79,9 @@ static const char ONRENDER_CA_CHAIN_PEM[] =
     "bmF0774BxL4YSFlhgjICICadVGNA3jdgUM/I2O2dgq43mLyjj0xMqTQrbO/7lZsm\n"
     "-----END CERTIFICATE-----\n";
 
+// --------- NVS keys and field-length limits ---------
+// All provisioned credentials are persisted under the "config" namespace so
+// they survive reboots and firmware updates.
 #define NVS_NAMESPACE "config"
 #define NVS_KEY_WIFI_SSID "wifi_ssid"
 #define NVS_KEY_WIFI_PASS "wifi_pass"
@@ -83,28 +92,46 @@ static const char ONRENDER_CA_CHAIN_PEM[] =
 #define MAX_WIFI_PASS_LEN 64
 #define MAX_BACKEND_URL_LEN 160
 #define MAX_BOARD_API_KEY_LEN 128
+
+// ------------- Backend / LoRa timing constants ----------------
+// Telemetry is posted relatively frequently so the dashboard stays
+// responsive; base-station heartbeat is slower because it changes rarely.
 #define TELEMETRY_POST_INTERVAL_MS 650
 #define BASE_STATUS_POST_INTERVAL_MS 1800
+// Remote command poll interval: 100 ms balances responsiveness against
+// HTTP overhead on a shared Wi-Fi link.
 #define REMOTE_COMMAND_POLL_INTERVAL_MS 100
+// Suppress duplicate remote commands within this window (ms) to prevent
+// re-flooding LoRa when the backend repeats a still-pending intent.
 #define REMOTE_COMMAND_DUPLICATE_SUPPRESS_MS 120
+// Suppress duplicate local motion commands within this window (ms) to
+// avoid micro-stutter from rapid identical joystick or button presses.
 #define LOCAL_MOTION_DUPLICATE_SUPPRESS_MS 45
+// Throttle repeated motion-command log lines to avoid log spam.
 #define BASE_MOTION_LOG_THROTTLE_MS 1000
+
+// Stack sizes are intentionally generous: backend_sync performs TLS
+// connections (large stack frames) and lora tasks process string buffers.
 #define BACKEND_HTTP_TASK_STACK_SIZE 16384
 #define BACKEND_HTTP_TIMEOUT_MS 900
 #define LORA_TASK_STACK_SIZE 6144
 #define DISPLAY_TASK_STACK_SIZE 6144
 #define RESTART_TASK_STACK_SIZE 3072
 
+// -------------- LoRa / GFSK radio parameters ----------------
+// 915 MHz ISM band; 22 dBm TX power is the regulatory maximum for US Part 15.
 #define LORA_FREQ_HZ     915000000
 #define LORA_TX_POWER_DBM 22
 #define LORA_TCXO_VOLT   3.3f
 #define LORA_USE_LDO     true
 
+// SF7 / BW4 (125 kHz) / CR1 (4/5) gives a good balance of range and data rate
+// for the short-to-medium distances expected in field deployments.
 #define LORA_SF          7
 #define LORA_BW          4
 #define LORA_CR          1
 #define LORA_PREAMBLE    8
-#define LORA_PAYLOAD_LEN 0
+#define LORA_PAYLOAD_LEN 0   // Variable-length packets.
 #define LORA_CRC_ON      true
 #define LORA_INVERT_IRQ  false
 #define GFSK_BITRATE_BPS 100000U
@@ -114,19 +141,38 @@ static const char ONRENDER_CA_CHAIN_PEM[] =
 #define GFSK_SYNC_WORD_BITS 32U
 #define GFSK_FIXED_PAYLOAD_LEN 64U
 
+// Maximum single LoRa command payload (bytes); headroom for escaped strings.
 #define LORA_CMD_MAX     384
+// TX queue depth: 16 commands provides burst buffering without allowing
+// stale commands to accumulate indefinitely.
 #define LORA_QUEUE_DEPTH 16
+// Maximum bytes that can be reassembled from a multi-fragment LoRa stream.
 #define LORA_RX_REASSEMBLY_MAX 1024
+// Set to 1 to enable automatic LoRa↔GFSK modem switching when the robot
+// enters or exits manual-drive mode.  0 (default) keeps the modem fixed.
 #define BASE_AUTO_RADIO_MODE_SWITCH 0
 
 static const char *TAG = "BASE";
 
+// ---- Wi-Fi event-group bits used by the bootstrap handshake ----
 static EventGroupHandle_t wifi_event_group;
 static const int WIFI_GOT_IP_BIT = BIT0;
 static const int WIFI_FAIL_BIT = BIT1;
 static int sta_retry_count = 0;
 static bool sta_bootstrap_in_progress = false;
 #define STA_BOOTSTRAP_MAX_RETRIES 3
+
+// ---- Shared-state locks ----------------------------------------
+// status_lock guards all global state strings and the status_json cache.
+// Any task that reads or writes current_state, current_mode, wifi_link_state,
+// lora_link_state, last_cmd*, last_lora*, last_ack*, ack_count, or status_json
+// must hold this mutex.
+//
+// backend_http_lock serialises HTTP client sessions so two tasks never share
+// the same TLS context.
+//
+// lora_lock serialises SX126x register access between the TX task and the RX
+// task (LoRaReceive / LoRaSend are not re-entrant).
 static SemaphoreHandle_t status_lock;
 static SemaphoreHandle_t backend_http_lock;
 static SemaphoreHandle_t lora_lock;
@@ -137,31 +183,44 @@ static char status_json[4096] = "{\"battery\":85,\"state\":\"IDLE\",\"mode\":\"B
 static char last_cmd[192]     = "none";
 static char last_cmd_id[64]   = "";
 static char last_cmd_status[32] = "idle";
-static char last_lora_rx[LORA_RX_REASSEMBLY_MAX] = "";
-static char last_lora_json[LORA_RX_REASSEMBLY_MAX] = "";
+static char last_lora_rx[LORA_RX_REASSEMBLY_MAX] = "";  // Most recent complete LoRa payload (raw text or JSON).
+static char last_lora_json[LORA_RX_REASSEMBLY_MAX] = ""; // Most recent valid telemetry frame (JSON only).
 static char last_ack_rx[160] = "";
 static char current_state[32] = "BOOT";
 static char current_mode[16] = "BOOT";
 static char wifi_link_state[16] = "connecting";
 static char lora_link_state[16] = "idle";
 static uint32_t ack_count = 0;
-static uint32_t last_lora_rx_count = 0;
-static uint32_t last_lora_json_count = 0;
+static uint32_t last_lora_rx_count = 0;   // Incremented on every accepted LoRa payload.
+static uint32_t last_lora_json_count = 0; // Incremented only when a telemetry JSON is stored.
+// Tick timestamps used by refresh_runtime_status_locked() to age out
+// stale receive-side state.  Zero means "never received".
 static TickType_t last_lora_rx_tick = 0;
 static TickType_t last_lora_json_tick = 0;
 static TickType_t last_ack_tick = 0;
 static TickType_t last_cmd_status_tick = 0;
 // Stream reassembly lets the base station stitch together chunked LoRa payloads
 // before they are exposed to the dashboard or forwarded to the backend.
+// lora_stream_buf accumulates fragments until a frame with has_end=true arrives
+// or a fresh complete payload resets the buffer.
 static bool lora_stream_seq_init = false;
 static uint32_t lora_stream_expected_seq = 0;
 static char lora_stream_buf[LORA_RX_REASSEMBLY_MAX] = "";
 static size_t lora_stream_len = 0;
-static uint32_t lora_rx_chain_id = 0;
+static uint32_t lora_rx_chain_id = 0; // Monotonic ID for log correlation across a multi-fragment chain.
 
+// ----- Stale-state aging timeouts (ms) -----
+// After no fresh LoRa packet is received for LORA_RX_STALE_MS the raw receive
+// buffer is cleared and the link state is downgraded to "stale" or "degraded".
 #define LORA_RX_STALE_MS             4500
+// Telemetry JSON is aged out separately so a link carrying only gateway
+// sideband messages doesn't masquerade as healthy telemetry.
 #define LORA_JSON_STALE_MS           4500
+// ACK strings are cleared after 3 s to avoid showing a stale "last ACK" on the
+// dashboard long after the robot has stopped responding.
 #define LORA_ACK_STALE_MS            3000
+// Command-status tokens ("sent", "acknowledged") auto-reset to "idle" after
+// 2.5 s once the TX queue drains, preventing a frozen status display.
 #define CMD_STATUS_RESET_MS          2500
 
 static char provisioned_ssid[MAX_WIFI_SSID_LEN + 1] = "";
@@ -192,6 +251,8 @@ static volatile radio_mode_t s_radio_mode = RADIO_MODE_LORA;
 static const char RADIO_SWITCH_TO_GFSK_FRAME[] = "RADIO:GFSK";
 static const char RADIO_SWITCH_TO_LORA_FRAME[] = "RADIO:LORA";
 
+// Return true if `value` exactly matches any string in `tokens`.
+// Used by the command classification helpers below to avoid repeated strcmp chains.
 static bool matches_any_token(const char *value, const char *const *tokens, size_t token_count) {
     if (!value || !tokens || token_count == 0) {
         return false;
@@ -204,6 +265,10 @@ static bool matches_any_token(const char *value, const char *const *tokens, size
     return false;
 }
 
+// Return true when the command is a motion/drive instruction.
+// Motion commands receive special queuing treatment: stale queued entries are
+// dropped when a newer motion command arrives so the robot always executes the
+// most recent operator intent rather than a backlog of obsolete moves.
 static bool is_motion_command(const char *command) {
     if (!command || command[0] == '\0') {
         return false;
@@ -230,10 +295,16 @@ static bool is_motion_command(const char *command) {
            strcmp(command, "RIGHT") == 0;
 }
 
+// Return true when the command encodes a full drive sequence with a stop step
+// (e.g. "J:" joystick or ",S:" suffix).  These sequences must not be de-duped
+// even if the payload bytes look identical, because each is a distinct manoeuvre.
 static bool command_has_drive_sequence(const char *command) {
     return command && (strstr(command, ",S:") != NULL || strncmp(command, "J:", 2) == 0);
 }
 
+// Return true when the command changes the robot's operating mode.
+// Mode commands are sent to the front of the TX queue so they jump ahead of
+// any pending motion commands.
 static bool is_mode_command(const char *command) {
     static const char *const mode_tokens[] = {
         "MANUAL", "AUTO", "PAUSE", "ESTOP", "RESET",
@@ -253,6 +324,9 @@ static bool is_mode_command(const char *command) {
     return matches_any_token(command, mode_tokens, sizeof(mode_tokens) / sizeof(mode_tokens[0]));
 }
 
+// Return true when the command enters manual-drive mode.
+// When BASE_AUTO_RADIO_MODE_SWITCH is enabled, a MANUAL entry triggers a
+// coordinated switch to the GFSK modem for lower-latency motion commands.
 static bool is_manual_entry_command(const char *command) {
     static const char *const manual_entry_tokens[] = {
         "MANUAL", "M", "CMD:M", "CMD:MANUAL",
@@ -264,6 +338,9 @@ static bool is_manual_entry_command(const char *command) {
     return matches_any_token(command, manual_entry_tokens, sizeof(manual_entry_tokens) / sizeof(manual_entry_tokens[0]));
 }
 
+// Return true when the command exits manual-drive mode (AUTO, PAUSE, ESTOP,
+// RESET).  When BASE_AUTO_RADIO_MODE_SWITCH is enabled, these commands trigger
+// a coordinated switch back to the LoRa modem.
 static bool is_lora_restore_command(const char *command) {
     static const char *const restore_tokens[] = {
         "AUTO", "A", "PAUSE", "P", "ESTOP", "E", "RESET", "X",
@@ -280,6 +357,8 @@ static const char *radio_mode_name(radio_mode_t mode) {
     return mode == RADIO_MODE_GFSK ? "GFSK" : "LORA";
 }
 
+// Apply a radio modem configuration while already holding lora_lock.
+// Callers that do not hold the lock should use radio_apply_mode() instead.
 static bool radio_apply_mode_locked(radio_mode_t mode) {
     if (mode == RADIO_MODE_LORA) {
         LoRaConfig(LORA_SF, LORA_BW, LORA_CR,
@@ -294,6 +373,7 @@ static bool radio_apply_mode_locked(radio_mode_t mode) {
     return true;
 }
 
+// Thread-safe wrapper: acquires lora_lock, reconfigures the modem, and releases.
 static bool radio_apply_mode(radio_mode_t mode) {
     bool ok = true;
     if (lora_lock) {
@@ -306,6 +386,10 @@ static bool radio_apply_mode(radio_mode_t mode) {
     return ok;
 }
 
+// Transmit `payload` up to `burst_count` times, retrying up to 3 times per burst
+// with a short inter-retry delay.  Bursting improves delivery probability in
+// noisy RF environments at the cost of airtime.
+// Must be called with lora_lock held.  Returns true if every burst succeeded.
 static bool lora_send_payload_with_retries_locked(const char *payload, int burst_count) {
     size_t payload_len = strnlen(payload, LORA_CMD_MAX);
     bool sent = false;
@@ -376,6 +460,9 @@ static void sync_time_with_sntp(void) {
     ESP_LOGW(TAG, "SNTP time sync timed out; TLS may still fail");
 }
 
+// Select the pinned CA certificate chain for TLS connections.
+// Currently only onrender.com has a pinned chain; all other hosts use the
+// ESP-IDF bundle so new backends don't require firmware changes.
 static const char *backend_cert_pem_for_url(const char *url) {
     if (!url || url[0] == '\0') {
         return NULL;
@@ -395,6 +482,13 @@ typedef struct {
     const char *payload;
 } lora_stream_frame_t;
 
+// Parse a sequenced stream frame from the SX126x.
+// Stream frames use the format:  S:<seq>:<marker>:<payload>
+//   seq    — monotonic fragment number (decimal).
+//   marker — 'M' (more fragments follow) or 'E' (end of stream).
+//   payload — the fragment data.
+// Non-stream frames are returned with is_stream=false so the caller falls
+// back to the simple (non-sequenced) reassembly path.
 static lora_stream_frame_t parse_lora_stream_frame(char *text) {
     lora_stream_frame_t out = {
         .is_stream = false,
@@ -429,6 +523,11 @@ static lora_stream_frame_t parse_lora_stream_frame(char *text) {
     return out;
 }
 
+// Return true when `payload` looks like a telemetry frame the backend can use.
+// Accepts both compact key-prefix frames (S:, T:, M:, F:) and JSON objects
+// containing known telemetry keys (fault, GPS coordinates, motor state, etc.).
+// Frames that pass this check but fail looks_like_complete_supported_telemetry_frame
+// are held in the reassembly buffer until they are complete.
 static bool looks_like_supported_telemetry_frame(const char *payload) {
     if (!payload) {
         return false;
@@ -467,6 +566,9 @@ static bool looks_like_supported_telemetry_frame(const char *payload) {
     return false;
 }
 
+// Return true when `payload` is a well-formed, balanced JSON object or array.
+// Uses a single-pass character scanner that tracks brace/bracket depth and
+// string escape state without requiring a full JSON parser.
 static bool looks_like_complete_json_document(const char *payload) {
     if (!payload) {
         return false;
@@ -523,6 +625,8 @@ static bool looks_like_complete_json_document(const char *payload) {
     return !in_string && brace_depth == 0 && bracket_depth == 0;
 }
 
+// Combine the two checks above: return true only when the payload is both a
+// recognised telemetry frame *and* complete (not a partial fragment).
 static bool looks_like_complete_supported_telemetry_frame(const char *payload) {
     if (!payload) {
         return false;
@@ -548,6 +652,9 @@ static bool looks_like_complete_supported_telemetry_frame(const char *payload) {
     return looks_like_complete_json_document(payload);
 }
 
+// Return true when the payload is a gateway sideband message ("GW:" or "ACK:").
+// Sideband messages are not telemetry and should not be appended to an in-progress
+// JSON reassembly chain.
 static bool is_gateway_sideband_message(const char *payload) {
     if (!payload) {
         return false;
@@ -580,6 +687,25 @@ static void log_lora_rx_chain_event(const char *event, uint32_t chain_id, const 
              text ? text : "");
 }
 
+// Accept a raw LoRa receive buffer and update the global reassembly state.
+//
+// Two reassembly paths are supported:
+//
+//   Non-stream path (no "S:<seq>:" prefix):
+//     • If a partial JSON is already accumulating in lora_stream_buf and a
+//       fresh JSON opener arrives, the stale partial is discarded.
+//     • If a partial JSON is accumulating and the new fragment is not a JSON
+//       opener or sideband, it is appended and the buffer is tested for
+//       completion.
+//     • Otherwise the frame is stored directly as last_lora_rx.
+//
+//   Stream path ("S:<seq>:<M|E>:<payload>"):
+//     • Fragments are appended in sequence; a gap resets the buffer.
+//     • The assembled payload is committed to last_lora_rx only on the
+//       end frame (has_end=true) and only if the content is complete.
+//
+// Must be called with status_lock held.
+// Returns true when a complete payload has been committed to last_lora_rx.
 static bool store_lora_rx_payload(char *text) {
     if (!text) {
         return false;
@@ -715,6 +841,8 @@ static bool store_lora_rx_payload(char *text) {
     return true;
 }
 
+// If `text` contains an "ACK:" token, copy it to last_ack_rx, bump the ack
+// counter, and record the timestamp so the aging logic can later clear it.
 static void capture_ack_if_present(const char *text) {
     if (!text) return;
     const char *ack = strstr(text, "ACK:");
@@ -727,12 +855,23 @@ static void capture_ack_if_present(const char *text) {
     last_cmd_status_tick = last_ack_tick;
 }
 
+// Age out stale receive-side state so the dashboard reflects transport
+// freshness instead of keeping the last good packet forever.
+//
+// Rules:
+//   • If no LoRa packet has been received for LORA_RX_STALE_MS, clear
+//     last_lora_rx and downgrade lora_link_state to "stale" or "degraded".
+//   • If no telemetry JSON has arrived for LORA_JSON_STALE_MS, clear
+//     last_lora_json and downgrade to "stale" when the TX queue is empty.
+//   • Clear last_ack_rx after LORA_ACK_STALE_MS with no new ACK.
+//   • Reset a terminal command status ("sent" / "acknowledged" / "forwarded")
+//     to "idle" after CMD_STATUS_RESET_MS once the TX queue drains.
+//
+// Must be called with status_lock held.
 static void refresh_runtime_status_locked(void) {
     const TickType_t now = xTaskGetTickCount();
     const int queue_depth = (int)(lora_cmd_q ? uxQueueMessagesWaiting(lora_cmd_q) : 0);
 
-    // Age out stale receive-side state so the dashboard reflects transport
-    // freshness instead of keeping the last good packet forever.
     if (last_lora_rx_tick != 0 && (now - last_lora_rx_tick) > pdMS_TO_TICKS(LORA_RX_STALE_MS)) {
         last_lora_rx[0] = '\0';
         last_lora_rx_tick = 0;
@@ -765,6 +904,9 @@ static void refresh_runtime_status_locked(void) {
     }
 }
 
+// Escape `src` for embedding in a JSON string value: backslash, quote,
+// newline, carriage-return, and tab are replaced with their JSON escape
+// sequences; other control characters (< 0x20) are replaced with spaces.
 static void json_escape_string(const char *src, char *dst, size_t dst_size) {
     if (!dst || dst_size == 0) {
         return;
@@ -810,6 +952,11 @@ static void json_escape_string(const char *src, char *dst, size_t dst_size) {
     dst[out] = '\0';
 }
 
+// Rebuild status_json from the current global state.
+// All string values are JSON-escaped before interpolation so that unusual
+// command payloads or SSIDs cannot break the JSON structure.
+// Must be called with status_lock held (it calls refresh_runtime_status_locked
+// which also requires the lock).
 static void refresh_status_json(void) {
     static char state_escaped[sizeof(current_state) * 2];
     static char mode_escaped[sizeof(current_mode) * 2];
@@ -877,6 +1024,9 @@ static void start_mdns_service(void) {
     ESP_LOGI(TAG, "mDNS started: http://%s.local", MDNS_HOSTNAME);
 }
 
+// Periodically snapshot shared state under status_lock into local copies,
+// then call display_show_status() outside the lock to avoid blocking
+// the status_lock for the duration of OLED SPI/I2C writes.
 static void display_task(void *arg) {
     (void)arg;
 
@@ -917,6 +1067,9 @@ static void display_task(void *arg) {
     }
 }
 
+// Minimal JSON key→string-value extractor used to parse backend responses
+// without pulling in a full JSON library.  Handles basic escape sequences
+// but does not unescape Unicode surrogate pairs.
 static bool extract_json_string(const char *json, const char *key, char *out, size_t out_size) {
     if (!json || !key || !out || out_size == 0) return false;
     char needle[48];
@@ -940,6 +1093,8 @@ static bool extract_json_string(const char *json, const char *key, char *out, si
     return i > 0;
 }
 
+// Return true when the JSON boolean field `key` is set to true or 1.
+// Used to check the "pending" flag in the remote command response.
 static bool json_flag_is_true(const char *json, const char *key) {
     if (!json || !key) return false;
     char needle[48];
@@ -953,6 +1108,9 @@ static bool json_flag_is_true(const char *json, const char *key) {
     return strncmp(found, "true", 4) == 0 || *found == '1';
 }
 
+// Read the entire HTTP request body into `buffer`.
+// Rejects bodies that are empty, exceed `buffer_size - 1`, or cannot be
+// received completely within the available HTTP receive buffer.
 static esp_err_t read_request_body(httpd_req_t *req, char *buffer, size_t buffer_size) {
     if (!req || !buffer || buffer_size == 0) return ESP_ERR_INVALID_ARG;
     if (req->content_len <= 0 || (size_t)req->content_len >= buffer_size) {
@@ -971,6 +1129,10 @@ static esp_err_t read_request_body(httpd_req_t *req, char *buffer, size_t buffer
     return ESP_OK;
 }
 
+// Load all provisioned credentials from NVS into the in-memory globals.
+// If no SSID has been stored, wifi_configured is left false and the station
+// will fall back to AP-only mode.  backend_url defaults to DEFAULT_BACKEND_URL
+// if the NVS key is absent or blank.
 static void load_provisioned_network_config(void) {
     nvs_handle_t nvs = 0;
     size_t len = 0;
@@ -1004,6 +1166,10 @@ static void load_provisioned_network_config(void) {
     nvs_close(nvs);
 }
 
+// Persist new Wi-Fi credentials and optional backend URL / API key to NVS,
+// then mirror them into the in-memory globals so in-flight requests see the
+// new values immediately without a restart (restart still follows for Wi-Fi).
+// A blank backend_url falls back to DEFAULT_BACKEND_URL.
 static esp_err_t save_provisioned_network_config(const char *ssid, const char *password, const char *backend_url, const char *board_api_key) {
     nvs_handle_t nvs = 0;
     esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &nvs);
@@ -1027,6 +1193,9 @@ static esp_err_t save_provisioned_network_config(const char *ssid, const char *p
     return err;
 }
 
+// Concatenate `backend_url` (stripped of any trailing slashes) with `path`
+// into `out`.  Returns false if either argument is empty or the result would
+// overflow `out_size`.
 static bool build_backend_endpoint(const char *backend_url, const char *path, char *out, size_t out_size) {
     if (!backend_url || !backend_url[0] || !path || !path[0] || !out || out_size == 0) {
         return false;
@@ -1045,6 +1214,12 @@ static bool build_backend_endpoint(const char *backend_url, const char *path, ch
     return true;
 }
 
+// POST `body` to `url` using a short-lived HTTP(S) client.
+// Acquires backend_http_lock to serialise TLS sessions; returns
+// ESP_ERR_TIMEOUT if another session holds the lock at call time.
+// Automatically selects the pinned onrender CA chain or the ESP-IDF CRT
+// bundle based on the URL host.
+// Returns ESP_OK only on a 2xx response.
 static esp_err_t post_payload_to_backend(const char *url, const char *body) {
     if (!url || !url[0] || !body || !body[0]) {
         return ESP_ERR_INVALID_ARG;
@@ -1108,6 +1283,9 @@ static esp_err_t post_payload_to_backend(const char *url, const char *body) {
     return ESP_OK;
 }
 
+// Issue an HTTP GET to `url`, stream the response body into `response_body`,
+// and report the HTTP status code via `status_code` (may be NULL).
+// Acquires backend_http_lock; returns ESP_ERR_TIMEOUT if the lock is busy.
 static esp_err_t get_json_from_backend(const char *url, char *response_body, size_t response_size, int *status_code) {
     if (!url || !url[0] || !response_body || response_size == 0) {
         return ESP_ERR_INVALID_ARG;
@@ -1175,6 +1353,21 @@ static esp_err_t get_json_from_backend(const char *url, char *response_body, siz
     return err;
 }
 
+// Enqueue `command` for LoRa transmission with priority-based queue management.
+//
+// Motion commands:
+//   • Duplicate bare motion frames within LOCAL_MOTION_DUPLICATE_SUPPRESS_MS
+//     are silently dropped to prevent micro-stutter from rapid key-repeat.
+//   • On arrival, any pending queued motion commands are discarded because the
+//     newer command supersedes them all.
+//
+// Mode commands:
+//   • Sent to the front of the queue so they jump ahead of any pending motion
+//     frames (e.g. ESTOP must fire before the next DRIVE frame).
+//   • If the queue is full, the oldest entry is dropped to make room.
+//
+// Updates last_cmd, last_cmd_status, and status_json under status_lock so
+// the dashboard reflects the new command immediately.
 static esp_err_t queue_command_for_lora(const char *command, const char *command_id) {
     static char last_motion_cmd[LORA_CMD_MAX] = "";
     static TickType_t last_motion_cmd_tick = 0;
@@ -1260,6 +1453,9 @@ static esp_err_t queue_command_for_lora(const char *command, const char *command
     return ESP_OK;
 }
 
+// Send the currently-active STA SSID and password to the LoRa gateway robot
+// so it can connect to the same Wi-Fi network (e.g. for OTA updates).
+// The frame is transmitted twice with a short gap to improve delivery odds.
 static void send_gateway_wifi_cfg_if_ready(void) {
     if (!lora_cmd_q) {
         return;
@@ -1284,6 +1480,10 @@ static void send_gateway_wifi_cfg_if_ready(void) {
     (void)queue_command_for_lora(frame, "gw-wifi-cfg");
 }
 
+// POST a command-acknowledgement to the backend.
+// Tries the primary endpoint first; if it returns 404, falls back through
+// a chain of legacy/alternate path variants so the firmware remains
+// compatible with older backend deployments.
 static esp_err_t post_remote_command_ack(const char *command_id, const char *status, const char *error_message) {
     if (!command_id || !command_id[0]) {
         return ESP_OK;
@@ -1356,6 +1556,9 @@ static esp_err_t post_remote_command_ack(const char *command_id, const char *sta
     return ack_err;
 }
 
+// Poll the backend for a pending remote command.
+// Returns true (and populates cmd_out / command_id_out) when the response
+// contains "pending": true and a non-empty "cmd" field.
 static bool fetch_remote_command_from_backend(char *cmd_out, size_t cmd_out_size, char *command_id_out, size_t command_id_size) {
     char backend_url[MAX_BACKEND_URL_LEN] = {0};
     char endpoint[MAX_BACKEND_URL_LEN + 64] = {0};
@@ -1701,6 +1904,11 @@ static httpd_handle_t start_http_server(void) {
     return server;
 }
 
+// Wi-Fi event handler: drives the STA bootstrap state machine.
+// During the initial bootstrap (sta_bootstrap_in_progress = true), up to
+// STA_BOOTSTRAP_MAX_RETRIES disconnects are tolerated before signalling
+// WIFI_FAIL_BIT to unblock try_sta_mode().  After bootstrap, disconnects
+// trigger automatic reconnection attempts without a retry limit.
 static void wifi_event_handler(void *arg, esp_event_base_t base, int32_t id, void *data) {
     (void)arg;
 
@@ -1739,6 +1947,9 @@ static void configure_ap_settings(void) {
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_cfg));
 }
 
+// Start AP-only mode as a last resort.  The link state is set to "degraded"
+// when credentials are provisioned (so the operator knows STA failed) or
+// "setup" when the unit has never been configured.
 static void start_ap_mode(void) {
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
     configure_ap_settings();
@@ -1752,6 +1963,10 @@ static void start_ap_mode(void) {
     ESP_LOGI(TAG, "AP started. SSID=%s", AP_SSID);
 }
 
+// Attempt to join `ssid` in APSTA mode (setup AP stays up during the attempt)
+// so operators can reconfigure if the STA handshake fails.  Waits up to 15 s
+// for an IP address.  On success, switches to pure STA mode and initiates an
+// SNTP time sync; on failure, leaves the AP active for re-provisioning.
 static bool try_sta_mode(const char *ssid, const char *password) {
     wifi_config_t sta_cfg = {0};
     strncpy((char *)sta_cfg.sta.ssid, ssid, sizeof(sta_cfg.sta.ssid));
@@ -1795,6 +2010,11 @@ static bool try_sta_mode(const char *ssid, const char *password) {
     return false;
 }
 
+// Bring up Wi-Fi using the best available credentials.
+// Priority order:
+//   1. Provisioned SSID from NVS (if wifi_configured).
+//   2. Built-in fallback STA_SSID (if different from provisioned and non-empty).
+//   3. AP-only mode (always available as a last resort for re-provisioning).
 static void start_sta_then_fallback_ap(void) {
     wifi_event_group = xEventGroupCreate();
 
@@ -1855,6 +2075,13 @@ static void lora_init(void) {
     ESP_LOGI(TAG, "LoRa/GFSK radio ready @ %d Hz", (int)LORA_FREQ_HZ);
 }
 
+// TX task: blocks on the LoRa command queue and transmits each payload.
+// Motion and mode commands are sent as a 2-frame burst for reliability;
+// other commands use a single transmission.
+// When BASE_AUTO_RADIO_MODE_SWITCH is enabled, entering manual mode appends
+// a "RADIO:GFSK" switch frame and reconfigures the modem; exiting manual
+// mode sends "RADIO:LORA" and reverts.  Both the payload and the switch
+// frame are sent under lora_lock to prevent interleaving with the RX task.
 static void lora_tx_task(void *arg) {
     (void)arg;
     lora_cmd_t c;
@@ -1913,6 +2140,11 @@ static void lora_tx_task(void *arg) {
     }
 }
 
+// RX task: polls LoRaReceive() every 5 ms (non-blocking, 2 ms lock timeout).
+// Completed payloads are passed to store_lora_rx_payload() under status_lock
+// for reassembly and state updates.  A short polling interval keeps command
+// round-trip latency low without starving the TX task.
+// MANUAL-mode telemetry frames are log-throttled to 1/s to prevent log spam.
 static void lora_rx_task(void *arg) {
     (void)arg;
     uint8_t rx[255];
@@ -1978,6 +2210,16 @@ static void lora_rx_task(void *arg) {
     }
 }
 
+// app_main — system entry point.
+// Startup sequence:
+//   1. NVS, TCP/IP stack, and event loop initialisation.
+//   2. Mutex creation (status_lock, backend_http_lock, lora_lock).
+//   3. OLED display initialisation and boot splash.
+//   4. Wi-Fi bring-up (STA with AP fallback).
+//   5. mDNS service registration and HTTP server start.
+//   6. LoRa command queue creation, radio initialisation, and TX/RX tasks.
+//   7. One-shot gateway Wi-Fi config frame over LoRa.
+//   8. Backend sync task and (if display is present) display task.
 void app_main(void) {
     ESP_ERROR_CHECK(nvs_flash_init());
     ESP_ERROR_CHECK(esp_netif_init());
